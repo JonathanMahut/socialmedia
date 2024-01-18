@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/life_cycle_event_handler.dart';
@@ -43,6 +44,15 @@ class _MyAppState extends State<MyApp> {
         builder: (context, ThemeProvider notifier, Widget? child) {
           return MaterialApp(
             title: Constants.appName,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('en'), // English
+              Locale('fr'), // French
+            ],
             debugShowCheckedModeBanner: false,
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,

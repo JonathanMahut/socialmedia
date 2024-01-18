@@ -1,4 +1,4 @@
-# 🔥🔥 Wooble Social Media App  [![Twitter Follow](https://img.shields.io/twitter/follow/CharlyKeleb.svg?style=social)](https://twitter.com/CharlyKeleb)
+# 🔥🔥 Tatoo Connect Social Media App  [![Twitter Follow](https://img.shields.io/twitter/follow/CharlyKeleb.svg?style=social)](https://twitter.com/CharlyKeleb)
 
 Wooble is a fully functional social media app with multiple features built with flutter and dart.
 
@@ -15,18 +15,18 @@ Star⭐ the repo if you like what you see😉.
 
 * Custom photo feed
 * Post photo posts from camera or gallery
-    * Like posts
-    * Comment on posts
-        * View all comments on a post
+  * Like posts
+  * Comment on posts
+    * View all comments on a post
 * Search for users
 * Realtime Messaging and Sending images
 * Deleting Posts
 * Profile Pages
-    * Change profile picture
-    * Change username
-    * Follow / Unfollow Users
-    * Change image view from grid layout to feed layout
-    * Add your own bio
+  * Change profile picture
+  * Change username
+  * Follow / Unfollow Users
+  * Change image view from grid layout to feed layout
+  * Add your own bio
 * Notifications Feed showing recent likes / comments of your posts + new followers
 * Swipe to delete notification
 * Dark Mode Support
@@ -45,7 +45,6 @@ Star⭐ the repo if you like what you see😉.
 <img src="ss/w13.png" width="400"> <img src="ss/w14.png" width="400">
 <img src="ss/w15.png" width="400"> <img src="ss/w16.png" width="400">
 <img src="ss/w17.png" width="400"> <img src="ss/w18.png" width="400">
-
 
 </p>
 
@@ -77,6 +76,15 @@ keytool -exportcert -list -v \
   Fingerprint".
 * Follow instructions to download google-services.json
 * place `google-services.json` into `/android/app/`.
+* Add the activity in the manifest.xml in android/app/main
+
+    <activity
+
+    android:name="com.yalantis.ucrop.UCropActivity"
+
+    android:screenOrientation="portrait"
+
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
 - (skip if not running on iOS)
 
@@ -91,18 +99,20 @@ keytool -exportcert -list -v \
 Double check install instructions for both
 
 - Google Auth Plugin
-    - https://pub.dartlang.org/packages/firebase_auth
+  - https://pub.dartlang.org/packages/firebase_auth
 - Firestore Plugin
-    - https://pub.dartlang.org/packages/cloud_firestore
+  - https://pub.dartlang.org/packages/cloud_firestore
 
 # What's Next?
+
 - [] Video Calling
 - [] Reels
 - [] Sending and Uploading Videos(Video Compatibility)
 
 # Note
-  - The stories feature is ready, you can write a cloud scheduler function to auto delete stories
-    after 24hrs as cloud functions is not enabled in this project
+
+- The stories feature is ready, you can write a cloud scheduler function to auto delete stories
+  after 24hrs as cloud functions is not enabled in this project
 
 ## 🤓 Author(s)
 
