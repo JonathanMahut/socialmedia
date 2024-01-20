@@ -20,6 +20,7 @@ class EditProfileViewModel extends ChangeNotifier {
   String? bio;
   File? image;
   String? imgLink;
+  String? usergender;
 
   setUser(UserModel val) {
     user = val;
@@ -48,6 +49,16 @@ class EditProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setGender(String val) {
+    print('SetGender$val');
+    usergender = val;
+    notifyListeners();
+  }
+
+  getGender() {
+    return usergender;
+  }
+
   editProfile(BuildContext context) async {
     FormState form = formKey.currentState!;
     form.save();
@@ -66,6 +77,7 @@ class EditProfileViewModel extends ChangeNotifier {
           username: username,
           bio: bio,
           country: country,
+          gender: usergender.toString(),
         );
         print(success);
         if (success) {

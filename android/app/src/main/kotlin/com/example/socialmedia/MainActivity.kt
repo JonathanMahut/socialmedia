@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.jonathan.tatooconnect
 
 import io.flutter.embedding.android.FlutterActivity
 

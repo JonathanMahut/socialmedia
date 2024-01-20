@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/text_form_builder.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/utils/validation.dart';
@@ -20,6 +21,8 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   UserModel? user;
+
+  // final List<String> values = GenderType.values.map((e) => e.name).toList();
 
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -112,6 +115,8 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   buildForm(EditProfileViewModel viewModel, BuildContext context) {
+    String? gendervalue = viewModel.user?.gender;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -166,6 +171,25 @@ class _EditProfileState extends State<EditProfile> {
                 viewModel.setBio(val);
               },
             ),
+            SizedBox(height: 10.0),
+            DropdownButton<String>(
+              // Not necessary for Option 1
+              // value: widget.user!.gender,
+              hint: Text('Choose your gender'),
+              // value: (GenderType.OTHER).name,
+              onChanged: (String? val) {
+                setState(() {
+                  viewModel.setGender(val!);
+                });
+              },
+              value: viewModel.getGender(),
+              items: GenderType.values.map((gender) {
+                return DropdownMenuItem(
+                  child: Text((gender.name).toString()),
+                  value: gender.name,
+                );
+              }).toList(),
+            )
           ],
         ),
       ),

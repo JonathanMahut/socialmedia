@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/services.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -23,12 +24,17 @@ class UserService extends Service {
 
 //updates user profile in the Edit Profile Screen
   updateProfile(
-      {File? image, String? username, String? bio, String? country}) async {
+      {File? image,
+      String? username,
+      String? bio,
+      String? country,
+      String? gender}) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
+    users.gender = gender;
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }
@@ -37,6 +43,7 @@ class UserService extends Service {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
+      "gender": users.gender ?? GenderType.OTHER,
     });
 
     return true;

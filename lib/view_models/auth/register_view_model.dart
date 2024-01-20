@@ -8,11 +8,12 @@ class RegisterViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool validate = false;
   bool loading = false;
-  String? username, email, country, password, cPassword;
+  String? username, email, country, password, cPassword, gender;
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
   FocusNode passFN = FocusNode();
+  FocusNode genderFN = FocusNode();
   FocusNode cPassFN = FocusNode();
   AuthService auth = AuthService();
 
@@ -34,6 +35,8 @@ class RegisterViewModel extends ChangeNotifier {
             email: email,
             password: password,
             country: country,
+            gender: gender,
+            // artist : artist
           );
           print(success);
           if (success) {
@@ -82,6 +85,20 @@ class RegisterViewModel extends ChangeNotifier {
     country = val;
     notifyListeners();
   }
+
+  setGender(val) {
+    gender = val.toString();
+    notifyListeners();
+  }
+
+  getGender() {
+    return gender;
+  }
+
+  // setArtist(val) {
+  //   artist = val;
+  //   notifyListeners();
+  // }
 
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

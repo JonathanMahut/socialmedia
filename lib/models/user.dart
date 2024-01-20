@@ -11,18 +11,43 @@ class UserModel {
   Timestamp? lastSeen;
   bool? isOnline;
   bool? isArtist;
+  String? displayName;
+  String? phoneNumber;
+  String? gender;
+  String? website;
+  num? totalFollowers;
+  num? totalFollowing;
+  num? totalPosts;
+  num? totalFlashes;
+  String? theme;
+  String? language;
+  String? countryCode;
+  // List? styles;
 
-  UserModel(
-      {this.username,
-      this.email,
-      this.id,
-      this.photoUrl,
-      this.signedUpAt,
-      this.isOnline,
-      this.isArtist,
-      this.lastSeen,
-      this.bio,
-      this.country});
+  UserModel({
+    this.username,
+    this.email,
+    this.id,
+    this.photoUrl,
+    this.signedUpAt,
+    this.isOnline,
+    this.isArtist,
+    this.lastSeen,
+    this.bio,
+    this.country,
+    this.displayName,
+    this.phoneNumber,
+    this.gender,
+    this.website,
+    this.totalFollowers,
+    this.totalFollowing,
+    this.totalPosts,
+    this.totalFlashes,
+    this.theme,
+    this.language,
+    this.countryCode,
+    // this.styles
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     username = json['username'];
@@ -35,6 +60,18 @@ class UserModel {
     lastSeen = json['lastSeen'];
     bio = json['bio'];
     id = json['id'];
+    displayName = json['displayName'];
+    phoneNumber = json['phoneNumber'];
+    gender = json['gender'];
+    website = json['website'];
+    totalFollowers = json['totalFollowers'];
+    totalFollowing = json['totalFollowing'];
+    totalPosts = json['totalPosts'];
+    totalFlashes = json['totalFlashes'];
+    theme = json['theme'];
+    language = json['language'];
+    countryCode = json['countryCode'];
+    // styles = json['styles'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,6 +86,18 @@ class UserModel {
     data['isArtist'] = this.isArtist;
     data['lastSeen'] = this.lastSeen;
     data['id'] = this.id;
+    data['displayName'] = this.displayName;
+    data['phoneNumber'] = this.phoneNumber;
+    data['gender'] = this.gender;
+    data['website'] = this.website;
+    data['totalFollowers'] = this.totalFollowers;
+    data['totalFollowing'] = this.totalFollowing;
+    data['totalPosts'] = this.totalPosts;
+    data['totalFlashes'] = this.totalFlashes;
+    data['theme'] = this.theme;
+    data['language'] = this.language;
+    data['countryCode'] = this.countryCode;
+    // data['styles'] = this.styles;
     return data;
   }
 }

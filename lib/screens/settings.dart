@@ -39,7 +39,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 subtitle: Text(
-                  "A Fully Functional Social Media Application Made by CharlyKeleb",
+                  "A Fully Functional Social Media Application for tatoo artits made by John",
                 ),
                 trailing: Icon(Icons.error)),
             Divider(),
