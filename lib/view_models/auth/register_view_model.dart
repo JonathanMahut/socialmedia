@@ -9,6 +9,7 @@ class RegisterViewModel extends ChangeNotifier {
   bool validate = false;
   bool loading = false;
   String? username, email, country, password, cPassword, gender;
+  bool? isArtist;
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
@@ -36,7 +37,7 @@ class RegisterViewModel extends ChangeNotifier {
             password: password,
             country: country,
             gender: gender,
-            // artist : artist
+            isArtist: isArtist,
           );
           print(success);
           if (success) {
@@ -95,10 +96,14 @@ class RegisterViewModel extends ChangeNotifier {
     return gender;
   }
 
-  // setArtist(val) {
-  //   artist = val;
-  //   notifyListeners();
-  // }
+  setArtist(val) {
+    isArtist = val;
+    notifyListeners();
+  }
+
+  getIsArtidt() {
+    return isArtist;
+  }
 
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

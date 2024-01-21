@@ -21,6 +21,7 @@ class EditProfileViewModel extends ChangeNotifier {
   File? image;
   String? imgLink;
   String? usergender;
+  bool? isArtist;
 
   setUser(UserModel val) {
     user = val;
@@ -55,6 +56,16 @@ class EditProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setIsArtist(bool val) {
+    print('SetIsArtist$val');
+    isArtist = val;
+    notifyListeners();
+  }
+
+  getIsArtist() {
+    return isArtist;
+  }
+
   getGender() {
     return usergender;
   }
@@ -78,6 +89,7 @@ class EditProfileViewModel extends ChangeNotifier {
           bio: bio,
           country: country,
           gender: usergender.toString(),
+          isArtist: isArtist,
         );
         print(success);
         if (success) {

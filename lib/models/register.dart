@@ -1,8 +1,8 @@
-
 class Register {
   String? username;
   String? email;
   String? gender;
+  bool? isArtist;
   String? country;
   String? password;
   String? passwordConfirmation;
@@ -13,6 +13,7 @@ class Register {
     data['name'] = this.username;
     data['email'] = this.email;
     data['gender'] = this.gender;
+    data['isArtist'] = this.isArtist;
     data['password'] = this.password;
     data['password_confirmation'] = this.passwordConfirmation;
     data['public_email'] = this.publicEmail;

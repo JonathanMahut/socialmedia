@@ -16,14 +16,15 @@ class AuthService {
     String? country,
     String? password,
     String? gender,
-    /* required artist*/
+    bool? isArtist,
   }) async {
     var res = await firebaseAuth.createUserWithEmailAndPassword(
       email: '$email',
       password: '$password',
     );
     if (res.user != null) {
-      await saveUserToFirestore(name!, res.user!, email!, country!, gender!);
+      await saveUserToFirestore(
+          name!, res.user!, email!, country!, gender!, isArtist!);
       return true;
     } else {
       return false;
@@ -32,7 +33,7 @@ class AuthService {
 
 //this will save the details inputted by the user to firestore.
   saveUserToFirestore(String name, User user, String email, String country,
-      String gender) async {
+      String gender, bool isArtist) async {
     await usersRef.doc(user.uid).set({
       'username': name,
       'email': email,
@@ -42,6 +43,7 @@ class AuthService {
       'country': country,
       'photoUrl': user.photoURL ?? '',
       'gender': gender,
+      'isArtist': isArtist,
     });
   }
 

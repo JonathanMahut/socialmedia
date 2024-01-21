@@ -156,6 +156,18 @@ class _RegisterState extends State<Register> {
             }).toList(),
             // focusNode: viewModel.genderFN,
           ),
+          SizedBox(height: 10.0),
+          SwitchListTile(
+            tileColor: Colors.yellow[50],
+            activeColor: Colors.red,
+            title: const Text('I am a tatoo artist !'),
+            value: false,
+            onChanged: (bool? val) {
+              setState(() {
+                viewModel.setArtist(val);
+              });
+            },
+          ),
           SizedBox(height: 25.0),
           Container(
             height: 45.0,

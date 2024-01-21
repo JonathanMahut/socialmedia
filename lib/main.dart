@@ -52,6 +52,9 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: [
               Locale('en'), // English
               Locale('fr'), // French
+              Locale('es'), // Spanish
+              Locale('ge'), // German
+              Locale('it'), // Italian
             ],
             debugShowCheckedModeBanner: false,
             theme: themeData(

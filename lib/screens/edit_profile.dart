@@ -115,8 +115,6 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   buildForm(EditProfileViewModel viewModel, BuildContext context) {
-    String? gendervalue = viewModel.user?.gender;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -177,19 +175,32 @@ class _EditProfileState extends State<EditProfile> {
               // value: widget.user!.gender,
               hint: Text('Choose your gender'),
               // value: (GenderType.OTHER).name,
+              value: viewModel.getGender(),
               onChanged: (String? val) {
                 setState(() {
                   viewModel.setGender(val!);
                 });
               },
-              value: viewModel.getGender(),
+              // value: viewModel.getGender(),
               items: GenderType.values.map((gender) {
                 return DropdownMenuItem(
                   child: Text((gender.name).toString()),
                   value: gender.name,
                 );
               }).toList(),
-            )
+            ),
+            SizedBox(height: 10.0),
+            SwitchListTile(
+              tileColor: Colors.yellow[50],
+              activeColor: Colors.red,
+              title: const Text('I am a tatoo artist !'),
+              value: viewModel.isArtist ?? false,
+              onChanged: (bool? val) {
+                setState(() {
+                  viewModel.isArtist = val;
+                });
+              },
+            ),
           ],
         ),
       ),

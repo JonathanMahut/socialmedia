@@ -28,13 +28,15 @@ class UserService extends Service {
       String? username,
       String? bio,
       String? country,
-      String? gender}) async {
+      String? gender,
+      bool? isArtist}) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
     users.gender = gender;
+    users.isArtist = isArtist;
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }
@@ -44,6 +46,7 @@ class UserService extends Service {
       'country': country,
       "photoUrl": users.photoUrl ?? '',
       "gender": users.gender ?? GenderType.OTHER,
+      "isArtist": users.isArtist ?? false,
     });
 
     return true;
