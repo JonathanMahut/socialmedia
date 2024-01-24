@@ -15,10 +15,11 @@ class _ProfilePictureState extends State<ProfilePicture> {
   @override
   Widget build(BuildContext context) {
     PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
         viewModel.resetPost();
-        return true;
+        return;
       },
       child: LoadingOverlay(
         progressIndicator: circularProgress(context),
@@ -59,7 +60,8 @@ class _ProfilePictureState extends State<ProfilePicture> {
                               child: Text(
                                 'Tap to add your profile picture',
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.secondary,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                             )

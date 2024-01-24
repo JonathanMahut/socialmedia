@@ -23,10 +23,11 @@ class _CreatePostState extends State<CreatePost> {
     }
 
     PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
         await viewModel.resetPost();
-        return true;
+        return;
       },
       child: LoadingOverlay(
         progressIndicator: circularProgress(context),

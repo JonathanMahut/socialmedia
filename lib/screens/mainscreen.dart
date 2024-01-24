@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/components/fab_container.dart';
+import 'package:social_media_app/pages/feeds.dart';
+import 'package:social_media_app/pages/flashes.dart';
 import 'package:social_media_app/pages/notification.dart';
 import 'package:social_media_app/pages/profile.dart';
 import 'package:social_media_app/pages/search.dart';
-import 'package:social_media_app/pages/feeds.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
 class TabScreen extends StatefulWidget {
@@ -16,6 +17,8 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   int _page = 0;
+  // bool isArtist = true;
+  // String pageTitle = "";
 
   List pages = [
     {
@@ -47,6 +50,12 @@ class _TabScreenState extends State<TabScreen> {
       'icon': CupertinoIcons.person_fill,
       'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 4,
+    },
+    {
+      'title': 'flashes',
+      'icon': Ionicons.flash,
+      'page': Flashes(profileId: firebaseAuth.currentUser!.uid),
+      'index': 5,
     },
   ];
 
@@ -100,6 +109,8 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   buildFab() {
+    // if (isArtist == true) {
+    // pageTitle = "unsee";
     return Container(
       height: 45.0,
       width: 45.0,
@@ -109,6 +120,18 @@ class _TabScreenState extends State<TabScreen> {
         mini: true,
       ),
     );
+    // } else {
+    //   pageTitle = "Flashes";
+    //   return Container(
+    //     height: 45.0,
+    //     width: 45.0,
+    //     // ignore: missing_required_param
+    //     child: FabContainer(
+    //       icon: Ionicons.add_outline,
+    //       mini: true,
+    //     ),
+    //   );
+    // }
   }
 
   void navigationTapped(int page) {
