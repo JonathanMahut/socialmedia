@@ -4,19 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/models/flash.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
-import 'package:social_media_app/services/post_service.dart';
+import 'package:social_media_app/services/flash_service.dart';
 import 'package:social_media_app/services/user_service.dart';
-import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class PostsViewModel extends ChangeNotifier {
+class FlashViewModel extends ChangeNotifier {
   //Services
   UserService userService = UserService();
-  PostService postService = PostService();
+  FlashService flashService = FlashService();
 
   //Keys
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -26,11 +23,12 @@ class PostsViewModel extends ChangeNotifier {
   bool loading = false;
   String? username;
   File? mediaUrl;
-  final picker = ImagePicker();
+
   String? location;
+  String? city;
   Position? position;
   Placemark? placemark;
-  String? bio;
+  // String? bio;
   String? description;
   String? email;
   String? commentData;
@@ -39,9 +37,10 @@ class PostsViewModel extends ChangeNotifier {
   String? type;
   File? userDp;
   String? imgLink;
+
+  bool isDispo = true;
   bool edit = false;
   String? id;
-  bool? isFlash;
 
   //controllers
   TextEditingController locationTEC = TextEditingController();
@@ -52,10 +51,13 @@ class PostsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setPost(PostModel post) {
-    description = post.description;
-    imgLink = post.mediaUrl;
-    location = post.location;
+  setFlash(FlashModel flash) {
+    description = flash.description;
+    imgLink = flash.mediaUrl;
+    location = flash.location;
+    isDispo = flash.isFlashDispo!;
+    city = flash.city;
+
     edit = true;
     edit = false;
     notifyListeners();
@@ -79,57 +81,13 @@ class PostsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setBio(String val) {
-    print('SetBio $val');
-    bio = val;
-    notifyListeners();
-  }
-
-  setIsFlash(bool val) {
-    print('SetFlash $val');
-    isFlash = val;
-    notifyListeners();
-  }
+  // setBio(String val) {
+  //   print('SetBio $val');
+  //   bio = val;
+  //   notifyListeners();
+  // }
 
   //Functions
-  pickImage({bool camera = false, BuildContext? context}) async {
-    loading = true;
-    notifyListeners();
-    try {
-      XFile? pickedFile = await picker.pickImage(
-        source: camera ? ImageSource.camera : ImageSource.gallery,
-      );
-      CroppedFile? croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile!.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: Constants.lightAccent,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            minimumAspectRatio: 1.0,
-          ),
-        ],
-      );
-      mediaUrl = File(croppedFile!.path);
-      loading = false;
-      notifyListeners();
-    } catch (e) {
-      loading = false;
-      notifyListeners();
-      showInSnackBar('Cancelled', context);
-    }
-  }
 
   getLocation() async {
     loading = true;
@@ -155,19 +113,19 @@ class PostsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  uploadPosts(BuildContext context) async {
+  uploadFlashes(BuildContext context) async {
     try {
       loading = true;
       notifyListeners();
-      await postService.uploadPost(
-          mediaUrl!, location!, description!, isFlash!);
+      await flashService.uploadFlash(
+          mediaUrl!, location!, city!, description!, isDispo);
       loading = false;
-      resetPost();
+      resetFlash();
       notifyListeners();
     } catch (e) {
       print(e);
       loading = false;
-      resetPost();
+      resetFlash();
       showInSnackBar('Uploaded successfully!', context);
       notifyListeners();
     }
@@ -180,7 +138,7 @@ class PostsViewModel extends ChangeNotifier {
       try {
         loading = true;
         notifyListeners();
-        await postService.uploadProfilePicture(
+        await flashService.uploadProfilePicture(
             mediaUrl!, firebaseAuth.currentUser!);
         loading = false;
         Navigator.of(context)
@@ -195,12 +153,11 @@ class PostsViewModel extends ChangeNotifier {
     }
   }
 
-  resetPost() {
+  resetFlash() {
     mediaUrl = null;
     description = null;
     location = null;
     edit = false;
-    isFlash = false;
     notifyListeners();
   }
 

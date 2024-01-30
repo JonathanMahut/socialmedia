@@ -544,6 +544,8 @@ class _ProfileState extends State<Profile> {
   }
 
   buildGridPost() {
+    // TODO : Test if user is an Artist
+    //TODO : Test if Post is a Flash to create an enter in a Flashes Database
     return StreamGridWrapper(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 10.0),

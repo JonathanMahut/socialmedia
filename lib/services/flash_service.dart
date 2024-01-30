@@ -8,8 +8,8 @@ import 'package:social_media_app/services/services.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:uuid/uuid.dart';
 
-class PostService extends Service {
-  String postId = Uuid().v4();
+class FlashService extends Service {
+  String flashId = Uuid().v4();
 
 //uploads profile picture to the users collection
   uploadProfilePicture(File image, User user) async {
@@ -21,8 +21,8 @@ class PostService extends Service {
   }
 
 //uploads post to the post collection
-  uploadPost(File image, String location, String description,
-      bool isFlashDispo) async {
+  uploadFlash(File image, String location, String city, String description,
+      bool isDispo) async {
     String link = await uploadImage(posts, image);
     DocumentSnapshot doc =
         await usersRef.doc(firebaseAuth.currentUser!.uid).get();
@@ -32,14 +32,16 @@ class PostService extends Service {
     var ref = postRef.doc();
     ref.set({
       "id": ref.id,
-      "postId": ref.id,
+      "flashId": ref.id,
       "username": user!.username,
       "ownerId": firebaseAuth.currentUser!.uid,
       "mediaUrl": link,
       "description": description ?? "",
       "location": location ?? "Tatoo Connect",
+      "city": city ?? "Paris",
       "timestamp": Timestamp.now(),
-      "isFlashDispo": isFlashDispo,
+      "ownerEmail": user!.email,
+      "ownerPhone": user!.phoneNumber,
     }).catchError((e) {
       print(e);
     });
@@ -83,6 +85,8 @@ class PostService extends Service {
       "postId": postId,
       "mediaUrl": mediaUrl,
       "timestamp": Timestamp.now(),
+      "ownerEmail": user!.email,
+      "ownerPhone": user!.phoneNumber,
     });
   }
 
@@ -101,6 +105,8 @@ class PostService extends Service {
       "postId": postId,
       "mediaUrl": mediaUrl,
       "timestamp": Timestamp.now(),
+      "ownerEmail": user!.email,
+      "ownerPhone": user!.phoneNumber,
     });
   }
 

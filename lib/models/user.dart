@@ -22,6 +22,8 @@ class UserModel {
   String? theme;
   String? language;
   String? countryCode;
+  String? postalAdress;
+  String? city;
   // List? styles;
 
   UserModel({
@@ -46,6 +48,8 @@ class UserModel {
     this.theme,
     this.language,
     this.countryCode,
+    this.postalAdress,
+    this.city,
     // this.styles
   });
 
@@ -71,6 +75,9 @@ class UserModel {
     theme = json['theme'];
     language = json['language'];
     countryCode = json['countryCode'];
+    postalAdress = json['postalAdress'];
+    city = json['city'];
+
     // styles = json['styles'];
   }
 
@@ -97,6 +104,8 @@ class UserModel {
     data['theme'] = this.theme;
     data['language'] = this.language;
     data['countryCode'] = this.countryCode;
+    data['postalAdress'] = this.postalAdress;
+    data['city'] = this.city;
     // data['styles'] = this.styles;
     return data;
   }

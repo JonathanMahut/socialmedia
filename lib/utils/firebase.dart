@@ -13,6 +13,8 @@ CollectionReference usersRef = firestore.collection('users');
 CollectionReference chatRef = firestore.collection("chats");
 CollectionReference postRef = firestore.collection('posts');
 CollectionReference storyRef = firestore.collection('posts');
+CollectionReference flashRef = firestore.collection('flashes');
+
 CollectionReference commentRef = firestore.collection('comments');
 CollectionReference notificationRef = firestore.collection('notifications');
 CollectionReference followersRef = firestore.collection('followers');
@@ -24,5 +26,6 @@ CollectionReference statusRef = firestore.collection('status');
 
 // Storage refs
 Reference profilePic = storage.ref().child('profilePic');
+Reference flashes = storage.ref().child('flashes');
 Reference posts = storage.ref().child('posts');
 Reference statuses = storage.ref().child('status');

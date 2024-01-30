@@ -183,6 +183,18 @@ class _CreatePostState extends State<CreatePost> {
                   onPressed: () => viewModel.getLocation(),
                 ),
               ),
+              SizedBox(height: 10.0),
+              SwitchListTile(
+                tileColor: Colors.yellow[50],
+                activeColor: Colors.red,
+                title: const Text('It\'s a dispo flash'),
+                value: viewModel.isFlash ?? false,
+                onChanged: (bool? val) {
+                  setState(() {
+                    viewModel.setIsFlash(val!);
+                  });
+                },
+              ),
             ],
           ),
         ),
