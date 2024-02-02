@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/tatoo_style.dart';
 
 class UserModel {
   String? username;
@@ -24,8 +25,7 @@ class UserModel {
   String? countryCode;
   String? postalAdress;
   String? city;
-  // List? styles;
-
+  List<TatooStyle>? tatooStyles;
   UserModel({
     this.username,
     this.email,
@@ -50,7 +50,7 @@ class UserModel {
     this.countryCode,
     this.postalAdress,
     this.city,
-    // this.styles
+    this.tatooStyles,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -77,8 +77,14 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-
-    // styles = json['styles'];
+    tatooStyles = json['tatooStyles'].cast<TatooStyle>();
+    // tatooStyles = json['tatooStyles'];
+    // if (json.containsKey('tatooStyles') && json['tatooStyles'] != null) {
+    //   tatooStyles = List<TatooStyle>.from(
+    //       json['tatooStyles'].map((style) => TatooStyle.values[style]));
+    // } else {
+    //   tatooStyles = [];
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -106,7 +112,10 @@ class UserModel {
     data['countryCode'] = this.countryCode;
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
-    // data['styles'] = this.styles;
+
+    data['tatooStyles'] =
+        tatooStyles!.map((style) => style.index).toList() ?? [];
+
     return data;
   }
 }

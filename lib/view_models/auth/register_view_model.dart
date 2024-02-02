@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/auth/register/profile_pic.dart';
+import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/services/auth_service.dart';
 
 class RegisterViewModel extends ChangeNotifier {
@@ -10,6 +11,7 @@ class RegisterViewModel extends ChangeNotifier {
   bool loading = false;
   String? username, email, country, password, cPassword, gender;
   bool? isArtist;
+  List<TatooStyle>? selectedTatooStyles = [];
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
@@ -38,6 +40,7 @@ class RegisterViewModel extends ChangeNotifier {
             country: country,
             gender: gender,
             isArtist: isArtist,
+            tatooStyles: selectedTatooStyles,
           );
           print(success);
           if (success) {
@@ -50,7 +53,7 @@ class RegisterViewModel extends ChangeNotifier {
         } catch (e) {
           loading = false;
           notifyListeners();
-          print(e);
+          print(e.toString());
           showInSnackBar(
               '${auth.handleFirebaseAuthError(e.toString())}', context);
         }
