@@ -33,16 +33,6 @@ Tatoo Connect is a fully functional social media app with multiple features buil
 
 ## Screenshots
 
-<p>
-<img src="ss/w1.png" width="400"/> <img src="ss/w2.png" width="400"/>
-<img src="ss/w3.png" width="400"> <img src="ss/w4.png" width="400">
-<img src="ss/w5.png" width="400"> <img src="ss/w6.png" width="400">
-<img src="ss/w7.png" width="400"> <img src="ss/w8.png" width="400">
-<img src="ss/w9.png" width="400"> <img src="ss/w10.png" width="400">
-<img src="ss/w11.png" width="400"> <img src="ss/w12.png" width="400">
-<img src="ss/w13.png" width="400"> <img src="ss/w14.png" width="400">
-<img src="ss/w15.png" width="400"> <img src="ss/w16.png" width="400">
-<img src="ss/w17.png" width="400"> <img src="ss/w18.png" width="400">
 
 </p>
 
@@ -99,9 +89,28 @@ Double check install instructions for both
 
 # What's Next?
 
-- [] Video Calling
-- [] Reels
-- [] Sending and Uploading Videos(Video Compatibility)
+* [ ] Video Calling
+* [ ] Vocal Calling
+* [ ] Post multi Media with carousel
+* [ ] Sending and Uploading Videos(Video Compatibility)
+* [ ] Sending and Uploading Vocal and Audio (AudioCompatibility)
+* [ ] Geolocalisation
+* [ ] Kind of Users : Tatoo Artist, Event Organisator, Client
+* [ ] Choose style page impoved and storage in firebase for Tatoo Artist
+* [ ] System of secret key for the licence management (Tatoo Artist, announcers, Event Organisator)
+* [ ] Modify feeds page to manage right of posting only from Tatao Artist, Event Organisator,announcer
+* [ ] Tatoo Flash system with Tinder SYstem (swipe card with Super Like to contact the tatoo Artist)
+* [ ] Search improvement by Artists, Styles, Geolocalisation, Avalaible Flashes
+* [ ] Manage tatoo styles in Profile Page for Tatoo Artist
+* [ ] Add Google Auth system
+* [ ] Add Meta (Facebook, Instagram) Auth
+* [ ] Get the Instagram Post to push on tatoo connect ?
+* [ ] Push Tatoo Connect to Instagram Account ?
+* [ ] Double Authentication by phone number ?
+
+### Known Issues
+
+* For Artist, there is an issu on Signup, the Tatoo Style pages appears before Photo Profile, ans the selected styles are not saved.
 
 # Note
 
