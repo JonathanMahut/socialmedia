@@ -2,6 +2,9 @@
 
 Tatoo Connect is a fully functional social media app with multiple features built with flutter and dart.
 
+The objective is to permits to Tatoo Artists, Announcers and Evnts organisator to publish their workd ans to Client to see the differents posts, comments them, like them, follow artist and Studio, Events, and choose some Tatoo Flash as we choose a Love Partner to be in contact with the Tatoo Artist.
+
+
 ## Requirements
 
 * Any Operating System (ie. MacOS X, Linux, Windows)
