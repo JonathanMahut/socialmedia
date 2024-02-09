@@ -60,15 +60,33 @@ FlutterFire configure and answer to the différents question
 
 * The google.service.json and firebase needed diles will be automacality created
 * For android, some modifications will be to done in the gradle file (project and app).)
-* Add the activity in the manifest.xml in android/app/main
+* in the android/build.gradlec:
 
-  <activity
+  ```
+  dependencies {
+  classpath"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  classpath"com.google.gms:google-services:4.4.0"
+  }
+  ```
+* in android/app/build.gradle
 
-  android:name="com.yalantis.ucrop.UCropActivity"
+```
+plugins {  
+id"com.android.application"  
+id"kotlin-android"  
+id"dev.flutter.flutter-gradle-plugin"  
+id("com.google.gms.google-services")
+}
+```
 
-  android:screenOrientation="portrait"
 
-  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+```
+dependencies {implementation(platform("com.google.firebase:firebase-bom:32.3.1"))}
+applyplugin: 'com.google.gms.google-services'
+```
+
+
 
 - (skip if not running on iOS)
 
