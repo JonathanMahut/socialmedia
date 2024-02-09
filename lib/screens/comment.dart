@@ -205,7 +205,7 @@ class _CommentsState extends State<Comments> {
                           if (snapshot.hasData) {
                             QuerySnapshot snap = snapshot.data!;
                             List<DocumentSnapshot> docs = snap.docs;
-                            return buildLikesCount(context, docs.length ?? 0);
+                            return buildLikesCount(context, docs.length);
                           } else {
                             return buildLikesCount(context, 0);
                           }
@@ -278,7 +278,8 @@ class _CommentsState extends State<Comments> {
                 children: [
                   CircleAvatar(
                     radius: 20.0,
-                    backgroundImage: CachedNetworkImageProvider(comments.userDp!),
+                    backgroundImage:
+                        CachedNetworkImageProvider(comments.userDp!),
                   ),
                   SizedBox(width: 10.0),
                   Column(
@@ -302,7 +303,7 @@ class _CommentsState extends State<Comments> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 50.0),
-                child: Text( comments.comment!.trim()),
+                child: Text(comments.comment!.trim()),
               ),
               SizedBox(height: 10.0),
             ],

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 
-class UserModel {
+class TatooArtist {
   String? username;
   String? email;
   String? photoUrl;
@@ -11,7 +11,7 @@ class UserModel {
   Timestamp? signedUpAt;
   Timestamp? lastSeen;
   bool? isOnline;
-  bool? isArtist;
+  bool? isGuestArtist;
   String? displayName;
   String? phoneNumber;
   String? gender;
@@ -25,15 +25,16 @@ class UserModel {
   String? countryCode;
   String? postalAdress;
   String? city;
+  String? secretKey;
   List<TatooStyle>? tatooStyles;
-  UserModel({
+  TatooArtist({
     this.username,
     this.email,
     this.id,
     this.photoUrl,
     this.signedUpAt,
     this.isOnline,
-    this.isArtist,
+    this.isGuestArtist,
     this.lastSeen,
     this.bio,
     this.country,
@@ -51,16 +52,17 @@ class UserModel {
     this.postalAdress,
     this.city,
     this.tatooStyles,
+    this.secretKey,
   });
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  TatooArtist.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
     photoUrl = json['photoUrl'];
     signedUpAt = json['signedUpAt'];
     isOnline = json['isOnline'];
-    isArtist = json['isArtist'];
+    isGuestArtist = json['isGuestArtist'];
     lastSeen = json['lastSeen'];
     bio = json['bio'];
     id = json['id'];
@@ -77,6 +79,7 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
+    secretKey = json['secretKey'];
 
     //tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
     // tatooStyles = json['tatooStyles'];
@@ -94,7 +97,7 @@ class UserModel {
     data['bio'] = this.bio;
     data['signedUpAt'] = this.signedUpAt;
     data['isOnline'] = this.isOnline;
-    data['isArtist'] = this.isArtist;
+    data['isGuestArtist'] = this.isGuestArtist;
     data['lastSeen'] = this.lastSeen;
     data['id'] = this.id;
     data['displayName'] = this.displayName;
@@ -110,6 +113,7 @@ class UserModel {
     data['countryCode'] = this.countryCode;
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
+    data['secretKey'] = this.secretKey;
     data['tatooStyles'] = tatooStyles!.map((style) => style.index).toList();
 
     return data;

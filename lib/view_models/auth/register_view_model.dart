@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/auth/register/choose_style.dart';
 import 'package:social_media_app/auth/register/profile_pic.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/services/auth_service.dart';
@@ -9,8 +10,10 @@ class RegisterViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool validate = false;
   bool loading = false;
-  String? username, email, country, password, cPassword, gender;
-  bool? isArtist;
+  String? username, email, country, password, cPassword;
+  String gender = 'UNKNOWN';
+
+  bool isArtist = false;
   List<TatooStyle>? selectedTatooStyles = [];
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
@@ -49,6 +52,17 @@ class RegisterViewModel extends ChangeNotifier {
                 builder: (_) => ProfilePicture(),
               ),
             );
+            print(success);
+          } else {
+            showInSnackBar('User account Not successfully created ', context);
+          }
+          if (isArtist == true) {
+            Navigator.of(context).pushReplacement(
+              CupertinoPageRoute(
+                builder: (_) => TatooSelectionPage(),
+              ),
+            );
+            showInSnackBar('Artist account created successfully', context);
           }
         } catch (e) {
           loading = false;

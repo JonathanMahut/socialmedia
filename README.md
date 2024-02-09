@@ -1,15 +1,13 @@
-# 🔥🔥 Tatoo Connect Social Media App  [![Twitter Follow](https://img.shields.io/twitter/follow/CharlyKeleb.svg?style=social)](https://twitter.com/CharlyKeleb)
+# Tatoo Connect Social Media App  [![Twitter Follow](https://img.shields.io/twitter/follow/CharlyKeleb.svg?style=social)](https://twitter.com/CharlyKeleb)
 
 Tatoo Connect is a fully functional social media app with multiple features built with flutter and dart.
 
-Star⭐ the repo if you like what you see😉.
-
-## ✨ Requirements
+## Requirements
 
 * Any Operating System (ie. MacOS X, Linux, Windows)
 * Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
-* A little knowledge of Dart and Flutter
-* A brain to think 🤓🤓
+* A little knowledge of Dart 3.x and Flutter
+* A brain to think
 
 ## Features
 
@@ -52,7 +50,7 @@ Star⭐ the repo if you like what you see😉.
 
 #### 1. [Setup Flutter](https://flutter.dev/docs/get-started/install)
 
-#### 2. Clone the repo
+2. Setup Firebase CLI
 
 #### 3. Setup the firebase app
 
@@ -64,27 +62,23 @@ Star⭐ the repo if you like what you see😉.
 * Click "Authentication" in the left-hand menu
 * Click the "sign-in method" tab
 * Click "Email and Password" and enable it
-* Create an app within your Firebase instance for Android, with package name com.yourcompany.news
-* Run the following command to get your SHA-1 key:
+* You'll need to create a Firestore Database and a Firebase Storage
 
 ```
-keytool -exportcert -list -v \
--alias androiddebugkey -keystore ~/.android/debug.keystore
+FlutterFire configure and answer to the différents question
 ```
 
-* In the Firebase console, in the settings of your Android app, add your SHA-1 key by clicking "Add
-  Fingerprint".
-* Follow instructions to download google-services.json
-* place `google-services.json` into `/android/app/`.
+* The google.service.json and firebase needed diles will be automacality created
+* For android, some modifications will be to done in the gradle file (project and app).)
 * Add the activity in the manifest.xml in android/app/main
 
-    <activity
+  <activity
 
-    android:name="com.yalantis.ucrop.UCropActivity"
+  android:name="com.yalantis.ucrop.UCropActivity"
 
-    android:screenOrientation="portrait"
+  android:screenOrientation="portrait"
 
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
 - (skip if not running on iOS)
 
@@ -113,8 +107,3 @@ Double check install instructions for both
 
 - The stories feature is ready, you can write a cloud scheduler function to auto delete stories
   after 24hrs as cloud functions is not enabled in this project
-
-## 🤓 Author(s)
-
-**Charly Keleb
-CharlyKeleb** [![Twitter Follow](https://img.shields.io/twitter/follow/Charlykeleb.svg?style=social)](https://twitter.com/Charlykeleb)

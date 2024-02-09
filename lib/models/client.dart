@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 
-class UserModel {
+class Client {
   String? username;
   String? email;
   String? photoUrl;
@@ -11,7 +11,6 @@ class UserModel {
   Timestamp? signedUpAt;
   Timestamp? lastSeen;
   bool? isOnline;
-  bool? isArtist;
   String? displayName;
   String? phoneNumber;
   String? gender;
@@ -26,14 +25,13 @@ class UserModel {
   String? postalAdress;
   String? city;
   List<TatooStyle>? tatooStyles;
-  UserModel({
+  Client({
     this.username,
     this.email,
     this.id,
     this.photoUrl,
     this.signedUpAt,
     this.isOnline,
-    this.isArtist,
     this.lastSeen,
     this.bio,
     this.country,
@@ -53,14 +51,13 @@ class UserModel {
     this.tatooStyles,
   });
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  Client.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
     photoUrl = json['photoUrl'];
     signedUpAt = json['signedUpAt'];
     isOnline = json['isOnline'];
-    isArtist = json['isArtist'];
     lastSeen = json['lastSeen'];
     bio = json['bio'];
     id = json['id'];
@@ -94,7 +91,6 @@ class UserModel {
     data['bio'] = this.bio;
     data['signedUpAt'] = this.signedUpAt;
     data['isOnline'] = this.isOnline;
-    data['isArtist'] = this.isArtist;
     data['lastSeen'] = this.lastSeen;
     data['id'] = this.id;
     data['displayName'] = this.displayName;

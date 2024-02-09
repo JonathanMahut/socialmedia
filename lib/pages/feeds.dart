@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/chats/recent_chats.dart';
 import 'package:social_media_app/models/post.dart';
@@ -15,7 +15,7 @@ class Feeds extends StatefulWidget {
   _FeedsState createState() => _FeedsState();
 }
 
-class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
+class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   int page = 5;
@@ -38,6 +38,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     print('>>>');
     return Scaffold(
       key: scaffoldKey,

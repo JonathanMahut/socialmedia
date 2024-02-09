@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/constants.dart';
@@ -22,6 +23,7 @@ class EditProfileViewModel extends ChangeNotifier {
   String? imgLink;
   String? usergender;
   bool? isArtist;
+  List<TatooStyle>? tatooStyle;
 
   setUser(UserModel val) {
     user = val;
@@ -70,6 +72,50 @@ class EditProfileViewModel extends ChangeNotifier {
     return usergender;
   }
 
+  setTatooStyle(List<TatooStyle> val) {
+    print('SetTatooStyle$val');
+    tatooStyle = val;
+    notifyListeners();
+  }
+
+  getTatooStyle() {
+    return tatooStyle;
+  }
+
+  getCountry() {
+    return country;
+  }
+
+  getBio() {
+    return bio;
+  }
+
+  getUsername() {
+    return username;
+  }
+
+  getImage() {
+    return imgLink;
+  }
+
+  getForm() {
+    return formKey;
+  }
+
+  getScaffold() {
+    return scaffoldKey;
+  }
+
+  getValidate() {
+    return validate;
+  }
+
+  getLoading() {
+    return loading;
+  }
+
+  // ignore: missing_return
+
   editProfile(BuildContext context) async {
     FormState form = formKey.currentState!;
     form.save();
@@ -90,6 +136,7 @@ class EditProfileViewModel extends ChangeNotifier {
           country: country,
           gender: usergender.toString(),
           isArtist: isArtist,
+          tatooStyles: tatooStyle ?? [],
         );
         print(success);
         if (success) {

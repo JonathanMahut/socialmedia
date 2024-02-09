@@ -147,6 +147,7 @@ class _RegisterState extends State<Register> {
                 print("Gender :" + viewModel.gender!);
               });
             },
+
             value: viewModel.getGender(),
             items: GenderType.values.map((gender) {
               return DropdownMenuItem(

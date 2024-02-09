@@ -69,6 +69,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -152,8 +153,10 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     if (!loading) {
       if (filteredUsers.isEmpty) {
         return Center(
-          child: Text("No User Found",
-              style: TextStyle(fontWeight: FontWeight.bold),),
+          child: Text(
+            "No User Found",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         );
       } else {
         return Expanded(
