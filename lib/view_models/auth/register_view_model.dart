@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_app/auth/register/choose_style.dart';
 import 'package:social_media_app/auth/register/profile_pic.dart';
-import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/services/auth_service.dart';
 
 class RegisterViewModel extends ChangeNotifier {
@@ -11,15 +9,15 @@ class RegisterViewModel extends ChangeNotifier {
   bool validate = false;
   bool loading = false;
   String? username, email, country, password, cPassword;
-  String gender = 'UNKNOWN';
+  // String gender = 'UNKNOWN';
 
-  bool isArtist = false;
-  List<TatooStyle>? selectedTatooStyles = [];
+  // bool isArtist = false;
+  // List<TatooStyle>? selectedTatooStyles = [];
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
   FocusNode passFN = FocusNode();
-  FocusNode genderFN = FocusNode();
+  //FocusNode genderFN = FocusNode();
   FocusNode cPassFN = FocusNode();
   AuthService auth = AuthService();
 
@@ -41,9 +39,9 @@ class RegisterViewModel extends ChangeNotifier {
             email: email,
             password: password,
             country: country,
-            gender: gender,
-            isArtist: isArtist,
-            tatooStyles: selectedTatooStyles,
+            // gender: gender,
+            // isArtist: isArtist,
+            // tatooStyles: selectedTatooStyles,
           );
           print(success);
           if (success) {
@@ -56,14 +54,14 @@ class RegisterViewModel extends ChangeNotifier {
           } else {
             showInSnackBar('User account Not successfully created ', context);
           }
-          if (isArtist == true) {
-            Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(
-                builder: (_) => TatooSelectionPage(),
-              ),
-            );
-            showInSnackBar('Artist account created successfully', context);
-          }
+          // if (isArtist == true) {
+          //   Navigator.of(context).pushReplacement(
+          //     CupertinoPageRoute(
+          //       builder: (_) => TatooSelectionPage(),
+          //     ),
+          //   );
+          //   showInSnackBar('Artist account created successfully', context);
+          // }
         } catch (e) {
           loading = false;
           notifyListeners();
@@ -104,23 +102,23 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setGender(val) {
-    gender = val.toString();
-    notifyListeners();
-  }
+  // setGender(val) {
+  //   gender = val.toString();
+  //   notifyListeners();
+  // }
 
-  getGender() {
-    return gender;
-  }
+  // getGender() {
+  //   return gender;
+  // }
 
-  setArtist(val) {
-    isArtist = val;
-    notifyListeners();
-  }
+  // setArtist(val) {
+  //   isArtist = val;
+  //   notifyListeners();
+  // }
 
-  getIsArtidt() {
-    return isArtist;
-  }
+  // getIsArtidt() {
+  //   return isArtist;
+  // }
 
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

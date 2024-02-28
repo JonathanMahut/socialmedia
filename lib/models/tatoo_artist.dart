@@ -1,32 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/user.dart';
 
-class TatooArtist {
+class TatooArtist extends UserModel {
+  @override
   String? username;
+  @override
   String? email;
+  @override
   String? photoUrl;
+  @override
   String? country;
+  @override
   String? bio;
+  @override
   String? id;
+  @override
   Timestamp? signedUpAt;
+  @override
   Timestamp? lastSeen;
+  @override
   bool? isOnline;
+
   bool? isGuestArtist;
+  @override
   String? displayName;
+  @override
   String? phoneNumber;
+
   String? gender;
+
   String? website;
+  @override
   num? totalFollowers;
+  @override
   num? totalFollowing;
+
   num? totalPosts;
+
   num? totalFlashes;
+  @override
   String? theme;
+  @override
   String? language;
+  @override
   String? countryCode;
+  @override
   String? postalAdress;
+  @override
   String? city;
   String? secretKey;
   List<TatooStyle>? tatooStyles;
+
   TatooArtist({
     this.username,
     this.email,
@@ -55,6 +80,7 @@ class TatooArtist {
     this.secretKey,
   });
 
+  @override
   TatooArtist.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     email = json['email'];

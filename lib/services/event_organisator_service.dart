@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:social_media_app/models/event_organisator.dart';
+import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class UserService extends Service {
+class EventOrganisatorService implements UserService {
   //get the authenticated uis
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -29,7 +30,7 @@ class UserService extends Service {
     String? country,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
-    var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    var users = EventOrganisator.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
@@ -45,5 +46,11 @@ class UserService extends Service {
     });
 
     return true;
+  }
+
+  @override
+  Future<String> uploadImage(Reference ref, File file) {
+    // TODO: implement uploadImage
+    throw UnimplementedError();
   }
 }

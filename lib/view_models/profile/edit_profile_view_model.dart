@@ -134,9 +134,9 @@ class EditProfileViewModel extends ChangeNotifier {
           username: username,
           bio: bio,
           country: country,
-          gender: usergender.toString(),
-          isArtist: isArtist,
-          tatooStyles: tatooStyle ?? [],
+          // gender: usergender.toString(),
+          // isArtist: isArtist,
+          // tatooStyles: tatooStyle ?? [],
         );
         print(success);
         if (success) {

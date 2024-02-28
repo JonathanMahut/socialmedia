@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -57,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBvdG4uBv7jPqp8q4NIUr_YlU-zeqx8ywk',
-    appId: '1:971080238211:android:5ef32bf64b731ae6c2c7b6',
+    appId: '1:971080238211:android:6f091773ada6146cc2c7b6',
     messagingSenderId: '971080238211',
     projectId: 'flutter-fire-instagram-c-1b81d',
     storageBucket: 'flutter-fire-instagram-c-1b81d.appspot.com',
@@ -71,5 +68,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-fire-instagram-c-1b81d.appspot.com',
     iosClientId: '971080238211-31t1bb6uv7dlbvrn7ke6ipsq4il82ffd.apps.googleusercontent.com',
     iosBundleId: 'com.mikkyboy.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyACrAInjRcWBq7vVWjCdFKd19UQooG14fg',
+    appId: '1:971080238211:ios:fd34bdd6f6bd732fc2c7b6',
+    messagingSenderId: '971080238211',
+    projectId: 'flutter-fire-instagram-c-1b81d',
+    storageBucket: 'flutter-fire-instagram-c-1b81d.appspot.com',
+    iosClientId: '971080238211-ku2971lrnio3747ncgh6f67kfqbetqjn.apps.googleusercontent.com',
+    iosBundleId: 'com.jonathan.tatooconnect.RunnerTests',
   );
 }

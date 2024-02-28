@@ -5,7 +5,6 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/password_text_field.dart';
 import 'package:social_media_app/components/text_form_builder.dart';
-import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/auth/register_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -135,40 +134,40 @@ class _RegisterState extends State<Register> {
             },
             focusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 10.0),
-          DropdownButton<String>(
-            // Not necessary for Option 1
-            // value: (GenderType.OTHER).name,
-            hint: Text('Choose your gender'),
-            onChanged: (String? val) {
-              setState(() {
-                val;
-                viewModel.setGender(val) as String?;
-                print("Gender :" + viewModel.gender!);
-              });
-            },
+          // SizedBox(height: 10.0),
+          // DropdownButton<String>(
+          //   // Not necessary for Option 1
+          //   // value: (GenderType.OTHER).name,
+          //   hint: Text('Choose your gender'),
+          //   onChanged: (String? val) {
+          //     setState(() {
+          //       val;
+          //       viewModel.setGender(val) as String?;
+          //       print("Gender :" + viewModel.gender!);
+          //     });
+          //   },
 
-            value: viewModel.getGender(),
-            items: GenderType.values.map((gender) {
-              return DropdownMenuItem(
-                child: Text((gender.name).toString()),
-                value: gender.name,
-              );
-            }).toList(),
-            // focusNode: viewModel.genderFN,
-          ),
-          SizedBox(height: 10.0),
-          SwitchListTile(
-            tileColor: Colors.yellow[50],
-            activeColor: Colors.red,
-            title: const Text('I am a tatoo artist !'),
-            value: false,
-            onChanged: (bool? val) {
-              setState(() {
-                viewModel.setArtist(val);
-              });
-            },
-          ),
+          //   value: viewModel.getGender(),
+          //   items: GenderType.values.map((gender) {
+          //     return DropdownMenuItem(
+          //       child: Text((gender.name).toString()),
+          //       value: gender.name,
+          //     );
+          //   }).toList(),
+          //   // focusNode: viewModel.genderFN,
+          // ),
+          // SizedBox(height: 10.0),
+          // SwitchListTile(
+          //   tileColor: Colors.yellow[50],
+          //   activeColor: Colors.red,
+          //   title: const Text('I am a tatoo artist !'),
+          //   value: false,
+          //   onChanged: (bool? val) {
+          //     setState(() {
+          //       viewModel.setArtist(val);
+          //     });
+          //   },
+          // ),
           SizedBox(height: 25.0),
           Container(
             height: 45.0,

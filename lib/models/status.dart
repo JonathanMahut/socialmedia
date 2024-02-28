@@ -25,8 +25,12 @@ class StatusModel {
     viewers = json['viewers'];
     if (json['type'] == 'text') {
       type = MessageType.TEXT;
-    } else {
+    } else if (json['type'] == 'image') {
       type = MessageType.IMAGE;
+    } else if (json['type'] == 'video') {
+      type = MessageType.VIDEO;
+    } else if (json['type'] == 'audio') {
+      type = MessageType.AUDIO;
     }
     time = json['time'];
   }
@@ -39,8 +43,12 @@ class StatusModel {
     data['url'] = this.url;
     if (this.type == MessageType.TEXT) {
       data['type'] = 'text';
-    } else {
+    } else if (this.type == MessageType.VIDEO) {
       data['type'] = 'image';
+    } else if (this.type == MessageType.VIDEO) {
+      data['type'] = 'video';
+    } else if (this.type == MessageType.AUDIO) {
+      data['type'] = 'audio';
     }
     data['time'] = this.time;
     return data;

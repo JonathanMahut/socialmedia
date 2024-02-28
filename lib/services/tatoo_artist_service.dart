@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
+import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
+import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class UserService extends Service {
+class TatooArtistService extends UserService {
   //get the authenticated uis
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -27,13 +30,18 @@ class UserService extends Service {
     String? username,
     String? bio,
     String? country,
+    String? gender,
+    List<TatooStyle>?
+        tatooStyles, // Nouvelle propriété pour les styles de tatouage
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
-    var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    var users = TatooArtist.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
-
+    users.gender = gender;
+    // users.isArtist = isArtist;
+    users.tatooStyles = tatooStyles; // Attribution des styles de tatouage
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }
@@ -42,8 +50,19 @@ class UserService extends Service {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
+      "gender": users.gender ?? GenderType.OTHER,
+      // Sérialisation des styles de tatouage
+      "tatooStyles": users.tatooStyles != null
+          ? users.tatooStyles!.map((style) => style.index).toList()
+          : null,
     });
 
     return true;
+  }
+
+  @override
+  Future<String> uploadImage(Reference ref, File file) {
+    // TODO: implement uploadImage
+    throw UnimplementedError();
   }
 }

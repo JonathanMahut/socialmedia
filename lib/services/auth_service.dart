@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
 class AuthService {
@@ -16,8 +15,6 @@ class AuthService {
     String? email,
     String? country,
     String? password,
-    String gender = 'UNKNOWN',
-    bool isArtist = false,
     String? displayName,
     String? phoneNumber,
     String? website,
@@ -25,7 +22,6 @@ class AuthService {
     String? countryCode,
     String? postalAdress,
     String? city,
-    List<TatooStyle>? tatooStyles,
   }) async {
     var res = await firebaseAuth.createUserWithEmailAndPassword(
       email: '$email',
@@ -37,8 +33,6 @@ class AuthService {
         res.user!,
         email!,
         country!,
-        gender,
-        isArtist,
         displayName,
         phoneNumber,
         website,
@@ -46,7 +40,6 @@ class AuthService {
         countryCode,
         postalAdress,
         city,
-        tatooStyles,
       );
       return true;
     } else {
@@ -60,8 +53,6 @@ class AuthService {
     User user,
     String email,
     String country,
-    String gender,
-    bool isArtist,
     String? displayName,
     String? phoneNumber,
     String? website,
@@ -69,7 +60,6 @@ class AuthService {
     String? countryCode,
     String? postalAdress,
     String? city,
-    List<TatooStyle>? tatooStyles,
   ) async {
     Map<String, dynamic> userData = {
       'username': name,
@@ -79,8 +69,6 @@ class AuthService {
       'bio': "",
       'country': country,
       'photoUrl': user.photoURL ?? '',
-      'gender': gender,
-      'isArtist': isArtist,
       'displayName': displayName ?? '',
       'phoneNumber': phoneNumber ?? '',
       'website': website ?? '',
@@ -88,7 +76,6 @@ class AuthService {
       'countryCode': countryCode ?? '',
       'postalAdress': postalAdress ?? '',
       'city': city ?? '',
-      'tatooStyles': tatooStyles ?? [],
     };
     print(userData);
     // // Vérifier si tatooStyles n'est pas nul avant de l'ajouter aux données utilisateur
@@ -151,3 +138,123 @@ class AuthService {
     }
   }
 }
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/models/tatoo_artist.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+
+// class AuthService {
+//   FirebaseAuth _auth = FirebaseAuth.instance;
+
+//   // Méthode pour créer un utilisateur avec Firebase
+//   Future<bool> createUser({
+//     required String name,
+//     required String email,
+//     required String country,
+//     required String password,
+//     String? displayName,
+//     String? phoneNumber,
+//     String? website,
+//     String? language,
+//     String? countryCode,
+//     String? postalAdress,
+//     String? city,
+//     String userType = 'standard', // Par défaut, crée un utilisateur standard
+//   }) async {
+//     try {
+//       UserCredential result = await _auth.createUserWithEmailAndPassword(
+//         email: email,
+//         password: password,
+//       );
+
+//       User? user = result.user;
+//       if (user != null) {
+//         await saveUserToFirestore(
+//           name,
+//           user,
+//           email,
+//           country,
+//           displayName,
+//           phoneNumber,
+//           website,
+//           language,
+//           countryCode,
+//           postalAdress,
+//           city,
+//           userType,
+//         );
+//         return true;
+//       } else {
+//         return false;
+//       }
+//     } catch (e) {
+//       print(e.toString());
+//       return false;
+//     }
+//   }
+
+//   // Enregistre les détails de l'utilisateur dans Firestore
+//   Future<void> saveUserToFirestore(
+//     String name,
+//     User user,
+//     String email,
+//     String country,
+//     String? displayName,
+//     String? phoneNumber,
+//     String? website,
+//     String? language,
+//     String? countryCode,
+//     String? postalAdress,
+//     String? city,
+//     String userType,
+//   ) async {
+//     Map<String, dynamic> userData = {
+//       'username': name,
+//       'email': email,
+//       'country': country,
+//       'time': Timestamp.now(),
+//       'id': user.uid,
+//       'type': userType, // Ajoute le type d'utilisateur
+//       'bio': "",
+//       'photoUrl': user.photoURL ?? '',
+//       'displayName': displayName ?? '',
+//       'phoneNumber': phoneNumber ?? '',
+//       'website': website ?? '',
+//       'language': language ?? '',
+//       'countryCode': countryCode ?? '',
+//       'postalAdress': postalAdress ?? '',
+//       'city': city ?? '',
+//     };
+
+//     await usersRef.doc(user.uid).set(userData);
+//   }
+
+//   // Fonction pour connecter un utilisateur avec son email et son mot de passe
+//   Future<bool> loginUser({required String email, required String password}) async {
+//     try {
+//       UserCredential result = await _auth.signInWithEmailAndPassword(
+//         email: email,
+//         password: password,
+//       );
+
+//       User? user = result.user;
+//       return user != null;
+//     } catch (e) {
+//       print(e.toString());
+//       return false;
+//     }
+//   }
+
+//   // Déconnexion
+//   Future<void> logOut() async {
+//     await _auth.signOut();
+//   }
+
+//   // Gestion des erreurs Firebase Auth
+//   String handleFirebaseAuthError(String e) {
+//     // Gestion des erreurs...
+//   }
+// }

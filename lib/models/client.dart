@@ -1,30 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/user.dart';
 
-class Client {
+class Client extends UserModel {
+  @override
   String? username;
+  @override
   String? email;
+  @override
   String? photoUrl;
+  @override
   String? country;
+  @override
   String? bio;
+  @override
   String? id;
+  @override
   Timestamp? signedUpAt;
+  @override
   Timestamp? lastSeen;
+  @override
   bool? isOnline;
+  @override
   String? displayName;
+  @override
   String? phoneNumber;
   String? gender;
-  String? website;
+  @override
   num? totalFollowers;
+  @override
   num? totalFollowing;
-  num? totalPosts;
-  num? totalFlashes;
+  @override
   String? theme;
+  @override
   String? language;
+  @override
   String? countryCode;
+  @override
   String? postalAdress;
+  @override
   String? city;
-  List<TatooStyle>? tatooStyles;
+
+  @override
   Client({
     this.username,
     this.email,
@@ -38,19 +54,16 @@ class Client {
     this.displayName,
     this.phoneNumber,
     this.gender,
-    this.website,
     this.totalFollowers,
     this.totalFollowing,
-    this.totalPosts,
-    this.totalFlashes,
     this.theme,
     this.language,
     this.countryCode,
     this.postalAdress,
     this.city,
-    this.tatooStyles,
   });
 
+  @override
   Client.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     email = json['email'];
@@ -64,24 +77,16 @@ class Client {
     displayName = json['displayName'];
     phoneNumber = json['phoneNumber'];
     gender = json['gender'];
-    website = json['website'];
     totalFollowers = json['totalFollowers'];
     totalFollowing = json['totalFollowing'];
-    totalPosts = json['totalPosts'];
-    totalFlashes = json['totalFlashes'];
     theme = json['theme'];
     language = json['language'];
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-
-    //tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
-    // tatooStyles = json['tatooStyles'];
-    if (json.containsKey('tatooStyles') && json['tatooStyles'] != null) {
-      tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
-    }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['username'] = this.username;
@@ -96,17 +101,13 @@ class Client {
     data['displayName'] = this.displayName;
     data['phoneNumber'] = this.phoneNumber;
     data['gender'] = this.gender;
-    data['website'] = this.website;
     data['totalFollowers'] = this.totalFollowers;
     data['totalFollowing'] = this.totalFollowing;
-    data['totalPosts'] = this.totalPosts;
-    data['totalFlashes'] = this.totalFlashes;
     data['theme'] = this.theme;
     data['language'] = this.language;
     data['countryCode'] = this.countryCode;
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
-    data['tatooStyles'] = tatooStyles!.map((style) => style.index).toList();
 
     return data;
   }

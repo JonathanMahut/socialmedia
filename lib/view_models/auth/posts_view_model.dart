@@ -41,7 +41,7 @@ class PostsViewModel extends ChangeNotifier {
   String? imgLink;
   bool edit = false;
   String? id;
-  bool? isFlash;
+  bool isFlash = false;
 
   //controllers
   TextEditingController locationTEC = TextEditingController();

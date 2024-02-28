@@ -1,9 +1,8 @@
-# Tatoo Connect Social Media App  
+# Tatoo Connect Social Media App
 
 Tatoo Connect is a fully functional social media app with multiple features built with flutter and dart.
 
 The objective is to permits to Tatoo Artists, Announcers and Evnts organisator to publish their workd ans to Client to see the differents posts, comments them, like them, follow artist and Studio, Events, and choose some Tatoo Flash as we choose a Love Partner to be in contact with the Tatoo Artist.
-
 
 ## Requirements
 
@@ -35,7 +34,6 @@ The objective is to permits to Tatoo Artists, Announcers and Evnts organisator t
 * Used Provider to manage state
 
 ## Screenshots
-
 
 </p>
 
@@ -82,14 +80,10 @@ id("com.google.gms.google-services")
 }
 ```
 
-
-
 ```
 dependencies {implementation(platform("com.google.firebase:firebase-bom:32.3.1"))}
 applyplugin: 'com.google.gms.google-services'
 ```
-
-
 
 - (skip if not running on iOS)
 
@@ -119,7 +113,7 @@ Double check install instructions for both
 * [ ] Kind of Users : Tatoo Artist, Event Organisator, Client
 * [ ] Choose style page impoved and storage in firebase for Tatoo Artist
 * [ ] System of secret key for the licence management (Tatoo Artist, announcers, Event Organisator)
-* [ ] Modify feeds page to manage right of posting only from Tatao Artist, Event Organisator,announcer
+* [ ] Modify feeds page to manage right of posting only from Tatoo Artist, Event Organisator,announcer
 * [ ] Tatoo Flash system with Tinder SYstem (swipe card with Super Like to contact the tatoo Artist)
 * [ ] Search improvement by Artists, Styles, Geolocalisation, Avalaible Flashes
 * [ ] Manage tatoo styles in Profile Page for Tatoo Artist

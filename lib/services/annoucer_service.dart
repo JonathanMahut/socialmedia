@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/models/vendor.dart';
 import 'package:social_media_app/services/services.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class UserService extends Service {
+class AnnoucerService extends Service {
   //get the authenticated uis
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -29,11 +29,10 @@ class UserService extends Service {
     String? country,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
-    var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    var users = Anoucer.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
-
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/screens/view_image.dart';
 import 'package:social_media_app/services/services.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -26,7 +26,7 @@ class FlashService extends Service {
     String link = await uploadImage(posts, image);
     DocumentSnapshot doc =
         await usersRef.doc(firebaseAuth.currentUser!.uid).get();
-    user = UserModel.fromJson(
+    user = TatooArtist.fromJson(
       doc.data() as Map<String, dynamic>,
     );
     var ref = postRef.doc();
@@ -51,7 +51,7 @@ class FlashService extends Service {
   uploadComment(String currentUserId, String comment, String postId,
       String ownerId, String mediaUrl) async {
     DocumentSnapshot doc = await usersRef.doc(currentUserId).get();
-    user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    user = TatooArtist.fromJson(doc.data() as Map<String, dynamic>);
     await commentRef.doc(postId).collection("comments").add({
       "username": user!.username,
       "comment": comment,
@@ -117,7 +117,7 @@ class FlashService extends Service {
 
     if (isNotMe) {
       DocumentSnapshot doc = await usersRef.doc(currentUser).get();
-      user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+      user = TatooArtist.fromJson(doc.data() as Map<String, dynamic>);
       notificationRef
           .doc(ownerId)
           .collection('notifications')
