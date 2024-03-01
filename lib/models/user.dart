@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 
 class UserModel {
   String? username;
@@ -20,6 +21,7 @@ class UserModel {
   String? countryCode;
   String? postalAdress;
   String? city;
+  UserType? userType;
 
   UserModel({
     this.username,
@@ -41,6 +43,7 @@ class UserModel {
     this.countryCode,
     this.postalAdress,
     this.city,
+    this.userType,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -63,6 +66,7 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
+    userType = json['userType'] ?? UserType.CLIENT;
   }
 
   Map<String, dynamic> toJson() {
@@ -86,6 +90,7 @@ class UserModel {
     data['countryCode'] = this.countryCode;
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
+    data['userType'] = this.userType ?? UserType.CLIENT;
 
     return data;
   }
