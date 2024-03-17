@@ -31,7 +31,7 @@ class _TatooSelectionPageState extends State<TatooSelectionPage> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                primary: selectedTatooStyles.contains(style)
+                backgroundColor: selectedTatooStyles.contains(style)
                     ? Colors.blue
                     : Colors.grey,
               ),

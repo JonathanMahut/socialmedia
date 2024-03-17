@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -30,6 +31,8 @@ class TatooArtistService extends UserService {
     String? username,
     String? bio,
     String? country,
+    String? userType,
+    // bool? isArtist,
     String? gender,
     List<TatooStyle>?
         tatooStyles, // Nouvelle propriété pour les styles de tatouage
@@ -39,7 +42,17 @@ class TatooArtistService extends UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    users.gender = gender;
+    if (userType != null) {
+      users.userType = userType;
+    } else {
+      users.userType = UserType.TATOOARTIST as String;
+    }
+
+    if (gender != null) {
+      users.gender = gender;
+    } else {
+      users.gender = GenderType.OTHER as String?;
+    }
     // users.isArtist = isArtist;
     users.tatooStyles = tatooStyles; // Attribution des styles de tatouage
     if (image != null) {
@@ -50,7 +63,9 @@ class TatooArtistService extends UserService {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
-      "gender": users.gender ?? GenderType.OTHER,
+      "userType": users.userType ?? UserType.TATOOARTIST as String,
+      // "isArtist": users.isArtist ?? false,
+      "gender": users.gender ?? GenderType.OTHER as String,
       // Sérialisation des styles de tatouage
       "tatooStyles": users.tatooStyles != null
           ? users.tatooStyles!.map((style) => style.index).toList()

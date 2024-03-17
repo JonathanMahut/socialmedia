@@ -160,7 +160,7 @@ class PostsViewModel extends ChangeNotifier {
       loading = true;
       notifyListeners();
       await postService.uploadPost(
-          mediaUrl!, location!, description!, isFlash!);
+          mediaUrl!, location!, description!, isFlash);
       loading = false;
       resetPost();
       notifyListeners();

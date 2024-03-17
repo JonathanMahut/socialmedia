@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/event_organisator.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -28,12 +29,18 @@ class EventOrganisatorService implements UserService {
     String? username,
     String? bio,
     String? country,
+    String? userType,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = EventOrganisator.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;
+    if (userType != null) {
+      users.userType = userType;
+    } else {
+      users.userType = UserType.EVENTORGANISATOR as String;
+    }
 
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
@@ -43,6 +50,7 @@ class EventOrganisatorService implements UserService {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
+      "userType": userType ?? UserType.EVENTORGANISATOR,
     });
 
     return true;

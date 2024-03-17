@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
 class AuthService {
@@ -22,6 +23,7 @@ class AuthService {
     String? countryCode,
     String? postalAdress,
     String? city,
+    String? userType,
   }) async {
     var res = await firebaseAuth.createUserWithEmailAndPassword(
       email: '$email',
@@ -40,6 +42,7 @@ class AuthService {
         countryCode,
         postalAdress,
         city,
+        userType as String ?? UserType.CLIENT as String,
       );
       return true;
     } else {
@@ -60,6 +63,7 @@ class AuthService {
     String? countryCode,
     String? postalAdress,
     String? city,
+    String? userType,
   ) async {
     Map<String, dynamic> userData = {
       'username': name,
@@ -76,6 +80,7 @@ class AuthService {
       'countryCode': countryCode ?? '',
       'postalAdress': postalAdress ?? '',
       'city': city ?? '',
+      'userType': userType ?? UserType.CLIENT as String
     };
     print(userData);
     // // Vérifier si tatooStyles n'est pas nul avant de l'ajouter aux données utilisateur

@@ -21,7 +21,7 @@ class UserModel {
   String? countryCode;
   String? postalAdress;
   String? city;
-  UserType? userType;
+  String? userType;
 
   UserModel({
     this.username,
@@ -66,7 +66,7 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-    userType = json['userType'] ?? UserType.CLIENT;
+    userType = json['userType'] ?? 'CLIENT';
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +90,7 @@ class UserModel {
     data['countryCode'] = this.countryCode;
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
-    data['userType'] = this.userType ?? UserType.CLIENT;
+    data['userType'] = this.userType ?? UserType.CLIENT as String;
 
     return data;
   }

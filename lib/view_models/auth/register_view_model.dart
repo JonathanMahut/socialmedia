@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/auth/register/profile_pic.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/services/auth_service.dart';
 
 class RegisterViewModel extends ChangeNotifier {
@@ -8,7 +9,7 @@ class RegisterViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool validate = false;
   bool loading = false;
-  String? username, email, country, password, cPassword;
+  String? username, email, country, password, cPassword, userType;
   // String gender = 'UNKNOWN';
 
   // bool isArtist = false;
@@ -35,14 +36,15 @@ class RegisterViewModel extends ChangeNotifier {
         notifyListeners();
         try {
           bool success = await auth.createUser(
-            name: username,
-            email: email,
-            password: password,
-            country: country,
-            // gender: gender,
-            // isArtist: isArtist,
-            // tatooStyles: selectedTatooStyles,
-          );
+              name: username,
+              email: email,
+              password: password,
+              country: country,
+              userType: UserType.CLIENT.name
+              // gender: gender,
+              // isArtist: isArtist,
+              // tatooStyles: selectedTatooStyles,
+              );
           print(success);
           if (success) {
             Navigator.of(context).pushReplacement(
@@ -100,6 +102,15 @@ class RegisterViewModel extends ChangeNotifier {
   setCountry(val) {
     country = val;
     notifyListeners();
+  }
+
+  setUserType(val) {
+    userType = val;
+    notifyListeners();
+  }
+
+  getUserType() {
+    return userType;
   }
 
   // setGender(val) {
