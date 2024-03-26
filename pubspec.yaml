@@ -96,6 +96,7 @@ dependencies:
   lottie: ^3.0.0
   custom_clippers: ^2.0.0
   easy_localization: ^3.0.3
+  json_annotation: ^4.8.1
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.1
@@ -106,6 +107,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  flutter_lints: ^3.0.1
   
 flutter_icons:
   android: true

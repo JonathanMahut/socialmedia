@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
-class Anoucer extends UserModel {
+class Annoucer extends UserModel {
   @override
   String? username;
   @override
@@ -42,9 +44,12 @@ class Anoucer extends UserModel {
   @override
   String? city;
   String? secretKey;
+  @override
+  @EnumConverter()
+  UserType userType = UserType.VENDOR;
 
   @override
-  Anoucer({
+  Annoucer({
     this.username,
     this.email,
     this.id,
@@ -66,9 +71,12 @@ class Anoucer extends UserModel {
     this.postalAdress,
     this.city,
     this.secretKey,
-  });
+    // required super.userType,
+  }) : super(userType: UserType.VENDOR);
+
   @override
-  Anoucer.fromJson(Map<String, dynamic> json) {
+  Annoucer.fromJson(Map<String, dynamic> json)
+      : super(userType: UserType.VENDOR) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -90,32 +98,33 @@ class Anoucer extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
+    userType = json['userType'];
   }
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['country'] = this.country;
-    data['email'] = this.email;
-    data['photoUrl'] = this.photoUrl;
-    data['bio'] = this.bio;
-    data['signedUpAt'] = this.signedUpAt;
-    data['isOnline'] = this.isOnline;
-    data['lastSeen'] = this.lastSeen;
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    data['phoneNumber'] = this.phoneNumber;
-    data['website'] = this.website;
-    data['totalFollowers'] = this.totalFollowers;
-    data['totalFollowing'] = this.totalFollowing;
-    data['totalPosts'] = this.totalPosts;
-    data['theme'] = this.theme;
-    data['language'] = this.language;
-    data['countryCode'] = this.countryCode;
-    data['postalAdress'] = this.postalAdress;
-    data['city'] = this.city;
-    data['secretKey'] = this.secretKey;
-
+    data['username'] = username;
+    data['country'] = country;
+    data['email'] = email;
+    data['photoUrl'] = photoUrl;
+    data['bio'] = bio;
+    data['signedUpAt'] = signedUpAt;
+    data['isOnline'] = isOnline;
+    data['lastSeen'] = lastSeen;
+    data['id'] = id;
+    data['displayName'] = displayName;
+    data['phoneNumber'] = phoneNumber;
+    data['website'] = website;
+    data['totalFollowers'] = totalFollowers;
+    data['totalFollowing'] = totalFollowing;
+    data['totalPosts'] = totalPosts;
+    data['theme'] = theme;
+    data['language'] = language;
+    data['countryCode'] = countryCode;
+    data['postalAdress'] = postalAdress;
+    data['city'] = city;
+    data['secretKey'] = secretKey;
+    data['userType'] = userType;
     return data;
   }
 }

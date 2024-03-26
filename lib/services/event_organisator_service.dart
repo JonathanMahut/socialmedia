@@ -24,12 +24,13 @@ class EventOrganisatorService implements UserService {
   }
 
   //updates user profile in the Edit Profile Screen
+  @override
   updateProfile({
     File? image,
     String? username,
     String? bio,
     String? country,
-    String? userType,
+    required UserType userType,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = EventOrganisator.fromJson(doc.data() as Map<String, dynamic>);
@@ -39,7 +40,7 @@ class EventOrganisatorService implements UserService {
     if (userType != null) {
       users.userType = userType;
     } else {
-      users.userType = UserType.EVENTORGANISATOR as String;
+      users.userType = UserType.EVENTORGANISATOR;
     }
 
     if (image != null) {

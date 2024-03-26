@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class Client extends UserModel {
   @override
@@ -39,6 +41,9 @@ class Client extends UserModel {
   String? postalAdress;
   @override
   String? city;
+  @override
+  @EnumConverter()
+  UserType userType = UserType.CLIENT;
 
   @override
   Client({
@@ -61,10 +66,12 @@ class Client extends UserModel {
     this.countryCode,
     this.postalAdress,
     this.city,
-  });
+    //  required super.userType,
+  }) : super(userType: UserType.CLIENT);
 
   @override
-  Client.fromJson(Map<String, dynamic> json) {
+  Client.fromJson(Map<String, dynamic> json)
+      : super(userType: UserType.CLIENT) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -84,30 +91,32 @@ class Client extends UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
+    userType = json['userType'] as UserType? ?? UserType.CLIENT;
   }
 
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['country'] = this.country;
-    data['email'] = this.email;
-    data['photoUrl'] = this.photoUrl;
-    data['bio'] = this.bio;
-    data['signedUpAt'] = this.signedUpAt;
-    data['isOnline'] = this.isOnline;
-    data['lastSeen'] = this.lastSeen;
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    data['phoneNumber'] = this.phoneNumber;
-    data['gender'] = this.gender;
-    data['totalFollowers'] = this.totalFollowers;
-    data['totalFollowing'] = this.totalFollowing;
-    data['theme'] = this.theme;
-    data['language'] = this.language;
-    data['countryCode'] = this.countryCode;
-    data['postalAdress'] = this.postalAdress;
-    data['city'] = this.city;
+    data['username'] = username;
+    data['country'] = country;
+    data['email'] = email;
+    data['photoUrl'] = photoUrl;
+    data['bio'] = bio;
+    data['signedUpAt'] = signedUpAt;
+    data['isOnline'] = isOnline;
+    data['lastSeen'] = lastSeen;
+    data['id'] = id;
+    data['displayName'] = displayName;
+    data['phoneNumber'] = phoneNumber;
+    data['gender'] = gender;
+    data['totalFollowers'] = totalFollowers;
+    data['totalFollowing'] = totalFollowing;
+    data['theme'] = theme;
+    data['language'] = language;
+    data['countryCode'] = countryCode;
+    data['postalAdress'] = postalAdress;
+    data['city'] = city;
+    data['userType'] = UserType.CLIENT.name;
 
     return data;
   }

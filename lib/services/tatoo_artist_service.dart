@@ -31,7 +31,7 @@ class TatooArtistService extends UserService {
     String? username,
     String? bio,
     String? country,
-    String? userType,
+    required UserType userType,
     // bool? isArtist,
     String? gender,
     List<TatooStyle>?
@@ -45,7 +45,7 @@ class TatooArtistService extends UserService {
     if (userType != null) {
       users.userType = userType;
     } else {
-      users.userType = UserType.TATOOARTIST as String;
+      users.userType = UserType.TATOOARTIST;
     }
 
     if (gender != null) {

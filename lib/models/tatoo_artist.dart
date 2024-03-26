@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class TatooArtist extends UserModel {
   @override
@@ -21,24 +23,14 @@ class TatooArtist extends UserModel {
   Timestamp? lastSeen;
   @override
   bool? isOnline;
-
-  bool? isGuestArtist;
   @override
   String? displayName;
   @override
   String? phoneNumber;
-
-  String? gender;
-
-  String? website;
   @override
   num? totalFollowers;
   @override
   num? totalFollowing;
-
-  num? totalPosts;
-
-  num? totalFlashes;
   @override
   String? theme;
   @override
@@ -49,6 +41,15 @@ class TatooArtist extends UserModel {
   String? postalAdress;
   @override
   String? city;
+  @override
+  @EnumConverter()
+  UserType userType = UserType.TATOOARTIST;
+
+  bool? isGuestArtist;
+  String? gender;
+  String? website;
+  num? totalPosts;
+  num? totalFlashes;
   String? secretKey;
   List<TatooStyle>? tatooStyles;
 
@@ -78,10 +79,12 @@ class TatooArtist extends UserModel {
     this.city,
     this.tatooStyles,
     this.secretKey,
-  });
+    //  required super.userType,
+  }) : super(userType: UserType.TATOOARTIST);
 
   @override
-  TatooArtist.fromJson(Map<String, dynamic> json) {
+  TatooArtist.fromJson(Map<String, dynamic> json)
+      : super(userType: UserType.TATOOARTIST) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -106,9 +109,8 @@ class TatooArtist extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
+    super.userType = json['userType'] as UserType? ?? UserType.TATOOARTIST;
 
-    //tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
-    // tatooStyles = json['tatooStyles'];
     if (json.containsKey('tatooStyles') && json['tatooStyles'] != null) {
       tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
     }
@@ -116,31 +118,33 @@ class TatooArtist extends UserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['country'] = this.country;
-    data['email'] = this.email;
-    data['photoUrl'] = this.photoUrl;
-    data['bio'] = this.bio;
-    data['signedUpAt'] = this.signedUpAt;
-    data['isOnline'] = this.isOnline;
-    data['isGuestArtist'] = this.isGuestArtist;
-    data['lastSeen'] = this.lastSeen;
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    data['phoneNumber'] = this.phoneNumber;
-    data['gender'] = this.gender;
-    data['website'] = this.website;
-    data['totalFollowers'] = this.totalFollowers;
-    data['totalFollowing'] = this.totalFollowing;
-    data['totalPosts'] = this.totalPosts;
-    data['totalFlashes'] = this.totalFlashes;
-    data['theme'] = this.theme;
-    data['language'] = this.language;
-    data['countryCode'] = this.countryCode;
-    data['postalAdress'] = this.postalAdress;
-    data['city'] = this.city;
-    data['secretKey'] = this.secretKey;
+    data['username'] = username;
+    data['country'] = country;
+    data['email'] = email;
+    data['photoUrl'] = photoUrl;
+    data['bio'] = bio;
+    data['signedUpAt'] = signedUpAt;
+    data['isOnline'] = isOnline;
+    data['isGuestArtist'] = isGuestArtist;
+    data['lastSeen'] = lastSeen;
+    data['id'] = id;
+    data['displayName'] = displayName;
+    data['phoneNumber'] = phoneNumber;
+    data['gender'] = gender;
+    data['website'] = website;
+    data['totalFollowers'] = totalFollowers;
+    data['totalFollowing'] = totalFollowing;
+    data['totalPosts'] = totalPosts;
+    data['totalFlashes'] = totalFlashes;
+    data['theme'] = theme;
+    data['language'] = language;
+    data['countryCode'] = countryCode;
+    data['postalAdress'] = postalAdress;
+    data['city'] = city;
+    data['userType'] = userType.name;
+    data['secretKey'] = secretKey;
     data['tatooStyles'] = tatooStyles!.map((style) => style.index).toList();
+    data['userType'] = UserType.TATOOARTIST.name;
 
     return data;
   }

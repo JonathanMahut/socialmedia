@@ -29,7 +29,7 @@ class AnnoucerService extends Service {
     String? country,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
-    var users = Anoucer.fromJson(doc.data() as Map<String, dynamic>);
+    var users = Annoucer.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;
     users.bio = bio;
     users.country = country;

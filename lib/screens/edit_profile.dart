@@ -190,17 +190,6 @@ class _EditProfileState extends State<EditProfile> {
               }).toList(),
             ),
             SizedBox(height: 10.0),
-            SwitchListTile(
-              tileColor: Colors.yellow[50],
-              activeColor: Colors.red,
-              title: const Text('I am a tatoo artist !'),
-              value: viewModel.isArtist ?? false,
-              onChanged: (bool? val) {
-                setState(() {
-                  viewModel.isArtist = val;
-                });
-              },
-            ),
           ],
         ),
       ),

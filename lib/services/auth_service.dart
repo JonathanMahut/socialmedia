@@ -42,7 +42,7 @@ class AuthService {
         countryCode,
         postalAdress,
         city,
-        userType as String ?? UserType.CLIENT as String,
+        userType ?? UserType.CLIENT as String,
       );
       return true;
     } else {
@@ -83,13 +83,6 @@ class AuthService {
       'userType': userType ?? UserType.CLIENT as String
     };
     print(userData);
-    // // Vérifier si tatooStyles n'est pas nul avant de l'ajouter aux données utilisateur
-    // if (tatooStyles != null) {
-    //   userData['tatooStyles'] =
-    //       tatooStyles.map((style) => style.index).toList();
-    // } else {
-    //   userData['tatooStyles'] = [];
-    // }
 
     await usersRef.doc(user.uid).set(userData);
   }

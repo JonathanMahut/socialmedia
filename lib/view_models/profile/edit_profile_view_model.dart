@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/constants.dart';
@@ -22,7 +23,6 @@ class EditProfileViewModel extends ChangeNotifier {
   File? image;
   String? imgLink;
   String? usergender;
-  bool? isArtist;
   List<TatooStyle>? tatooStyle;
 
   setUser(UserModel val) {
@@ -56,16 +56,6 @@ class EditProfileViewModel extends ChangeNotifier {
     print('SetGender$val');
     usergender = val;
     notifyListeners();
-  }
-
-  setIsArtist(bool val) {
-    print('SetIsArtist$val');
-    isArtist = val;
-    notifyListeners();
-  }
-
-  getIsArtist() {
-    return isArtist;
   }
 
   getGender() {
@@ -134,9 +124,7 @@ class EditProfileViewModel extends ChangeNotifier {
           username: username,
           bio: bio,
           country: country,
-          // gender: usergender.toString(),
-          // isArtist: isArtist,
-          // tatooStyles: tatooStyle ?? [],
+          userType: UserType.CLIENT,
         );
         print(success);
         if (success) {

@@ -28,7 +28,7 @@ class UserService extends Service {
     String? username,
     String? bio,
     String? country,
-    String? userType,
+    required UserType userType,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
@@ -39,7 +39,7 @@ class UserService extends Service {
     if (userType != null) {
       users.userType = userType;
     } else {
-      users.userType = UserType.CLIENT.name;
+      users.userType = UserType.CLIENT;
     }
 
     if (image != null) {
@@ -50,7 +50,7 @@ class UserService extends Service {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
-      "userType": users.userType ?? UserType.CLIENT.name,
+      "userType": users.userType ?? UserType.CLIENT,
     });
 
     return true;

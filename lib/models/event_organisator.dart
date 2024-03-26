@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class EventOrganisator extends UserModel {
   @override
@@ -20,8 +22,6 @@ class EventOrganisator extends UserModel {
   Timestamp? lastSeen;
   @override
   bool? isOnline;
-  @override
-  bool? isArtist;
   @override
   String? displayName;
   @override
@@ -46,6 +46,9 @@ class EventOrganisator extends UserModel {
   String? postalAdress;
   @override
   String? city;
+  @override
+  @EnumConverter()
+  UserType userType = UserType.EVENTORGANISATOR;
 
   String? secretKey;
 
@@ -57,7 +60,6 @@ class EventOrganisator extends UserModel {
     this.photoUrl,
     this.signedUpAt,
     this.isOnline,
-    this.isArtist,
     this.lastSeen,
     this.bio,
     this.country,
@@ -74,17 +76,18 @@ class EventOrganisator extends UserModel {
     this.postalAdress,
     this.city,
     this.secretKey,
-  });
+    //required this.userType,
+  }) : super(userType: UserType.EVENTORGANISATOR);
 
   @override
-  EventOrganisator.fromJson(Map<String, dynamic> json) {
+  EventOrganisator.fromJson(Map<String, dynamic> json)
+      : super(userType: UserType.EVENTORGANISATOR) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
     photoUrl = json['photoUrl'];
     signedUpAt = json['signedUpAt'];
     isOnline = json['isOnline'];
-    isArtist = json['isArtist'];
     lastSeen = json['lastSeen'];
     bio = json['bio'];
     id = json['id'];
@@ -101,6 +104,7 @@ class EventOrganisator extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
+    super.userType = json['userType'] as UserType? ?? UserType.EVENTORGANISATOR;
   }
 
   @override
@@ -128,6 +132,7 @@ class EventOrganisator extends UserModel {
     data['postalAdress'] = this.postalAdress;
     data['city'] = this.city;
     data['secretKey'] = this.secretKey;
+    data['userType'] = this.userType.name;
 
     return data;
   }
