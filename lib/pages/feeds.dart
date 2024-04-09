@@ -75,13 +75,13 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
             postRef.orderBy('timestamp', descending: true).limit(page).get(),
         child: SingleChildScrollView(
           // controller: scrollController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StoryWidget(),
-              Container(
+              const StoryWidget(),
+              SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: FutureBuilder(
                   future: postRef
@@ -109,7 +109,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
                         ConnectionState.waiting) {
                       return circularProgress(context);
                     } else
-                      return Center(
+                      return const Center(
                         child: Text(
                           'No Feeds',
                           style: TextStyle(

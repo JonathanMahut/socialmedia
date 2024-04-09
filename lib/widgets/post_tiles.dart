@@ -7,7 +7,7 @@ import 'package:social_media_app/widgets/cached_image.dart';
 class PostTile extends StatefulWidget {
   final PostModel? post;
 
-  PostTile({this.post});
+  const PostTile({super.key, this.post});
 
   @override
   _PostTileState createState() => _PostTileState();
@@ -31,7 +31,7 @@ class _PostTileState extends State<PostTile> {
           ),
           elevation: 5,
           child: ClipRRect(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(3.0),
             ),
             child: cachedNetworkImage(widget.post!.mediaUrl!),

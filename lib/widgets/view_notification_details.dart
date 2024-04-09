@@ -10,7 +10,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class ViewActivityDetails extends StatefulWidget {
   final ActivityModel? activity;
 
-  ViewActivityDetails({this.activity});
+  const ViewActivityDetails({super.key, this.activity});
 
   @override
   _ViewActivityDetailsState createState() => _ViewActivityDetailsState();
@@ -25,14 +25,14 @@ class _ViewActivityDetailsState extends State<ViewActivityDetails> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.keyboard_backspace),
+          child: const Icon(Icons.keyboard_backspace),
         ),
       ),
       body: ListView(
         children: [
           buildImage(context),
           ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
             leading: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -49,12 +49,12 @@ class _ViewActivityDetailsState extends State<ViewActivityDetails> {
             ),
             title: Text(
               widget.activity!.username!,
-              style: TextStyle(fontWeight: FontWeight.w800),
+              style: const TextStyle(fontWeight: FontWeight.w800),
             ),
             subtitle: Row(
               children: [
-                Icon(Ionicons.alarm_outline, size: 13.0),
-                SizedBox(width: 3.0),
+                const Icon(Ionicons.alarm_outline, size: 13.0),
+                const SizedBox(width: 3.0),
                 Text(
                   timeago.format(widget.activity!.timestamp!.toDate()),
                 ),
@@ -62,13 +62,13 @@ class _ViewActivityDetailsState extends State<ViewActivityDetails> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               widget.activity?.commentData ?? "",
-              style: TextStyle(fontWeight: FontWeight.w400),
+              style: const TextStyle(fontWeight: FontWeight.w400),
             ),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );
@@ -85,7 +85,7 @@ class _ViewActivityDetailsState extends State<ViewActivityDetails> {
             return circularProgress(context);
           },
           errorWidget: (context, url, error) {
-            return Icon(Icons.error);
+            return const Icon(Icons.error);
           },
           height: 400.0,
           fit: BoxFit.cover,

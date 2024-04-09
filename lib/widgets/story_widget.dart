@@ -8,7 +8,7 @@ import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class StoryWidget extends StatelessWidget {
-  const StoryWidget({Key? key}) : super(key: key);
+  const StoryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

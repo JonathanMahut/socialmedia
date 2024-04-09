@@ -3,11 +3,11 @@ import 'package:ionicons/ionicons.dart';
 
 AppBar header(context) {
   return AppBar(
-    title: Text('Tatoo Connect'),
+    title: const Text('Tatoo Connect'),
     centerTitle: true,
-    actions: [
+    actions: const [
       Padding(
-        padding: const EdgeInsets.only(right: 20.0),
+        padding: EdgeInsets.only(right: 20.0),
         child: Icon(Ionicons.notifications_outline),
       )
     ],

@@ -15,10 +15,9 @@ class StreamStoriesWrapper extends StatelessWidget {
   final bool? reverse;
   final ScrollPhysics physics;
   final EdgeInsets padding;
-  
 
   const StreamStoriesWrapper({
-    Key? key,
+    super.key,
     required this.stream,
     required this.itemBuilder,
     this.scrollDirection = Axis.vertical,
@@ -26,7 +25,7 @@ class StreamStoriesWrapper extends StatelessWidget {
     this.reverse,
     this.physics = const ClampingScrollPhysics(),
     this.padding = const EdgeInsets.only(bottom: 2.0, left: 2.0),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class StreamStoriesWrapper extends StatelessWidget {
         if (snapshot.hasData) {
           var list = snapshot.data!.docs.toList();
           return list.length == 0
-              ? SizedBox()
+              ? const SizedBox()
               : ListView.builder(
                   padding: padding,
                   scrollDirection: scrollDirection,
@@ -61,33 +60,33 @@ class StreamStoriesWrapper extends StatelessWidget {
 
   buildUploadButton() {
     return Padding(
-      padding: EdgeInsets.all(7.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.transparent,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                offset: new Offset(0.0, 0.0),
-                blurRadius: 2.0,
-                spreadRadius: 0.0,
-              ),
-            ],
+      padding: const EdgeInsets.all(7.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.transparent,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(0.5),
-            child: CircleAvatar(
-              radius: 25.0,
-              backgroundColor: Colors.grey[300],
-              child: Center(
-                child: Icon(Icons.add, color: Colors.blue),
-              ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              offset: const Offset(0.0, 0.0),
+              blurRadius: 2.0,
+              spreadRadius: 0.0,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(0.5),
+          child: CircleAvatar(
+            radius: 25.0,
+            backgroundColor: Colors.grey[300],
+            child: const Center(
+              child: Icon(Icons.add, color: Colors.blue),
             ),
           ),
+        ),
       ),
     );
   }
