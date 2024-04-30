@@ -22,7 +22,7 @@ class _PostTileState extends State<PostTile> {
           builder: (_) => ViewImage(post: widget.post),
         ));
       },
-      child: Container(
+      child: SizedBox(
         height: 100,
         width: 150,
         child: Card(

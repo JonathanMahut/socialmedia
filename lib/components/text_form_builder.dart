@@ -13,27 +13,28 @@ class TextFormBuilder extends StatefulWidget {
   final VoidCallback? submitAction;
   final FormFieldValidator<String>? validateFunction;
   final void Function(String)? onSaved, onChange;
-  final Key? key;
+
   final IconData? prefix;
   final IconData? suffix;
 
-  TextFormBuilder(
-      {this.prefix,
-      this.suffix,
-      this.initialValue,
-      this.enabled,
-      this.hintText,
-      this.textInputType,
-      this.controller,
-      this.textInputAction,
-      this.nextFocusNode,
-      this.focusNode,
-      this.submitAction,
-      this.obscureText = false,
-      this.validateFunction,
-      this.onSaved,
-      this.onChange,
-      this.key});
+  const TextFormBuilder({
+    super.key,
+    this.prefix,
+    this.suffix,
+    this.initialValue,
+    this.enabled,
+    this.hintText,
+    this.textInputType,
+    this.controller,
+    this.textInputAction,
+    this.nextFocusNode,
+    this.focusNode,
+    this.submitAction,
+    this.obscureText = false,
+    this.validateFunction,
+    this.onSaved,
+    this.onChange,
+  });
 
   @override
   _TextFormBuilderState createState() => _TextFormBuilderState();
@@ -71,7 +72,7 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
                     setState(() {});
                     widget.onSaved!(val);
                   },
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15.0,
                   ),
                   key: widget.key,
@@ -111,17 +112,18 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
                     hintStyle: TextStyle(
                       color: Colors.grey[400],
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 20.0),
                     border: border(context),
                     enabledBorder: border(context),
                     focusedBorder: focusBorder(context),
-                    errorStyle: TextStyle(height: 0.0, fontSize: 0.0),
+                    errorStyle: const TextStyle(height: 0.0, fontSize: 0.0),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 5.0),
+          const SizedBox(height: 5.0),
           Visibility(
             visible: error != null,
             child: Padding(
@@ -141,7 +143,7 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
   }
 
   border(BuildContext context) {
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(30.0),
       ),
@@ -154,7 +156,7 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
 
   focusBorder(BuildContext context) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.all(
+      borderRadius: const BorderRadius.all(
         Radius.circular(30.0),
       ),
       borderSide: BorderSide(

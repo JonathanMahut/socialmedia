@@ -7,8 +7,7 @@ class IconBadge extends StatefulWidget {
   final double? size;
   final Color? color;
 
-  IconBadge({Key? key, required this.icon, this.size, this.color})
-      : super(key: key);
+  const IconBadge({super.key, required this.icon, this.size, this.color});
 
   @override
   _IconBadgeState createState() => _IconBadgeState();
@@ -27,22 +26,22 @@ class _IconBadgeState extends State<IconBadge> {
         Icon(
           widget.icon,
           size: widget.size,
-          color: widget.color ?? null,
+          color: widget.color,
         ),
         Positioned(
           right: 0.0,
           child: Container(
-            padding: EdgeInsets.all(1),
+            padding: const EdgeInsets.all(1),
             decoration: BoxDecoration(
               color: Colors.red,
               borderRadius: BorderRadius.circular(6),
             ),
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 11,
               minHeight: 11,
             ),
             child:
-                Padding(padding: EdgeInsets.only(top: 1), child: buildCount()),
+                Padding(padding: const EdgeInsets.only(top: 1), child: buildCount()),
           ),
         ),
       ],
@@ -70,7 +69,7 @@ class _IconBadgeState extends State<IconBadge> {
   buildTextWidget(String counter) {
     return Text(
       counter,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
         fontSize: 9,
       ),

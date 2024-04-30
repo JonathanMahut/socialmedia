@@ -12,6 +12,8 @@ import 'package:social_media_app/view_models/status/status_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class ConfirmStatus extends StatefulWidget {
+  const ConfirmStatus({super.key});
+
   @override
   State<ConfirmStatus> createState() => _ConfirmStatusState();
 }
@@ -36,7 +38,7 @@ class _ConfirmStatusState extends State<ConfirmStatus> {
       bottomNavigationBar: BottomAppBar(
         elevation: 10.0,
         child: Container(
-          constraints: BoxConstraints(maxHeight: 100.0),
+          constraints: const BoxConstraints(maxHeight: 100.0),
           child: Flexible(
             child: TextFormField(
               style: TextStyle(
@@ -44,7 +46,7 @@ class _ConfirmStatusState extends State<ConfirmStatus> {
                 color: Theme.of(context).textTheme.titleLarge!.color,
               ),
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.0),
+                contentPadding: const EdgeInsets.all(10.0),
                 enabledBorder: InputBorder.none,
                 border: InputBorder.none,
                 hintText: "Type your caption",

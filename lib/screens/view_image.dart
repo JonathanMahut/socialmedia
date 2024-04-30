@@ -12,7 +12,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class ViewImage extends StatefulWidget {
   final PostModel? post;
 
-  ViewImage({this.post});
+  const ViewImage({super.key, this.post});
 
   @override
   _ViewImageState createState() => _ViewImageState();
@@ -39,7 +39,7 @@ class _ViewImageState extends State<ViewImage> {
         color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Container(
+          child: SizedBox(
             height: 50.0,
             width: MediaQuery.of(context).size.width,
             child: Row(
@@ -50,13 +50,13 @@ class _ViewImageState extends State<ViewImage> {
                   children: [
                     Text(
                       widget.post!.username!,
-                      style: TextStyle(fontWeight: FontWeight.w800),
+                      style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
-                    SizedBox(height: 3.0),
+                    const SizedBox(height: 3.0),
                     Row(
                       children: [
-                        Icon(Ionicons.alarm_outline, size: 13.0),
-                        SizedBox(width: 3.0),
+                        const Icon(Ionicons.alarm_outline, size: 13.0),
+                        const SizedBox(width: 3.0),
                         Text(
                           timeago.format(widget.post!.timestamp!.toDate()),
                         ),
@@ -64,7 +64,7 @@ class _ViewImageState extends State<ViewImage> {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 buildLikeButton(),
               ],
             ),
@@ -85,7 +85,7 @@ class _ViewImageState extends State<ViewImage> {
             return circularProgress(context);
           },
           errorWidget: (context, url, error) {
-            return Icon(Icons.error);
+            return const Icon(Icons.error);
           },
           height: 400.0,
           fit: BoxFit.cover,
@@ -187,8 +187,8 @@ class _ViewImageState extends State<ViewImage> {
             onTap: onLikeButtonTapped,
             size: 25.0,
             circleColor:
-                CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
-            bubblesColor: BubblesColor(
+                const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            bubblesColor: const BubblesColor(
               dotPrimaryColor: Color(0xffFFA500),
               dotSecondaryColor: Color(0xffd8392b),
               dotThirdColor: Color(0xffFF69B4),

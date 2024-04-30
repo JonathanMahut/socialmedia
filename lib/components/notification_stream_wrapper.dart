@@ -16,14 +16,14 @@ class ActivityStreamWrapper extends StatelessWidget {
   final EdgeInsets padding;
 
   const ActivityStreamWrapper({
-    Key? key,
+    super.key,
     required this.stream,
     required this.itemBuilder,
     this.scrollDirection = Axis.vertical,
     this.shrinkWrap = false,
     this.physics = const ClampingScrollPhysics(),
     this.padding = const EdgeInsets.only(bottom: 2.0, left: 2.0),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class ActivityStreamWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var list = snapshot.data!.docs.toList();
-          return list.length == 0
+          return list.isEmpty
               ? Container(
-                  child: Center(
+                  child: const Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 250.0),
+                      padding: EdgeInsets.only(top: 250.0),
                       child: Text('No Recent Activities'),
                     ),
                   ),
@@ -45,7 +45,7 @@ class ActivityStreamWrapper extends StatelessWidget {
                   separatorBuilder: (BuildContext context, int index) {
                     return Align(
                       alignment: Alignment.centerRight,
-                      child: Container(
+                      child: SizedBox(
                         height: 0.5,
                         width: MediaQuery.of(context).size.width / 1.3,
                         child: const Divider(),

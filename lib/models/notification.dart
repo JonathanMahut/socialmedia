@@ -23,15 +23,15 @@ class ActivityModel {
     timestamp = json['timestamp'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['username'] = this.username;
-    data['userId'] = this.userId;
-    data['userDp'] = this.userDp;
-    data['postId'] = this.postId;
-    data['mediaUrl'] = this.mediaUrl;
-    data['commentData'] = this.commentData;
-    data['timestamp'] = this.timestamp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type;
+    data['username'] = username;
+    data['userId'] = userId;
+    data['userDp'] = userDp;
+    data['postId'] = postId;
+    data['mediaUrl'] = mediaUrl;
+    data['commentData'] = commentData;
+    data['timestamp'] = timestamp;
     return data;
   }
 }

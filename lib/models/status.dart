@@ -36,21 +36,21 @@ class StatusModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['caption'] = this.caption;
-    data['statusId'] = this.statusId;
-    data['viewers'] = this.viewers;
-    data['url'] = this.url;
-    if (this.type == MessageType.TEXT) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['caption'] = caption;
+    data['statusId'] = statusId;
+    data['viewers'] = viewers;
+    data['url'] = url;
+    if (type == MessageType.TEXT) {
       data['type'] = 'text';
-    } else if (this.type == MessageType.VIDEO) {
+    } else if (type == MessageType.VIDEO) {
       data['type'] = 'image';
-    } else if (this.type == MessageType.VIDEO) {
+    } else if (type == MessageType.VIDEO) {
       data['type'] = 'video';
-    } else if (this.type == MessageType.AUDIO) {
+    } else if (type == MessageType.AUDIO) {
       data['type'] = 'audio';
     }
-    data['time'] = this.time;
+    data['time'] = time;
     return data;
   }
 }

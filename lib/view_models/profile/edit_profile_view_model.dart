@@ -23,6 +23,8 @@ class EditProfileViewModel extends ChangeNotifier {
   File? image;
   String? imgLink;
   String? usergender;
+  String? usertype;
+
   List<TatooStyle>? tatooStyle;
 
   setUser(UserModel val) {
@@ -62,14 +64,28 @@ class EditProfileViewModel extends ChangeNotifier {
     return usergender;
   }
 
-  setTatooStyle(List<TatooStyle> val) {
-    print('SetTatooStyle$val');
-    tatooStyle = val;
+  setUserType(String val) {
+    print('SetUserType$val');
+    usertype = val;
     notifyListeners();
+  }
+
+  getUserType() {
+    if (usertype == null || usertype == '') {
+      return UserType.CLIENT.name;
+    } else {
+      return UserType;
+    }
   }
 
   getTatooStyle() {
     return tatooStyle;
+  }
+
+  setTatooStyle(List<TatooStyle> val) {
+    print('SetTatooStyle$val');
+    tatooStyle = val;
+    notifyListeners();
   }
 
   getCountry() {
@@ -124,7 +140,7 @@ class EditProfileViewModel extends ChangeNotifier {
           username: username,
           bio: bio,
           country: country,
-          userType: UserType.CLIENT,
+          userType: getUserType(),
         );
         print(success);
         if (success) {

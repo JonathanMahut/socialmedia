@@ -11,8 +11,7 @@ class ListPosts extends StatefulWidget {
 
   final username;
 
-  const ListPosts({Key? key, required this.userId, required this.username})
-      : super(key: key);
+  const ListPosts({super.key, required this.userId, required this.username});
 
   @override
   State<ListPosts> createState() => _ListPostsState();
@@ -25,19 +24,19 @@ class _ListPostsState extends State<ListPosts> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () => Navigator.pop(context),
-          child: Icon(Ionicons.chevron_back),
+          child: const Icon(Ionicons.chevron_back),
         ),
         title: Column(
           children: [
             Text(
               widget.username.toUpperCase(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w600,
                 color: Colors.grey,
               ),
             ),
-            Text(
+            const Text(
               'Posts',
               style: TextStyle(
                 fontSize: 18.0,
@@ -47,7 +46,7 @@ class _ListPostsState extends State<ListPosts> {
           ],
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
@@ -73,7 +72,7 @@ class _ListPostsState extends State<ListPosts> {
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return circularProgress(context);
             } else
-              return Center(
+              return const Center(
                 child: Text(
                   'No Feeds',
                   style: TextStyle(

@@ -11,6 +11,8 @@ import 'package:social_media_app/widgets/story_widget.dart';
 import 'package:social_media_app/widgets/userpost.dart';
 
 class Feeds extends StatefulWidget {
+  const Feeds({super.key});
+
   @override
   _FeedsState createState() => _FeedsState();
 }
@@ -46,14 +48,14 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
         automaticallyImplyLeading: false,
         title: Text(
           Constants.appName,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w900,
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Ionicons.chatbubble_ellipses,
               size: 30.0,
             ),
@@ -61,12 +63,12 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (_) => Chats(),
+                  builder: (_) => const Chats(),
                 ),
               );
             },
           ),
-          SizedBox(width: 20.0),
+          const SizedBox(width: 20.0),
         ],
       ),
       body: RefreshIndicator(

@@ -9,7 +9,7 @@ import 'package:social_media_app/utils/firebase.dart';
 import 'package:uuid/uuid.dart';
 
 class FlashService extends Service {
-  String flashId = Uuid().v4();
+  String flashId = const Uuid().v4();
 
 //uploads profile picture to the users collection
   uploadProfilePicture(File image, User user) async {

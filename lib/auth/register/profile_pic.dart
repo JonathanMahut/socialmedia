@@ -7,6 +7,8 @@ import 'package:social_media_app/view_models/auth/posts_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class ProfilePicture extends StatefulWidget {
+  const ProfilePicture({super.key});
+
   @override
   _ProfilePictureState createState() => _ProfilePictureState();
 }
@@ -27,12 +29,12 @@ class _ProfilePictureState extends State<ProfilePicture> {
         child: Scaffold(
           key: viewModel.scaffoldKey,
           appBar: AppBar(
-            title: Text('Add a profile picture'),
+            title: const Text('Add a profile picture'),
             centerTitle: true,
             automaticallyImplyLeading: false,
           ),
           body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             children: [
               InkWell(
                 onTap: () => showImageChoices(context, viewModel),
@@ -41,7 +43,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   height: MediaQuery.of(context).size.width - 30,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(3.0),
                     ),
                     border: Border.all(
@@ -73,7 +75,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                             ),
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Center(
                 child: ElevatedButton(
                   style: ButtonStyle(
@@ -113,28 +115,28 @@ class _ProfilePictureState extends State<ProfilePicture> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   'Select from'.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Ionicons.camera_outline),
-                title: Text('Camera'),
+                leading: const Icon(Ionicons.camera_outline),
+                title: const Text('Camera'),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage(camera: true);
                 },
               ),
               ListTile(
-                leading: Icon(Ionicons.image),
-                title: Text('Gallery'),
+                leading: const Icon(Ionicons.image),
+                title: const Text('Gallery'),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage();

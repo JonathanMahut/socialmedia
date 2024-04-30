@@ -54,7 +54,7 @@ class _LandingState extends State<Landing> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
-                      builder: (_) => Login(),
+                      builder: (_) => const Login(),
                     ),
                   );
                 },
@@ -69,7 +69,7 @@ class _LandingState extends State<Landing> {
                       end: Alignment.bottomLeft,
                       colors: [
                         Theme.of(context).colorScheme.secondary,
-                        Color(0xff597FDB),
+                        const Color(0xff597FDB),
                       ],
                     ),
                   ),
@@ -88,7 +88,7 @@ class _LandingState extends State<Landing> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
-                      builder: (_) => Register(), //
+                      builder: (_) => const Register(), //
                     ),
                   );
                 },
@@ -103,7 +103,7 @@ class _LandingState extends State<Landing> {
                       end: Alignment.bottomLeft,
                       colors: [
                         Theme.of(context).colorScheme.secondary,
-                        Color(0xff597FDB),
+                        const Color(0xff597FDB),
                       ],
                     ),
                   ),

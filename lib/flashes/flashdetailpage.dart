@@ -18,7 +18,7 @@ class FlashDetailsPage extends StatefulWidget {
   final String ownerPhone;
 
   const FlashDetailsPage({
-    Key? key,
+    super.key,
     required this.id,
     required this.postId,
     required this.description,
@@ -31,7 +31,7 @@ class FlashDetailsPage extends StatefulWidget {
     required this.ownerEmail,
     required this.ownerPhone,
     required this.mediaUrl,
-  }) : super(key: key);
+  });
 
   @override
   _FlashFlashDetailsPageState createState() => _FlashFlashDetailsPageState();
@@ -216,7 +216,7 @@ class _FlashFlashDetailsPageState extends State<FlashDetailsPage> {
                       Container(
                         margin: const EdgeInsets.all(0.0),
                         child: Text(
-                          widget.description + ", " + widget.username,
+                          "${widget.description}, ${widget.username}",
                           style: const TextStyle(
                             color: Colors.black87,
                             fontSize: 24.0,
@@ -229,11 +229,7 @@ class _FlashFlashDetailsPageState extends State<FlashDetailsPage> {
                       Container(
                         margin: const EdgeInsets.all(0.0),
                         child: Text(
-                          widget.city +
-                              " " +
-                              widget.location +
-                              " ," +
-                              widget.city,
+                          "${widget.city} ${widget.location} ,${widget.city}",
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14.0,

@@ -36,12 +36,8 @@ class UserService extends Service {
     users.bio = bio;
     users.country = country;
     // UserType Value
-    if (userType != null) {
-      users.userType = userType;
-    } else {
-      users.userType = UserType.CLIENT;
-    }
-
+    users.userType = userType;
+  
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }

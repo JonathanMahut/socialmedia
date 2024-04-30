@@ -10,6 +10,8 @@ import 'package:social_media_app/view_models/auth/register_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class Register extends StatefulWidget {
+  const Register({super.key});
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -24,7 +26,7 @@ class _RegisterState extends State<Register> {
       child: Scaffold(
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Text(
@@ -34,13 +36,13 @@ class _RegisterState extends State<Register> {
                 fontSize: 25.0,
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             buildForm(viewModel, context),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Already have an account  ',
                 ),
                 GestureDetector(
@@ -79,7 +81,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.usernameFN,
             nextFocusNode: viewModel.emailFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.mail_outline,
@@ -92,7 +94,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.emailFN,
             nextFocusNode: viewModel.countryFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.pin_outline,
@@ -105,7 +107,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.countryFN,
             nextFocusNode: viewModel.passFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_closed_outline,
@@ -120,7 +122,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.passFN,
             nextFocusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_open_outline,
@@ -168,8 +170,8 @@ class _RegisterState extends State<Register> {
           //     });
           //   },
           // ),
-          SizedBox(height: 25.0),
-          Container(
+          const SizedBox(height: 25.0),
+          SizedBox(
             height: 45.0,
             width: 180.0,
             child: ElevatedButton(
@@ -184,7 +186,7 @@ class _RegisterState extends State<Register> {
               ),
               child: Text(
                 'sign up'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w600,

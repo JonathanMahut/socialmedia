@@ -12,7 +12,7 @@ class ChatBubbleWidget extends StatefulWidget {
   final Timestamp? time;
   final bool? isMe;
 
-  ChatBubbleWidget({
+  const ChatBubbleWidget({super.key, 
     @required this.message,
     @required this.time,
     @required this.isMe,
@@ -54,7 +54,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
             bottomLeft: Radius.circular(5.0),
             bottomRight: Radius.circular(10.0),
           )
-        : BorderRadius.only(
+        : const BorderRadius.only(
             topRight: Radius.circular(5.0),
             bottomLeft: Radius.circular(10.0),
             bottomRight: Radius.circular(5.0),
@@ -103,11 +103,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
         ),
         Padding(
           padding: widget.isMe!
-              ? EdgeInsets.only(
+              ? const EdgeInsets.only(
                   right: 10.0,
                   bottom: 10.0,
                 )
-              : EdgeInsets.only(
+              : const EdgeInsets.only(
                   left: 10.0,
                   bottom: 10.0,
                 ),

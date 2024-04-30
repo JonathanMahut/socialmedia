@@ -9,7 +9,7 @@ import 'package:social_media_app/utils/firebase.dart';
 import 'package:uuid/uuid.dart';
 
 class PostService extends Service {
-  String postId = Uuid().v4();
+  String postId = const Uuid().v4();
 
 //uploads profile picture to the users collection
   uploadProfilePicture(File image, User user) async {

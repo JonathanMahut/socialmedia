@@ -34,7 +34,7 @@ class StreamStoriesWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var list = snapshot.data!.docs.toList();
-          return list.length == 0
+          return list.isEmpty
               ? const SizedBox()
               : ListView.builder(
                   padding: padding,

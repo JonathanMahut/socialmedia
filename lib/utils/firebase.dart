@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
-final Uuid uuid = Uuid();
+const Uuid uuid = Uuid();
 
 // Collection refs
 CollectionReference usersRef = firestore.collection('users');

@@ -32,13 +32,13 @@ class LoginViewModel extends ChangeNotifier {
         print(success);
         if (success) {
           Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(builder: (_) => TabScreen()));
+              CupertinoPageRoute(builder: (_) => const TabScreen()));
         }
       } catch (e) {
         loading = false;
         notifyListeners();
         print(e);
-        showInSnackBar('${auth.handleFirebaseAuthError(e.toString())}',context);
+        showInSnackBar(auth.handleFirebaseAuthError(e.toString()),context);
       }
       loading = false;
       notifyListeners();
@@ -59,7 +59,7 @@ class LoginViewModel extends ChangeNotifier {
         showInSnackBar('Please check your email for instructions '
             'to reset your password', context);
       } catch (e) {
-        showInSnackBar('${e.toString()}', context);
+        showInSnackBar(e.toString(), context);
       }
     }
     loading = false;

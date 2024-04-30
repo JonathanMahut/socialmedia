@@ -15,12 +15,12 @@ class StatusScreen extends StatefulWidget {
   final userId;
 
   const StatusScreen({
-    Key? key,
+    super.key,
     required this.initPage,
     required this.storyId,
     required this.statusId,
     required this.userId,
-  }) : super(key: key);
+  });
 
   @override
   State<StatusScreen> createState() => _StatusScreenState();
@@ -43,7 +43,7 @@ class _StatusScreenState extends State<StatusScreen> {
                 ? circularProgress(context)
                 : StoryPageView(
                     indicatorPadding:
-                        EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
+                        const EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
                     indicatorHeight: 15.0,
                     initialPage: 0,
                     onPageLimitReached: () {
@@ -51,7 +51,7 @@ class _StatusScreenState extends State<StatusScreen> {
                     },
                     indicatorVisitedColor:
                         Theme.of(context).colorScheme.secondary,
-                    indicatorDuration: Duration(seconds: 30),
+                    indicatorDuration: const Duration(seconds: 30),
                     itemBuilder: (context, pageIndex, storyIndex) {
                       StatusModel stats = StatusModel.fromJson(
                         status.toList()[storyIndex].data(),
@@ -70,13 +70,13 @@ class _StatusScreenState extends State<StatusScreen> {
                             .doc(stats.statusId)
                             .update({'viewers': allViewers});
                       }
-                      return Container(
+                      return SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         child: Stack(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 50.0),
+                              padding: const EdgeInsets.symmetric(vertical: 50.0),
                               child: getImage(stats.url!),
                             ),
                             Positioned(
@@ -109,7 +109,7 @@ class _StatusScreenState extends State<StatusScreen> {
                                                 BoxShadow(
                                                   color: Colors.grey
                                                       .withOpacity(0.3),
-                                                  offset: new Offset(0.0, 0.0),
+                                                  offset: const Offset(0.0, 0.0),
                                                   blurRadius: 2.0,
                                                   spreadRadius: 0.0,
                                                 ),
@@ -133,14 +133,14 @@ class _StatusScreenState extends State<StatusScreen> {
                                             children: [
                                               Text(
                                                 user.username!,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
-                                                "${timeago.format(stats.time!.toDate())}",
-                                                style: TextStyle(
+                                                timeago.format(stats.time!.toDate()),
+                                                style: const TextStyle(
                                                   fontSize: 12.0,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.grey,
@@ -170,7 +170,7 @@ class _StatusScreenState extends State<StatusScreen> {
                                     color: Colors.grey.withOpacity(0.2),
                                     width: MediaQuery.of(context).size.width,
                                     constraints:
-                                        BoxConstraints(maxHeight: 50.0),
+                                        const BoxConstraints(maxHeight: 50.0),
                                     child: Center(
                                       child: Column(
                                         mainAxisAlignment:

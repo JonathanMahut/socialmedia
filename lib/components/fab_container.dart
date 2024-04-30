@@ -10,7 +10,7 @@ class FabContainer extends StatelessWidget {
   final IconData icon;
   final bool mini;
 
-  FabContainer({this.page, required this.icon, this.mini = false});
+  const FabContainer({super.key, this.page, required this.icon, this.mini = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,14 @@ class FabContainer extends StatelessWidget {
       closedBuilder: (BuildContext context, VoidCallback openContainer) {
         return FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
           onPressed: () {
             chooseUpload(context, viewModel);
           },
           mini: mini,
+          child: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
         );
       },
     );
@@ -55,7 +55,7 @@ class FabContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Center(
@@ -69,28 +69,28 @@ class FabContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   CupertinoIcons.camera_on_rectangle,
                   size: 25.0,
                 ),
-                title: Text('Make a post'),
+                title: const Text('Make a post'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                      builder: (_) => CreatePost(),
+                      builder: (_) => const CreatePost(),
                     ),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   CupertinoIcons.camera_on_rectangle,
                   size: 25.0,
                 ),
-                title: Text('Add to story'),
+                title: const Text('Add to story'),
                 onTap: () async {
                   // Navigator.pop(context);
                   await viewModel.pickImage(context: context);

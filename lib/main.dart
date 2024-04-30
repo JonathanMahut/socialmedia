@@ -16,10 +16,15 @@ import 'package:social_media_app/view_models/theme/theme_view_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MyApp());
+  // FirebaseAppCheck.instance // Only needed if you use App checks
+  //     .installAppCheckProviderFactory(AppCheckProviderFactory(
+  //         provider: SafetyNetAppCheckProviderFactory()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -64,9 +69,10 @@ class _MyAppState extends State<MyApp> {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: ((BuildContext context, snapshot) {
                 if (snapshot.hasData) {
-                  return TabScreen();
-                } else
-                  return Landing();
+                  return const TabScreen();
+                } else {
+                  return const Landing();
+                }
               }),
             ),
           );

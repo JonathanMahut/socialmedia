@@ -21,12 +21,12 @@ class StatusService {
   sendStatus(StatusModel status, String chatId) async {
     //will send message to chats collection with the usersId
     await statusRef
-        .doc("$chatId")
+        .doc(chatId)
         .collection("statuses")
         .doc(status.statusId)
         .set(status.toJson());
     //will update "lastTextTime" to the last time a text was sent
-    await statusRef.doc("$chatId").update({
+    await statusRef.doc(chatId).update({
       "userId": firebaseAuth.currentUser!.uid,
     });
   }
@@ -34,9 +34,9 @@ class StatusService {
   Future<String> sendFirstStatus(StatusModel status) async {
     List<String> ids = [];
     await usersRef.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot documentSnapshot) {
+      for (var documentSnapshot in snapshot.docs) {
         ids.add(documentSnapshot.get('id'));
-      });
+      }
     });
     User? user = firebaseAuth.currentUser;
     DocumentReference ref = await statusRef.add({

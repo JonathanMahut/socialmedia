@@ -4,16 +4,18 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/text_form_builder.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/profile/edit_profile_view_model.dart';
+import 'package:social_media_app/widgets/genredropdownwidget.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel? user;
 
-  const EditProfile({this.user});
+  const EditProfile({super.key, this.user});
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -38,7 +40,7 @@ class _EditProfileState extends State<EditProfile> {
         key: viewModel.scaffoldKey,
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Edit Profile"),
+          title: const Text("Edit Profile"),
           actions: [
             Center(
               child: Padding(
@@ -73,7 +75,7 @@ class _EditProfileState extends State<EditProfile> {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.3),
-                        offset: new Offset(0.0, 0.0),
+                        offset: const Offset(0.0, 0.0),
                         blurRadius: 2.0,
                         spreadRadius: 0.0,
                       ),
@@ -106,7 +108,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             buildForm(viewModel, context)
           ],
         ),
@@ -115,6 +117,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   buildForm(EditProfileViewModel viewModel, BuildContext context) {
+    GenderType selectedGenre = GenderType.UNKNOWN;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -135,7 +138,7 @@ class _EditProfileState extends State<EditProfile> {
                 viewModel.setUsername(val);
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextFormBuilder(
               initialValue: widget.user!.country,
               enabled: !viewModel.loading,
@@ -147,8 +150,8 @@ class _EditProfileState extends State<EditProfile> {
                 viewModel.setCountry(val);
               },
             ),
-            SizedBox(height: 10.0),
-            Text(
+            const SizedBox(height: 10.0),
+            const Text(
               "Bio",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -169,27 +172,51 @@ class _EditProfileState extends State<EditProfile> {
                 viewModel.setBio(val);
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
+            // DropdownButton<String>(
+            //   // Not necessary for Option 1
+            //   // value: widget.user!.gender,
+            //   hint: const Text('Choose your gender'),
+            //   // value: (GenderType.OTHER).name,
+            //   value: viewModel.getGender(),
+            //   onChanged: (String? val) {
+            //     setState(() {
+            //       viewModel.setGender(val!);
+            //     });
+            //   },
+            //   // value: viewModel.getGender(),
+            //   items: GenderType.values.map((gender) {
+            //     return DropdownMenuItem(
+            //       value: gender.name,
+            //       child: Text((gender.name).toString()),
+            //     );
+            //   }).toList(),
+            // ),
+            GenreDDWidget(
+              initial: selectedGenre,
+              onItemChange: (GenderType g) => selectedGenre = g,
+            ),
+            const SizedBox(height: 10.0),
             DropdownButton<String>(
               // Not necessary for Option 1
               // value: widget.user!.gender,
-              hint: Text('Choose your gender'),
+              hint: const Text('Who are you ?'),
               // value: (GenderType.OTHER).name,
-              value: viewModel.getGender(),
+              value: viewModel.getUserType().toString(),
               onChanged: (String? val) {
                 setState(() {
-                  viewModel.setGender(val!);
+                  viewModel.setUserType(val!);
+                  print(viewModel.getUserType().toString());
                 });
               },
-              // value: viewModel.getGender(),
-              items: GenderType.values.map((gender) {
+              items: UserType.values.map((userType) {
                 return DropdownMenuItem(
-                  child: Text((gender.name).toString()),
-                  value: gender.name,
+                  value: userType.name,
+                  child: Text((userType.name).toString()),
                 );
               }).toList(),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),

@@ -11,11 +11,13 @@ import 'package:social_media_app/utils/firebase.dart';
 
 class TatooArtistService extends UserService {
   //get the authenticated uis
+  @override
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
   }
 
   //tells when the user is online or not and updates the last seen for the messages
+  @override
   setUserStatus(bool isOnline) {
     var user = firebaseAuth.currentUser;
     if (user != null) {
@@ -26,6 +28,7 @@ class TatooArtistService extends UserService {
   }
 
   //updates user profile in the Edit Profile Screen
+  @override
   updateProfile({
     File? image,
     String? username,
@@ -42,12 +45,8 @@ class TatooArtistService extends UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    if (userType != null) {
-      users.userType = userType;
-    } else {
-      users.userType = UserType.TATOOARTIST;
-    }
-
+    users.userType = userType;
+  
     if (gender != null) {
       users.gender = gender;
     } else {
@@ -67,9 +66,7 @@ class TatooArtistService extends UserService {
       // "isArtist": users.isArtist ?? false,
       "gender": users.gender ?? GenderType.OTHER as String,
       // Sérialisation des styles de tatouage
-      "tatooStyles": users.tatooStyles != null
-          ? users.tatooStyles!.map((style) => style.index).toList()
-          : null,
+      "tatooStyles": users.tatooStyles?.map((style) => style.index).toList(),
     });
 
     return true;

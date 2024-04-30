@@ -10,6 +10,8 @@ import 'package:social_media_app/pages/search.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
 class TabScreen extends StatefulWidget {
+  const TabScreen({super.key});
+
   @override
   _TabScreenState createState() => _TabScreenState();
 }
@@ -23,25 +25,25 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'Home',
       'icon': Ionicons.home,
-      'page': Feeds(),
+      'page': const Feeds(),
       'index': 0,
     },
     {
       'title': 'Search',
       'icon': Ionicons.search,
-      'page': Search(),
+      'page': const Search(),
       'index': 1,
     },
     {
       'title': 'unsee',
       'icon': Ionicons.add_circle,
-      'page': Text('nes'),
+      'page': const Text('nes'),
       'index': 2,
     },
     {
       'title': 'Notification',
       'icon': CupertinoIcons.bell_solid,
-      'page': Activities(),
+      'page': const Activities(),
       'index': 3,
     },
     {
@@ -50,6 +52,7 @@ class _TabScreenState extends State<TabScreen> {
       'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 4,
     },
+    {}
     // {
     //   'title': 'flashes',
     //   'icon': Ionicons.flash,
@@ -81,7 +84,7 @@ class _TabScreenState extends State<TabScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             for (Map item in pages)
               item['index'] == 2
                   ? buildFab()
@@ -100,7 +103,7 @@ class _TabScreenState extends State<TabScreen> {
                         onPressed: () => navigationTapped(item['index']),
                       ),
                     ),
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
           ],
         ),
       ),
@@ -110,7 +113,7 @@ class _TabScreenState extends State<TabScreen> {
   buildFab() {
     // if (isArtist == true) {
     // pageTitle = "unsee";
-    return Container(
+    return const SizedBox(
       height: 45.0,
       width: 45.0,
       // ignore: missing_required_param

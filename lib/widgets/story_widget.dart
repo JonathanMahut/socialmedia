@@ -12,12 +12,12 @@ class StoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100.0,
       child: Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: StreamBuilder<QuerySnapshot>(
-          stream: userChatsStream('${firebaseAuth.currentUser!.uid}'),
+          stream: userChatsStream(firebaseAuth.currentUser!.uid),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List chatList = snapshot.data!.docs;
@@ -26,7 +26,7 @@ class StoryWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   itemCount: chatList.length,
                   scrollDirection: Axis.horizontal,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     DocumentSnapshot statusListSnapshot = chatList[index];
                     return StreamBuilder<QuerySnapshot>(
@@ -40,7 +40,7 @@ class StoryWidget extends StatelessWidget {
                           List users = statusListSnapshot.get('whoCanSee');
                           // remove the current user's id from the Users
                           // list so we can get the rest of the user's id
-                          users.remove('${firebaseAuth.currentUser!.uid}');
+                          users.remove(firebaseAuth.currentUser!.uid);
                           return _buildStatusAvatar(
                               statusListSnapshot.get('userId'),
                               statusListSnapshot.id,
@@ -54,7 +54,7 @@ class StoryWidget extends StatelessWidget {
                   },
                 );
               } else {
-                return Center(
+                return const Center(
                   child: Text(
                     'No Status',
                   ),
@@ -76,7 +76,7 @@ class StoryWidget extends StatelessWidget {
     int index,
   ) {
     return StreamBuilder(
-      stream: usersRef.doc('$userId').snapshots(),
+      stream: usersRef.doc(userId).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot documentSnapshot =
@@ -111,7 +111,7 @@ class StoryWidget extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.3),
-                          offset: new Offset(0.0, 0.0),
+                          offset: const Offset(0.0, 0.0),
                           blurRadius: 2.0,
                           spreadRadius: 0.0,
                         ),
@@ -131,7 +131,7 @@ class StoryWidget extends StatelessWidget {
                 ),
                 Text(
                   user.username!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -147,7 +147,7 @@ class StoryWidget extends StatelessWidget {
   }
 
   Stream<QuerySnapshot> userChatsStream(String uid) {
-    return statusRef.where('whoCanSee', arrayContains: '$uid').snapshots();
+    return statusRef.where('whoCanSee', arrayContains: uid).snapshots();
   }
 
   Stream<QuerySnapshot> messageListStream(String documentId) {

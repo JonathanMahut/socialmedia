@@ -116,8 +116,9 @@ class TatooArtist extends UserModel {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['username'] = username;
     data['country'] = country;
     data['email'] = email;

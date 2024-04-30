@@ -8,6 +8,8 @@ import 'package:social_media_app/view_models/user/user_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class Chats extends StatelessWidget {
+  const Chats({super.key});
+
   @override
   Widget build(BuildContext context) {
     UserViewModel viewModel =
@@ -19,12 +21,12 @@ class Chats extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.keyboard_backspace),
+          child: const Icon(Icons.keyboard_backspace),
         ),
-        title: Text("Chats"),
+        title: const Text("Chats"),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: userChatsStream('${viewModel.user!.uid}'),
+        stream: userChatsStream(viewModel.user!.uid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List chatList = snapshot.data!.docs;
@@ -44,7 +46,7 @@ class Chats extends StatelessWidget {
                         List users = chatListSnapshot.get('users');
                         // remove the current user's id from the Users
                         // list so we can get the second user's id
-                        users.remove('${viewModel.user!.uid}');
+                        users.remove(viewModel.user!.uid);
                         String recipient = users[0];
                         return ChatItem(
                           userId: recipient,
@@ -56,7 +58,7 @@ class Chats extends StatelessWidget {
                           currentUserId: viewModel.user!.uid,
                         );
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     },
                   );
@@ -64,16 +66,16 @@ class Chats extends StatelessWidget {
                 separatorBuilder: (BuildContext context, int index) {
                   return Align(
                     alignment: Alignment.centerRight,
-                    child: Container(
+                    child: SizedBox(
                       height: 0.5,
                       width: MediaQuery.of(context).size.width / 1.3,
-                      child: Divider(),
+                      child: const Divider(),
                     ),
                   );
                 },
               );
             } else {
-              return Center(child: Text('No Chats'));
+              return const Center(child: Text('No Chats'));
             }
           } else {
             return Center(child: circularProgress(context));
@@ -85,7 +87,7 @@ class Chats extends StatelessWidget {
 
   Stream<QuerySnapshot> userChatsStream(String uid) {
     return chatRef
-        .where('users', arrayContains: '$uid')
+        .where('users', arrayContains: uid)
         .orderBy('lastTextTime', descending: true)
         .snapshots();
   }

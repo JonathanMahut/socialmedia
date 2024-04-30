@@ -78,7 +78,7 @@ class StatusViewModel extends ChangeNotifier {
       loading = false;
       Navigator.of(context!).push(
         CupertinoPageRoute(
-          builder: (_) => ConfirmStatus(),
+          builder: (_) => const ConfirmStatus(),
         ),
       );
       notifyListeners();

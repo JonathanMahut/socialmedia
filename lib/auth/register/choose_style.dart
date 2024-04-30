@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 
 class TatooSelectionPage extends StatefulWidget {
+  const TatooSelectionPage({super.key});
+
   @override
   _TatooSelectionPageState createState() => _TatooSelectionPageState();
 }
@@ -13,7 +15,7 @@ class _TatooSelectionPageState extends State<TatooSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Tatoo Styles'),
+        title: const Text('Select Tatoo Styles'),
       ),
       body: GridView.count(
         crossAxisCount: 3,
@@ -45,7 +47,7 @@ class _TatooSelectionPageState extends State<TatooSelectionPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('Valider'),
+          child: const Text('Valider'),
         ),
       ),
     );

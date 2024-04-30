@@ -11,6 +11,8 @@ import 'package:social_media_app/view_models/auth/posts_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
 
 class CreatePost extends StatefulWidget {
+  const CreatePost({super.key});
+
   @override
   _CreatePostState createState() => _CreatePostState();
 }
@@ -36,7 +38,7 @@ class _CreatePostState extends State<CreatePost> {
           key: viewModel.scaffoldKey,
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Ionicons.close_outline),
+              icon: const Icon(Ionicons.close_outline),
               onPressed: () {
                 viewModel.resetPost();
                 Navigator.pop(context);
@@ -66,9 +68,9 @@ class _CreatePostState extends State<CreatePost> {
             ],
           ),
           body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             children: [
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
               StreamBuilder(
                 stream: usersRef.doc(currentUserId()).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -83,7 +85,7 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                       title: Text(
                         user.username!,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         user.email!,
@@ -100,7 +102,7 @@ class _CreatePostState extends State<CreatePost> {
                   height: MediaQuery.of(context).size.width - 30,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(5.0),
                     ),
                     border: Border.all(
@@ -132,38 +134,38 @@ class _CreatePostState extends State<CreatePost> {
                             ),
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Text(
                 'Post Caption'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               TextFormField(
                 initialValue: viewModel.description,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Eg. This is very beautiful place!',
                   focusedBorder: UnderlineInputBorder(),
                 ),
                 maxLines: null,
                 onChanged: (val) => viewModel.setDescription(val),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Text(
                 'Location'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.all(0.0),
-                title: Container(
+                contentPadding: const EdgeInsets.all(0.0),
+                title: SizedBox(
                   width: 250.0,
                   child: TextFormField(
                     controller: viewModel.locationTEC,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(0.0),
                       hintText: 'United States,Los Angeles!',
                       focusedBorder: UnderlineInputBorder(),
@@ -174,7 +176,7 @@ class _CreatePostState extends State<CreatePost> {
                 ),
                 trailing: IconButton(
                   tooltip: "Use your current location",
-                  icon: Icon(
+                  icon: const Icon(
                     CupertinoIcons.map_pin_ellipse,
                     size: 25.0,
                   ),
@@ -183,7 +185,7 @@ class _CreatePostState extends State<CreatePost> {
                   onPressed: () => viewModel.getLocation(),
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               SwitchListTile(
                 tileColor: Colors.yellow[50],
                 activeColor: Colors.red,
@@ -214,9 +216,9 @@ class _CreatePostState extends State<CreatePost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              const SizedBox(height: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   'Select Image',
                   style: TextStyle(
@@ -224,18 +226,18 @@ class _CreatePostState extends State<CreatePost> {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Ionicons.camera_outline),
-                title: Text('Camera'),
+                leading: const Icon(Ionicons.camera_outline),
+                title: const Text('Camera'),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage(camera: true);
                 },
               ),
               ListTile(
-                leading: Icon(Ionicons.image),
-                title: Text('Gallery'),
+                leading: const Icon(Ionicons.image),
+                title: const Text('Gallery'),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage();

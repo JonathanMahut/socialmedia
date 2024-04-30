@@ -12,7 +12,7 @@ import 'content.dart';
 import 'flashdetailpage.dart';
 
 class FlashesPage extends StatefulWidget {
-  const FlashesPage({Key? key}) : super(key: key);
+  const FlashesPage({super.key});
 
   @override
   _FlashesPageState createState() => _FlashesPageState();
@@ -256,7 +256,7 @@ class _FlashesPageState extends State<FlashesPage> {
                                                     //   avatar: usersData[index]
                                                     //       ['picture']['large'],
                                                     // ),
-                                                    FlashDetailsPage(
+                                                    const FlashDetailsPage(
                                                   id: '',
                                                   postId: '',
                                                   description: '',

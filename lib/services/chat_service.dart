@@ -11,9 +11,9 @@ class ChatService {
 
   sendMessage(Message message, String chatId) async {
     //will send message to chats collection with the usersId
-    await chatRef.doc("$chatId").collection("messages").add(message.toJson());
+    await chatRef.doc(chatId).collection("messages").add(message.toJson());
     //will update "lastTextTime" to the last time a text was sent
-    await chatRef.doc("$chatId").update({"lastTextTime": Timestamp.now()});
+    await chatRef.doc(chatId).update({"lastTextTime": Timestamp.now()});
   }
 
   Future<String> sendFirstMessage(Message message, String recipient) async {

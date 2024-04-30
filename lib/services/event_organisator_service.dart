@@ -9,11 +9,13 @@ import 'package:social_media_app/utils/firebase.dart';
 
 class EventOrganisatorService implements UserService {
   //get the authenticated uis
+  @override
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
   }
 
   //tells when the user is online or not and updates the last seen for the messages
+  @override
   setUserStatus(bool isOnline) {
     var user = firebaseAuth.currentUser;
     if (user != null) {
@@ -37,12 +39,8 @@ class EventOrganisatorService implements UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    if (userType != null) {
-      users.userType = userType;
-    } else {
-      users.userType = UserType.EVENTORGANISATOR;
-    }
-
+    users.userType = userType;
+  
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }

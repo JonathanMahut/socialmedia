@@ -12,7 +12,7 @@ import 'package:social_media_app/widgets/indicators.dart';
 class ActivityItems extends StatefulWidget {
   final ActivityModel? activity;
 
-  ActivityItems({this.activity});
+  const ActivityItems({super.key, this.activity});
 
   @override
   _ActivityItemsState createState() => _ActivityItemsState();
@@ -29,7 +29,7 @@ class _ActivityItemsState extends State<ActivityItems> {
         delete();
       },
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
         onTap: () {
           Navigator.of(context).push(
             CupertinoPageRoute(
@@ -45,8 +45,8 @@ class _ActivityItemsState extends State<ActivityItems> {
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: Center(
                   child: Text(
-                    '${widget.activity!.username![0].toUpperCase()}',
-                    style: TextStyle(
+                    widget.activity!.username![0].toUpperCase(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold,
@@ -57,13 +57,13 @@ class _ActivityItemsState extends State<ActivityItems> {
             : CircleAvatar(
                 radius: 20.0,
                 backgroundImage: CachedNetworkImageProvider(
-                  '${widget.activity!.userDp!}',
+                  widget.activity!.userDp!,
                 ),
               ),
         title: RichText(
           overflow: TextOverflow.ellipsis,
           text: TextSpan(
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 14.0,
             ),
@@ -101,9 +101,9 @@ class _ActivityItemsState extends State<ActivityItems> {
   Widget stackBehindDismiss() {
     return Container(
       alignment: Alignment.centerRight,
-      padding: EdgeInsets.only(right: 20.0),
+      padding: const EdgeInsets.only(right: 20.0),
       color: Theme.of(context).colorScheme.secondary,
-      child: Icon(
+      child: const Icon(
         CupertinoIcons.delete,
         color: Colors.white,
       ),
@@ -128,7 +128,7 @@ class _ActivityItemsState extends State<ActivityItems> {
     if (widget.activity!.type == "like" || widget.activity!.type == "comment") {
       return buildPreviewImage();
     } else {
-      return Text('');
+      return const Text('');
     }
   }
 
@@ -153,7 +153,7 @@ class _ActivityItemsState extends State<ActivityItems> {
           return circularProgress(context);
         },
         errorWidget: (context, url, error) {
-          return Icon(Icons.error);
+          return const Icon(Icons.error);
         },
         height: 40.0,
         fit: BoxFit.cover,

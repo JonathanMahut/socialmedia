@@ -16,8 +16,9 @@ import 'package:timeago/timeago.dart' as timeago;
 class Comments extends StatefulWidget {
   final PostModel? post;
 
-  Comments({this.post});
+  const Comments({super.key, this.post});
 
+  @override
   _CommentsState createState() => _CommentsState();
 }
 
@@ -40,14 +41,14 @@ class _CommentsState extends State<Comments> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             CupertinoIcons.xmark_circle_fill,
           ),
         ),
         centerTitle: true,
-        title: Text('Comments'),
+        title: const Text('Comments'),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
@@ -58,7 +59,7 @@ class _CommentsState extends State<Comments> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: buildFullPost(),
                   ),
-                  Divider(thickness: 1.5),
+                  const Divider(thickness: 1.5),
                   Flexible(
                     child: buildComments(),
                   )
@@ -73,7 +74,7 @@ class _CommentsState extends State<Comments> {
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     maxHeight: 190.0,
                   ),
                   child: Column(
@@ -81,7 +82,7 @@ class _CommentsState extends State<Comments> {
                     children: <Widget>[
                       Flexible(
                         child: ListTile(
-                          contentPadding: EdgeInsets.all(0),
+                          contentPadding: const EdgeInsets.all(0),
                           title: TextField(
                             textCapitalization: TextCapitalization.sentences,
                             controller: commentsTEC,
@@ -91,7 +92,7 @@ class _CommentsState extends State<Comments> {
                                   Theme.of(context).textTheme.titleLarge!.color,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10.0),
+                              contentPadding: const EdgeInsets.all(10.0),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
@@ -169,7 +170,7 @@ class _CommentsState extends State<Comments> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           height: 350.0,
           width: MediaQuery.of(context).size.width - 20.0,
           child: cachedNetworkImage(widget.post!.mediaUrl!),
@@ -184,18 +185,18 @@ class _CommentsState extends State<Comments> {
                 children: [
                   Text(
                     widget.post!.description!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  SizedBox(height: 4.0),
+                  const SizedBox(height: 4.0),
                   Row(
                     children: [
                       Text(
                         timeago.format(widget.post!.timestamp!.toDate()),
-                        style: TextStyle(),
+                        style: const TextStyle(),
                       ),
-                      SizedBox(width: 3.0),
+                      const SizedBox(width: 3.0),
                       StreamBuilder(
                         stream: likesRef
                             .where('postId', isEqualTo: widget.post!.postId)
@@ -215,7 +216,7 @@ class _CommentsState extends State<Comments> {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               buildLikeButton(),
             ],
           ),
@@ -233,7 +234,7 @@ class _CommentsState extends State<Comments> {
           .collection('comments')
           .orderBy('timestamp', descending: true)
           .snapshots(),
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
         CommentModel comments =
             CommentModel.fromJson(snapshot.data() as Map<String, dynamic>);
@@ -281,21 +282,21 @@ class _CommentsState extends State<Comments> {
                     backgroundImage:
                         CachedNetworkImageProvider(comments.userDp!),
                   ),
-                  SizedBox(width: 10.0),
+                  const SizedBox(width: 10.0),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         comments.username!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.0,
                         ),
                       ),
                       Text(
                         timeago.format(comments.timestamp!.toDate()),
-                        style: TextStyle(fontSize: 10.0),
+                        style: const TextStyle(fontSize: 10.0),
                       ),
                     ],
                   )
@@ -305,7 +306,7 @@ class _CommentsState extends State<Comments> {
                 padding: const EdgeInsets.only(left: 50.0),
                 child: Text(comments.comment!.trim()),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
             ],
           ),
         );
@@ -367,8 +368,8 @@ class _CommentsState extends State<Comments> {
             onTap: onLikeButtonTapped,
             size: 25.0,
             circleColor:
-                CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
-            bubblesColor: BubblesColor(
+                const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            bubblesColor: const BubblesColor(
                 dotPrimaryColor: Color(0xffFFA500),
                 dotSecondaryColor: Color(0xffd8392b),
                 dotThirdColor: Color(0xffFF69B4),
@@ -392,7 +393,7 @@ class _CommentsState extends State<Comments> {
       padding: const EdgeInsets.only(left: 7.0),
       child: Text(
         '$count likes',
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 10.0,
         ),

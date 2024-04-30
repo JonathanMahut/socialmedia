@@ -13,6 +13,7 @@ class FlashModel {
   String? city;
   String? ownerEmail;
   String? ownerPhone;
+  String? profilPic;
 
   FlashModel(
       {this.id,
@@ -43,19 +44,19 @@ class FlashModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['postId'] = this.postId;
-    data['ownerId'] = this.ownerId;
-    data['location'] = this.location;
-    data['description'] = this.description;
-    data['mediaUrl'] = this.mediaUrl;
-    data['isFlashDispo'] = this.isFlashDispo;
-    data['timestamp'] = this.timestamp;
-    data['username'] = this.username;
-    data['city'] = this.city;
-    data['ownerEmail'] = this.ownerEmail;
-    data['ownerPhone'] = this.ownerPhone;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['postId'] = postId;
+    data['ownerId'] = ownerId;
+    data['location'] = location;
+    data['description'] = description;
+    data['mediaUrl'] = mediaUrl;
+    data['isFlashDispo'] = isFlashDispo;
+    data['timestamp'] = timestamp;
+    data['username'] = username;
+    data['city'] = city;
+    data['ownerEmail'] = ownerEmail;
+    data['ownerPhone'] = ownerPhone;
     return data;
   }
 }

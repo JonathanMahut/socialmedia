@@ -35,16 +35,16 @@ class PostModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['postId'] = this.postId;
-    data['ownerId'] = this.ownerId;
-    data['location'] = this.location;
-    data['description'] = this.description;
-    data['mediaUrl'] = this.mediaUrl;
-    data['isFlashDispo'] = this.isFlashDispo;
-    data['timestamp'] = this.timestamp;
-    data['username'] = this.username;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['postId'] = postId;
+    data['ownerId'] = ownerId;
+    data['location'] = location;
+    data['description'] = description;
+    data['mediaUrl'] = mediaUrl;
+    data['isFlashDispo'] = isFlashDispo;
+    data['timestamp'] = timestamp;
+    data['username'] = username;
     return data;
   }
 }
