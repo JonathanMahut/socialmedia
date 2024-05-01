@@ -98,7 +98,7 @@ class Annoucer extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
-    userType = json['userType'];
+    userType = UserType.values.byName(json['userType']);
   }
   @override
   Map<String, dynamic> toJson() {
@@ -124,7 +124,7 @@ class Annoucer extends UserModel {
     data['postalAdress'] = postalAdress;
     data['city'] = city;
     data['secretKey'] = secretKey;
-    data['userType'] = userType;
+    data['userType'] = userType.name;
     return data;
   }
 }

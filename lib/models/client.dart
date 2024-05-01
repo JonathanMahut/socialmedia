@@ -91,7 +91,7 @@ class Client extends UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-    userType = json['userType'] as UserType? ?? UserType.CLIENT;
+    userType = UserType.values.byName(json['userType']);
   }
 
   @override
@@ -116,7 +116,7 @@ class Client extends UserModel {
     data['countryCode'] = countryCode;
     data['postalAdress'] = postalAdress;
     data['city'] = city;
-    data['userType'] = UserType.CLIENT.name;
+    data['userType'] = userType.name;
 
     return data;
   }

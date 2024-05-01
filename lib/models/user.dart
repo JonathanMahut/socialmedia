@@ -67,7 +67,7 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-    userType = json['userType'] as UserType;
+    userType = UserType.values.byName(json['userType']);
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +90,7 @@ class UserModel {
     data['countryCode'] = countryCode;
     data['postalAdress'] = postalAdress;
     data['city'] = city;
-    data['userType'] = userType as String;
+    data['userType'] = userType.name;
 
     return data;
   }

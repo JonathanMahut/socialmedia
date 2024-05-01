@@ -109,7 +109,7 @@ class TatooArtist extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
-    super.userType = json['userType'] as UserType? ?? UserType.TATOOARTIST;
+    super.userType = UserType.values.byName(json['userType']);
 
     if (json.containsKey('tatooStyles') && json['tatooStyles'] != null) {
       tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
@@ -145,7 +145,7 @@ class TatooArtist extends UserModel {
     data['userType'] = userType.name;
     data['secretKey'] = secretKey;
     data['tatooStyles'] = tatooStyles!.map((style) => style.index).toList();
-    data['userType'] = UserType.TATOOARTIST.name;
+    data['userType'] = userType.name;
 
     return data;
   }

@@ -104,7 +104,7 @@ class EventOrganisator extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
-    super.userType = json['userType'] as UserType? ?? UserType.EVENTORGANISATOR;
+    super.userType = UserType.values.byName(json['userType']);
   }
 
   @override
