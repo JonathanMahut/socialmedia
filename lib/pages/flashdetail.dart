@@ -16,6 +16,8 @@ class FlashDetailsPage extends StatefulWidget {
   final String city;
   final String ownerEmail;
   final String ownerPhone;
+  final String profilPic;
+  final int nbLikes;
 
   const FlashDetailsPage({
     super.key,
@@ -31,6 +33,8 @@ class FlashDetailsPage extends StatefulWidget {
     required this.ownerEmail,
     required this.ownerPhone,
     required this.mediaUrl,
+    required this.profilPic,
+    required this.nbLikes,
   });
 
   @override

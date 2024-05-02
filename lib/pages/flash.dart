@@ -8,8 +8,8 @@ import 'package:social_media_app/utils/firebase.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
-import 'content.dart';
-import 'flashdetailpage.dart';
+import '../flashes/content.dart';
+import 'flashdetail.dart';
 
 class FlashesPage extends StatefulWidget {
   const FlashesPage({super.key});
@@ -268,6 +268,8 @@ class _FlashesPageState extends State<FlashesPage> {
                                                   ownerEmail: '',
                                                   ownerPhone: '',
                                                   mediaUrl: '',
+                                                  nbLikes: 0,
+                                                  profilPic: '',
                                                 ),
                                               ),
                                             );

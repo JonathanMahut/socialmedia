@@ -2,18 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FlashModel {
   String? id;
-  String? postId;
-  String? ownerId;
-  String? username;
-  String? location;
-  String? description;
-  String? mediaUrl;
-  bool? isFlashDispo;
+  String? postId; //post de l'artiste
+  String? ownerId; //id de l'artiste'
+  String? username; // nom de l'artiste
+  String? location; //location de l'artiste
+  String? description; //description du flash
+  String? mediaUrl; //Image du flash
+  bool? isFlashDispo; //est-il dispo
   Timestamp? timestamp;
   String? city;
   String? ownerEmail;
   String? ownerPhone;
   String? profilPic;
+  int? nbLikes;
 
   FlashModel(
       {this.id,
@@ -27,7 +28,9 @@ class FlashModel {
       this.isFlashDispo,
       this.city,
       this.ownerEmail,
-      this.ownerPhone});
+      this.ownerPhone,
+      this.nbLikes,
+      this.profilPic});
   FlashModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     postId = json['postId'];
@@ -41,6 +44,8 @@ class FlashModel {
     city = json['city'];
     ownerEmail = json['ownerEmail'];
     ownerPhone = json['ownerPhone'];
+    profilPic = json['profilPic'];
+    nbLikes = int.parse(json['nbLikes']);
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +62,8 @@ class FlashModel {
     data['city'] = city;
     data['ownerEmail'] = ownerEmail;
     data['ownerPhone'] = ownerPhone;
+    data['profilPic'] = profilPic;
+    data['nbLikes'] = nbLikes;
     return data;
   }
 }
