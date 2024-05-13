@@ -37,10 +37,13 @@ class FlashViewModel extends ChangeNotifier {
   String? type;
   File? userDp;
   String? imgLink;
+  String? profilPic;
 
   bool isDispo = true;
   bool edit = false;
   String? id;
+
+  int nblikes = 0;
 
   //controllers
   TextEditingController locationTEC = TextEditingController();
@@ -81,6 +84,12 @@ class FlashViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setNbLikes(int val) {
+    print('SetNbLike $val');
+    nblikes = val;
+    notifyListeners();
+  }
+
   // setBio(String val) {
   //   print('SetBio $val');
   //   bio = val;
@@ -118,7 +127,7 @@ class FlashViewModel extends ChangeNotifier {
       loading = true;
       notifyListeners();
       await flashService.uploadFlash(
-          mediaUrl!, location!, city!, description!, isDispo);
+          mediaUrl!, location!, city!, description!, isDispo, nblikes);
       loading = false;
       resetFlash();
       notifyListeners();
@@ -141,8 +150,8 @@ class FlashViewModel extends ChangeNotifier {
         await flashService.uploadProfilePicture(
             mediaUrl!, firebaseAuth.currentUser!);
         loading = false;
-        Navigator.of(context)
-            .pushReplacement(CupertinoPageRoute(builder: (_) => const TabScreen()));
+        Navigator.of(context).pushReplacement(
+            CupertinoPageRoute(builder: (_) => const TabScreen()));
         notifyListeners();
       } catch (e) {
         print(e);

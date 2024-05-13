@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/models/flash.dart';
+import 'package:social_media_app/chats/recent_chats.dart';
+import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
+import 'package:social_media_app/widgets/story_widget.dart';
+import 'package:social_media_app/widgets/userpost.dart';
 
 class Flashes extends StatefulWidget {
   const Flashes({super.key});

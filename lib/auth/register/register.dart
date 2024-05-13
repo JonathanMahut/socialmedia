@@ -5,6 +5,7 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/password_text_field.dart';
 import 'package:social_media_app/components/text_form_builder.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/auth/register_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -136,28 +137,28 @@ class _RegisterState extends State<Register> {
             },
             focusNode: viewModel.cPassFN,
           ),
-          // SizedBox(height: 10.0),
-          // DropdownButton<String>(
-          //   // Not necessary for Option 1
-          //   // value: (GenderType.OTHER).name,
-          //   hint: Text('Choose your gender'),
-          //   onChanged: (String? val) {
-          //     setState(() {
-          //       val;
-          //       viewModel.setGender(val) as String?;
-          //       print("Gender :" + viewModel.gender!);
-          //     });
-          //   },
+          SizedBox(height: 10.0),
+          DropdownButton<String>(
+            // Not necessary for Option 1
+            // value: (UserType.CLIENT).name,
+            hint: Text('Who are you ?'),
+            onChanged: (String? val) {
+              setState(() {
+                val;
+                viewModel.setUserType(val) as String?;
+                print("User Type :" + viewModel.userType!);
+              });
+            },
 
-          //   value: viewModel.getGender(),
-          //   items: GenderType.values.map((gender) {
-          //     return DropdownMenuItem(
-          //       child: Text((gender.name).toString()),
-          //       value: gender.name,
-          //     );
-          //   }).toList(),
-          //   // focusNode: viewModel.genderFN,
-          // ),
+            value: viewModel.getUserType(),
+            items: UserType.values.map((userType) {
+              return DropdownMenuItem(
+                child: Text((userType.name).toString()),
+                value: userType.name,
+              );
+            }).toList(),
+            // focusNode: viewModel.genderFN,
+          ),
           // SizedBox(height: 10.0),
           // SwitchListTile(
           //   tileColor: Colors.yellow[50],
@@ -170,6 +171,7 @@ class _RegisterState extends State<Register> {
           //     });
           //   },
           // ),
+
           const SizedBox(height: 25.0),
           SizedBox(
             height: 45.0,

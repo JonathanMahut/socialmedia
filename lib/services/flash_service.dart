@@ -21,8 +21,14 @@ class FlashService extends Service {
   }
 
 //uploads post to the post collection
-  uploadFlash(File image, String location, String city, String description,
-      bool isDispo) async {
+  uploadFlash(
+    File image,
+    String location,
+    String city,
+    String description,
+    bool isDispo,
+    int nblikes,
+  ) async {
     String link = await uploadImage(posts, image);
     DocumentSnapshot doc =
         await usersRef.doc(firebaseAuth.currentUser!.uid).get();
@@ -42,6 +48,8 @@ class FlashService extends Service {
       "timestamp": Timestamp.now(),
       "ownerEmail": user!.email,
       "ownerPhone": user!.phoneNumber,
+      "profilPic": user!.photoUrl,
+      "nbLikes": nblikes,
     }).catchError((e) {
       print(e);
     });

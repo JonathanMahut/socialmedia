@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/components/fab_container.dart';
 import 'package:social_media_app/pages/feeds.dart';
+import 'package:social_media_app/pages/flashes.dart';
 import 'package:social_media_app/pages/notification.dart';
 import 'package:social_media_app/pages/profile.dart';
 import 'package:social_media_app/pages/search.dart';
@@ -52,11 +53,10 @@ class _TabScreenState extends State<TabScreen> {
       'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 4,
     },
-    {}
     {
       'title': 'flashes',
       'icon': Ionicons.flash,
-      'page': Flashes(profileId: firebaseAuth.currentUser!.uid),
+      'page': Flashes(),
       'index': 5,
     },
   ];

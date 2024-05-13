@@ -4,42 +4,36 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
-import 'package:social_media_app/models/event_organisator.dart';
-import 'package:social_media_app/models/client.dart';
+import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/models/vendor.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
 import 'package:social_media_app/screens/settings.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/post_tiles.dart';
 
-class Profile extends StatefulWidget {
+class ProfileArtist extends StatefulWidget {
   final profileId;
 
-  const Profile({super.key, this.profileId});
+  const ProfileArtist({super.key, this.profileId});
 
   @override
   _ProfileState createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
-  User? user;
+class _ProfileState extends State<ProfileArtist> {
+  TatooArtist? user;
   bool isLoading = false;
   int postCount = 0;
   int followersCount = 0;
   int followingCount = 0;
   bool isFollowing = false;
-  UserModel? users;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
-
-  String userType = UserType.CLIENT.name;
 
   currentUserId() {
     return firebaseAuth.currentUser?.uid;
@@ -49,34 +43,6 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
-  }
-
-  // Determine usertype of the current user
-
-  checkCurrentUserType() async {
-    DocumentSnapshot doc = await usersRef
-        .doc(currentUserId())
-        .collection('users')
-        .doc(currentUserId())
-        .get();
-    // Get the Usertype of the current user
-    userType = doc.get('usertype');
-  
-    // Define the good User Model for the current user according to the Usertype
-
-    setState(() {
-      if (userType == UserType.CLIENT.name) {
-
-   } 
-   else if (userType== UserType.TATOOARTIST.name) {
-
-   } 
-   else if (userType== UserType.VENDOR.name) {
-  } 
-   else if (userType== UserType.EVENTORGANISATOR.name) {
-  } 
-});
-    
   }
 
   checkIfFollowing() async {
@@ -136,40 +102,10 @@ class _ProfileState extends State<Profile> {
               background: StreamBuilder(
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  //  UserModel user = UserModel.fromJson(
-                  //       snapshot.data!.data() as Map<String, dynamic>,
-                  //     );
-                  switch (userType) {
-                    case 'CLIENT':
-                      UserModel user = Client.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>,
-                      );
-                      break;
-                    case 'TATOOARTIST':
-                      TatooArtist user = TatooArtist.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>,
-                      );
-                      break;
-                    case 'VENDOR':
-                      Annoucer user = Annoucer.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>,
-                      );
-                      break;
-                    case 'EVENTORGANISATOR':
-                      EventOrganisator user = EventOrganisator.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>,
-                      );
-                      break;
-                    default:
-                      UserModel user = UserModel.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>,
-                      );
-                      break;
-                  }
-
-                    
-                   
+                  if (snapshot.hasData) {
+                    TatooArtist user = TatooArtist.fromJson(
+                      snapshot.data!.data() as Map<String, dynamic>,
+                    );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -186,7 +122,7 @@ class _ProfileState extends State<Profile> {
                                           .secondary,
                                       child: Center(
                                         child: Text(
-                                          user.username![0].toUpperCase(),
+                                          user.displayName![0].toUpperCase(),
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 15.0,
@@ -221,7 +157,7 @@ class _ProfileState extends State<Profile> {
                                         SizedBox(
                                           width: 130.0,
                                           child: Text(
-                                            user.username!,
+                                            user.displayName!,
                                             style: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w900,
@@ -284,7 +220,7 @@ class _ProfileState extends State<Profile> {
                                               ],
                                             ),
                                           )
-                                        : const Text('')
+                                        : const Text('Follow')
                                     // : buildLikeButton()
                                   ],
                                 ),
@@ -308,74 +244,6 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                         ),
-                        //Diplay list of TattooStylist if user is a TatooArtist
-                        user.userType == UserType.TATOOARTIST.name
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 20.0),
-                                child: SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    'Tattoo Styles : ${user.tatooStyles}',
-                                    style: const TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    maxLines: null,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        //Diplay the Gender of the currnt user
-                        user.userType == UserType.TATOOARTIST.name
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 20.0),
-                                child: SizedBox(
-                                  width: 200,
-                                  child: DropdownButton<String>(
-                                    value: user.,
-                                    items: <String>['Male', 'Female', 'Other']
-                                        .map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        user.gender = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        //Diplay list of TattooStylist if user is a TatooArtist
-                        user.userType == UserType.TATOOARTIST.name
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 20.0),
-                                child: SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    'Website : ${user.website}',
-                                    style: const TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    maxLines: null,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        // //Diplay list of TattooStylist if user is a TatooArtist
-                        // user.userType == UserType.TATOOARTIST.name
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(
-                        //             top: 10.0, left: 20.0),
-                        //         child: SizedBox
-
                         const SizedBox(height: 10.0),
                         SizedBox(
                           height: 50.0,
@@ -486,7 +354,7 @@ class _ProfileState extends State<Profile> {
                             onPressed: () async {
                               DocumentSnapshot doc =
                                   await usersRef.doc(widget.profileId).get();
-                              var currentUser = UserModel.fromJson(
+                              var currentUser = TatooArtist.fromJson(
                                 doc.data() as Map<String, dynamic>,
                               );
                               Navigator.push(
@@ -494,7 +362,7 @@ class _ProfileState extends State<Profile> {
                                 CupertinoPageRoute(
                                   builder: (_) => ListPosts(
                                     userId: widget.profileId,
-                                    username: currentUser.username,
+                                    username: currentUser.displayName,
                                   ),
                                 ),
                               );
@@ -598,9 +466,11 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  TatooArtist? users;
+
   handleUnfollow() async {
     DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
-    users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    users = TatooArtist.fromJson(doc.data() as Map<String, dynamic>);
     setState(() {
       isFollowing = false;
     });
@@ -641,7 +511,7 @@ class _ProfileState extends State<Profile> {
 
   handleFollow() async {
     DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
-    users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    users = TatooArtist.fromJson(doc.data() as Map<String, dynamic>);
     setState(() {
       isFollowing = true;
     });
@@ -665,7 +535,7 @@ class _ProfileState extends State<Profile> {
         .set({
       "type": "follow",
       "ownerId": widget.profileId,
-      "username": users?.username,
+      "username": users?.displayName,
       "userId": users?.id,
       "userDp": users?.photoUrl,
       "timestamp": timestamp,
@@ -693,56 +563,6 @@ class _ProfileState extends State<Profile> {
         return PostTile(
           post: posts,
         );
-      },
-    );
-  }
-
-  buildLikeButton() {
-    return StreamBuilder(
-      stream: favUsersRef
-          .where('postId', isEqualTo: widget.profileId)
-          .where('userId', isEqualTo: currentUserId())
-          .snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasData) {
-          List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
-          return GestureDetector(
-            onTap: () {
-              if (docs.isEmpty) {
-                favUsersRef.add({
-                  'userId': currentUserId(),
-                  'postId': widget.profileId,
-                  'dateCreated': Timestamp.now(),
-                });
-              } else {
-                favUsersRef.doc(docs[0].id).delete();
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 3.0,
-                    blurRadius: 5.0,
-                  )
-                ],
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Icon(
-                  docs.isEmpty
-                      ? CupertinoIcons.heart
-                      : CupertinoIcons.heart_fill,
-                  color: Color(0xff886EE4),
-                ),
-              ),
-            ),
-          );
-        }
-        return Container();
       },
     );
   }
