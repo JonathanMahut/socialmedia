@@ -53,12 +53,12 @@ class _TabScreenState extends State<TabScreen> {
       'index': 4,
     },
     {}
-    // {
-    //   'title': 'flashes',
-    //   'icon': Ionicons.flash,
-    //   'page': Flashes(profileId: firebaseAuth.currentUser!.uid),
-    //   'index': 5,
-    // },
+    {
+      'title': 'flashes',
+      'icon': Ionicons.flash,
+      'page': Flashes(profileId: firebaseAuth.currentUser!.uid),
+      'index': 5,
+    },
   ];
 
   @override
