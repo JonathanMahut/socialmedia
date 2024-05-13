@@ -6,8 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
+import 'package:social_media_app/models/event_organisator.dart';
+import 'package:social_media_app/models/client.dart';
 import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/models/vendor.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
 import 'package:social_media_app/screens/settings.dart';
@@ -34,6 +39,8 @@ class _ProfileState extends State<Profile> {
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
 
+  String userType = UserType.CLIENT.name;
+
   currentUserId() {
     return firebaseAuth.currentUser?.uid;
   }
@@ -42,6 +49,34 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+  }
+
+  // Determine usertype of the current user
+
+  checkCurrentUserType() async {
+    DocumentSnapshot doc = await usersRef
+        .doc(currentUserId())
+        .collection('users')
+        .doc(currentUserId())
+        .get();
+    // Get the Usertype of the current user
+    userType = doc.get('usertype');
+  
+    // Define the good User Model for the current user according to the Usertype
+
+    setState(() {
+      if (userType == UserType.CLIENT.name) {
+
+   } 
+   else if (userType== UserType.TATOOARTIST.name) {
+
+   } 
+   else if (userType== UserType.VENDOR.name) {
+  } 
+   else if (userType== UserType.EVENTORGANISATOR.name) {
+  } 
+});
+    
   }
 
   checkIfFollowing() async {
@@ -101,10 +136,40 @@ class _ProfileState extends State<Profile> {
               background: StreamBuilder(
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    UserModel user = UserModel.fromJson(
-                      snapshot.data!.data() as Map<String, dynamic>,
-                    );
+                if (snapshot.hasData) {
+                  //  UserModel user = UserModel.fromJson(
+                  //       snapshot.data!.data() as Map<String, dynamic>,
+                  //     );
+                  switch (userType) {
+                    case 'CLIENT':
+                      UserModel user = Client.fromJson(
+                        snapshot.data!.data() as Map<String, dynamic>,
+                      );
+                      break;
+                    case 'TATOOARTIST':
+                      TatooArtist user = TatooArtist.fromJson(
+                        snapshot.data!.data() as Map<String, dynamic>,
+                      );
+                      break;
+                    case 'VENDOR':
+                      Annoucer user = Annoucer.fromJson(
+                        snapshot.data!.data() as Map<String, dynamic>,
+                      );
+                      break;
+                    case 'EVENTORGANISATOR':
+                      EventOrganisator user = EventOrganisator.fromJson(
+                        snapshot.data!.data() as Map<String, dynamic>,
+                      );
+                      break;
+                    default:
+                      UserModel user = UserModel.fromJson(
+                        snapshot.data!.data() as Map<String, dynamic>,
+                      );
+                      break;
+                  }
+
+                    
+                   
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -243,6 +308,74 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                         ),
+                        //Diplay list of TattooStylist if user is a TatooArtist
+                        user.userType == UserType.TATOOARTIST.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    'Tattoo Styles : ${user.tatooStyles}',
+                                    style: const TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        //Diplay the Gender of the currnt user
+                        user.userType == UserType.TATOOARTIST.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: DropdownButton<String>(
+                                    value: user.,
+                                    items: <String>['Male', 'Female', 'Other']
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        user.gender = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        //Diplay list of TattooStylist if user is a TatooArtist
+                        user.userType == UserType.TATOOARTIST.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    'Website : ${user.website}',
+                                    style: const TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        // //Diplay list of TattooStylist if user is a TatooArtist
+                        // user.userType == UserType.TATOOARTIST.name
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.only(
+                        //             top: 10.0, left: 20.0),
+                        //         child: SizedBox
+
                         const SizedBox(height: 10.0),
                         SizedBox(
                           height: 50.0,
