@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
@@ -14,16 +16,16 @@ import 'package:social_media_app/screens/settings.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/post_tiles.dart';
 
-class Profile extends StatefulWidget {
+class ProfileTatooArtist extends StatefulWidget {
   final profileId;
 
-  const Profile({super.key, this.profileId});
+  const ProfileTatooArtist({super.key, this.profileId});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileTatooArtistState createState() => _ProfileTatooArtistState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileTatooArtistState extends State<ProfileTatooArtist> {
   User? user;
   bool isLoading = false;
   int postCount = 0;
@@ -34,6 +36,8 @@ class _ProfileState extends State<Profile> {
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
 
+  String userType = UserType.CLIENT.name;
+
   currentUserId() {
     return firebaseAuth.currentUser?.uid;
   }
@@ -42,6 +46,34 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+  }
+
+  // Determine usertype of the current user
+
+  checkCurrentUserType() async {
+    DocumentSnapshot doc = await usersRef
+        .doc(currentUserId())
+        .collection('users')
+        .doc(currentUserId())
+        .get();
+    // Get the Usertype of the current user
+    userType = doc.get('usertype');
+
+    // Define the good User Model for the current user according to the Usertype
+
+    setState(() {
+      if (userType == UserType.CLIENT.name) {
+        // Code for Client user type
+      } else if (userType == UserType.TATOOARTIST.name) {
+        // Code for TatooArtist user type
+      } else if (userType == UserType.VENDOR.name) {
+        // Code for Vendor user type
+      } else if (userType == UserType.EVENTORGANISATOR.name) {
+        // Code for EventOrganisator user type
+      } else {
+        // Code for default user type
+      }
+    });
   }
 
   checkIfFollowing() async {
@@ -102,7 +134,7 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    UserModel user = UserModel.fromJson(
+                    TatooArtist user = TatooArtist.fromJson(
                       snapshot.data!.data() as Map<String, dynamic>,
                     );
 
@@ -245,6 +277,50 @@ class _ProfileState extends State<Profile> {
                                 ),
                         ),
                         Container(),
+                        //Diplay the Gender of the currennt user if the
+                        user.userType == UserType.TATOOARTIST.name ||
+                                user.userType == UserType.CLIENT.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: DropdownButton<String>(
+                                    value: user.gender,
+                                    items: <String>['Male', 'Female', 'Other']
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        user.gender = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        //Diplay list of TattooStylist if user is a TatooArtist
+                        user.userType == UserType.TATOOARTIST.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    'Website : ${user.website}',
+                                    style: const TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         const SizedBox(height: 10.0),
                         SizedBox(
                           height: 50.0,
