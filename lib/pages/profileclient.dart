@@ -6,24 +6,29 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
+import 'package:social_media_app/models/event_organisator.dart';
+import 'package:social_media_app/models/client.dart';
 import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/models/vendor.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
 import 'package:social_media_app/screens/settings.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/post_tiles.dart';
 
-class Profile extends StatefulWidget {
+class ProfileClient extends StatefulWidget {
   final profileId;
 
-  const Profile({super.key, this.profileId});
+  const ProfileClient({super.key, this.profileId});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileClientState createState() => _ProfileClientState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileClientState extends State<ProfileClient> {
   User? user;
   bool isLoading = false;
   int postCount = 0;
@@ -43,6 +48,8 @@ class _ProfileState extends State<Profile> {
     super.initState();
     checkIfFollowing();
   }
+
+  // Determine usertype of the current user
 
   checkIfFollowing() async {
     DocumentSnapshot doc = await followersRef
@@ -102,7 +109,7 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    UserModel user = UserModel.fromJson(
+                    Client user = Client.fromJson(
                       snapshot.data!.data() as Map<String, dynamic>,
                     );
 
@@ -245,6 +252,33 @@ class _ProfileState extends State<Profile> {
                                 ),
                         ),
                         Container(),
+                        //Diplay the Gender of the currennt user if the
+                        user.userType == UserType.TATOOARTIST.name ||
+                                user.userType == UserType.CLIENT.name
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 20.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: DropdownButton<String>(
+                                    value: user.gender,
+                                    items: <String>['Male', 'Female', 'Other']
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        user.gender = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container(),
+
                         const SizedBox(height: 10.0),
                         SizedBox(
                           height: 50.0,

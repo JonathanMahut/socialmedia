@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/chats/conversation.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/pages/profile.dart';
+import 'package:social_media_app/pages/profileclient.dart';
+import 'package:social_media_app/pages/profiletatooartist.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -29,7 +32,12 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
   List<DocumentSnapshot> users = [];
   List<DocumentSnapshot> filteredUsers = [];
   bool loading = true;
+  String userType = "";
 
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   currentUserId() {
     return firebaseAuth.currentUser!.uid;
   }
@@ -42,6 +50,17 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     setState(() {
       loading = false;
     });
+  }
+  // Determine usertype of the current user
+
+  checkCurrentUserType() async {
+    DocumentSnapshot doc = await usersRef
+        .doc(currentUserId())
+        .collection('users')
+        .doc(currentUserId())
+        .get();
+    // Get the Usertype of the current user
+    userType = doc.get('usertype');
   }
 
   search(String query) {
@@ -177,7 +196,8 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                   });
                 }
                 return ListTile(
-                  onTap: () => showProfile(context, profileId: user.id!),
+                  onTap: () => showProfile(context,
+                      profileId: user.id!, userType: user.userType.name),
                   leading: user.photoUrl!.isEmpty
                       ? CircleAvatar(
                           radius: 20.0,
@@ -283,13 +303,33 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     }
   }
 
-  showProfile(BuildContext context, {String? profileId}) {
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (_) => Profile(profileId: profileId),
-      ),
-    );
+  showProfile(BuildContext context, {String? profileId, String? userType}) {
+    // Navigate to the correct profile page according to userType of current user
+    switch (userType) {
+      case 'CLIENT':
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => ProfileClient(profileId: profileId),
+          ),
+        );
+        break;
+      case 'TATOOARTIST':
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => ProfileTatooArtist(profileId: profileId),
+          ),
+        );
+        break;
+      default:
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => Profile(profileId: profileId),
+          ),
+        );
+    }
   }
 
   //get concatenated list of users
@@ -305,6 +345,6 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     return chatId;
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 }

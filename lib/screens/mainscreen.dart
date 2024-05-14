@@ -6,6 +6,8 @@ import 'package:social_media_app/components/fab_container.dart';
 import 'package:social_media_app/pages/feeds.dart';
 import 'package:social_media_app/pages/notification.dart';
 import 'package:social_media_app/pages/profile.dart';
+import 'package:social_media_app/pages/profileclient.dart';
+import 'package:social_media_app/pages/profiletatooartist.dart';
 import 'package:social_media_app/pages/search.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
@@ -52,7 +54,18 @@ class _TabScreenState extends State<TabScreen> {
       'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 4,
     },
-    {}
+    {
+      'title': 'ProfileClient',
+      'icon': CupertinoIcons.person_fill,
+      'page': ProfileClient(profileId: firebaseAuth.currentUser!.uid),
+      'index': 5,
+    },
+    {
+      'title': 'ProfileTatooArtist',
+      'icon': CupertinoIcons.person_fill,
+      'page': ProfileTatooArtist(profileId: firebaseAuth.currentUser!.uid),
+      'index': 6,
+    },
     // {
     //   'title': 'flashes',
     //   'icon': Ionicons.flash,
