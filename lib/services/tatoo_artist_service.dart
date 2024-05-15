@@ -45,8 +45,8 @@ class TatooArtistService extends UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    users.userType = userType;
-  
+    users.userType = userType.name;
+
     if (gender != null) {
       users.gender = gender;
     } else {
@@ -63,7 +63,7 @@ class TatooArtistService extends UserService {
       'country': country,
       "photoUrl": users.photoUrl ?? '',
       "userType": users.userType ?? UserType.TATOOARTIST as String,
-      // "isArtist": users.isArtist ?? false,
+
       "gender": users.gender ?? GenderType.OTHER as String,
       // Sérialisation des styles de tatouage
       "tatooStyles": users.tatooStyles?.map((style) => style.index).toList(),

@@ -36,8 +36,8 @@ class UserService extends Service {
     users.bio = bio;
     users.country = country;
     // UserType Value
-    users.userType = userType;
-  
+    users.userType = userType.name;
+
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }
@@ -46,7 +46,7 @@ class UserService extends Service {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
-      "userType": users.userType ?? UserType.CLIENT,
+      "userType": users.userType ?? UserType.UNKNOWN,
     });
 
     return true;

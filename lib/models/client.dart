@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/enum_converter.dart';
 
 class Client extends UserModel {
   @override
@@ -42,8 +41,8 @@ class Client extends UserModel {
   @override
   String? city;
   @override
-  @EnumConverter()
-  UserType userType = UserType.CLIENT;
+  // @EnumConverter()
+  String userType = UserType.CLIENT.name;
 
   @override
   Client({
@@ -67,11 +66,11 @@ class Client extends UserModel {
     this.postalAdress,
     this.city,
     //  required super.userType,
-  }) : super(userType: UserType.CLIENT);
+  }) : super(userType: UserType.CLIENT.name);
 
   @override
   Client.fromJson(Map<String, dynamic> json)
-      : super(userType: UserType.CLIENT) {
+      : super(userType: UserType.CLIENT.name) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -91,7 +90,8 @@ class Client extends UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-    userType = UserType.values.byName(json['userType']);
+    // userType = UserType.values.byName(json['userType']);
+    userType = json['userType'];
   }
 
   @override
@@ -116,7 +116,7 @@ class Client extends UserModel {
     data['countryCode'] = countryCode;
     data['postalAdress'] = postalAdress;
     data['city'] = city;
-    data['userType'] = userType.name;
+    data['userType'] = userType;
 
     return data;
   }

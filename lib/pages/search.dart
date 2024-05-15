@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/chats/conversation.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/pages/profile.dart';
 import 'package:social_media_app/pages/profileclient.dart';
@@ -197,7 +196,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                 }
                 return ListTile(
                   onTap: () => showProfile(context,
-                      profileId: user.id!, userType: user.userType.name),
+                      profileId: user.id!, userType: user.userType),
                   leading: user.photoUrl!.isEmpty
                       ? CircleAvatar(
                           radius: 20.0,

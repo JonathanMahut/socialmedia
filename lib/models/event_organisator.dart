@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/enum_converter.dart';
 
 class EventOrganisator extends UserModel {
   @override
@@ -47,8 +46,8 @@ class EventOrganisator extends UserModel {
   @override
   String? city;
   @override
-  @EnumConverter()
-  UserType userType = UserType.EVENTORGANISATOR;
+  // @EnumConverter()
+  String userType = UserType.EVENTORGANISATOR.name;
 
   String? secretKey;
 
@@ -77,11 +76,11 @@ class EventOrganisator extends UserModel {
     this.city,
     this.secretKey,
     //required this.userType,
-  }) : super(userType: UserType.EVENTORGANISATOR);
+  }) : super(userType: UserType.EVENTORGANISATOR.name);
 
   @override
   EventOrganisator.fromJson(Map<String, dynamic> json)
-      : super(userType: UserType.EVENTORGANISATOR) {
+      : super(userType: UserType.EVENTORGANISATOR.name) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -104,7 +103,7 @@ class EventOrganisator extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
-    super.userType = UserType.values.byName(json['userType']);
+    userType = json['userType'];
   }
 
   @override
@@ -132,7 +131,7 @@ class EventOrganisator extends UserModel {
     data['postalAdress'] = postalAdress;
     data['city'] = city;
     data['secretKey'] = secretKey;
-    data['userType'] = userType.name;
+    data['userType'] = userType;
 
     return data;
   }

@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/components/fab_container.dart';
 import 'package:social_media_app/pages/feeds.dart';
+import 'package:social_media_app/pages/flashes.dart';
 import 'package:social_media_app/pages/notification.dart';
-import 'package:social_media_app/pages/profile.dart';
+import 'package:social_media_app/pages/profiletatooartist.dart';
 import 'package:social_media_app/pages/search.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class TabScreen extends StatefulWidget {
-  const TabScreen({super.key});
+class TabScreenTatooArtist extends StatefulWidget {
+  const TabScreenTatooArtist({super.key});
 
   @override
-  _TabScreenState createState() => _TabScreenState();
+  _TabScreenStateTatooArtist createState() => _TabScreenStateTatooArtist();
 }
 
-class _TabScreenState extends State<TabScreen> {
+class _TabScreenStateTatooArtist extends State<TabScreenTatooArtist> {
   int _page = 0;
-  // bool isArtist = true;
-  // String pageTitle = "";
 
   List pages = [
     {
@@ -34,42 +33,42 @@ class _TabScreenState extends State<TabScreen> {
       'page': const Search(),
       'index': 1,
     },
-    // {
-    //   'title': 'unsee',
-    //   'icon': Ionicons.add_circle,
-    //   'page': const Text('nes'),
-    //   'index': 2,
-    // },
+    {
+      'title': 'unsee',
+      'icon': Ionicons.add_circle,
+      'page': const Text('nes'),
+      'index': 2,
+    },
     {
       'title': 'Notification',
       'icon': CupertinoIcons.bell_solid,
       'page': const Activities(),
-      'index': 2,
-    },
-    {
-      'title': 'Profile',
-      'icon': CupertinoIcons.person_fill,
-      'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 3,
     },
+    // {
+    //   'title': 'Profile',
+    //   'icon': CupertinoIcons.person_fill,
+    //   'page': Profile(profileId: firebaseAuth.currentUser!.uid),
+    //   'index': 4,
+    // },
     // {
     //   'title': 'ProfileClient',
     //   'icon': CupertinoIcons.person_fill,
     //   'page': ProfileClient(profileId: firebaseAuth.currentUser!.uid),
     //   'index': 5,
     // },
-    // {
-    //   'title': 'ProfileTatooArtist',
-    //   'icon': CupertinoIcons.person_fill,
-    //   'page': ProfileTatooArtist(profileId: firebaseAuth.currentUser!.uid),
-    //   'index': 6,
-    // },
-    // {
-    //   'title': 'flashes',
-    //   'icon': Ionicons.flash,
-    //   'page': Flashes(),
-    //   'index': 7,
-    // },
+    {
+      'title': 'ProfileTatooArtist',
+      'icon': CupertinoIcons.person_fill,
+      'page': ProfileTatooArtist(profileId: firebaseAuth.currentUser!.uid),
+      'index': 4,
+    },
+    {
+      'title': 'flashes',
+      'icon': Ionicons.flash,
+      'page': Flashes(),
+      'index': 5,
+    },
   ];
 
   @override

@@ -11,6 +11,7 @@ import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/profile/edit_profile_view_model.dart';
 import 'package:social_media_app/widgets/genredropdownwidget.dart';
 import 'package:social_media_app/widgets/indicators.dart';
+import 'package:social_media_app/widgets/usertypedropdownwidget.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel? user;
@@ -118,6 +119,8 @@ class _EditProfileState extends State<EditProfile> {
 
   buildForm(EditProfileViewModel viewModel, BuildContext context) {
     GenderType selectedGenre = GenderType.UNKNOWN;
+    UserType selectedUserType = UserType.UNKNOWN;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -197,25 +200,29 @@ class _EditProfileState extends State<EditProfile> {
               onItemChange: (GenderType g) => selectedGenre = g,
             ),
             const SizedBox(height: 10.0),
-            DropdownButton<String>(
-              // Not necessary for Option 1
-              // value: widget.user!.gender,
-              hint: const Text('Who are you ?'),
-              // value: (GenderType.OTHER).name,
-              value: viewModel.getUserType().toString(),
-              onChanged: (String? val) {
-                setState(() {
-                  viewModel.setUserType(val!);
-                  print(viewModel.getUserType().toString());
-                });
-              },
-              items: UserType.values.map((userType) {
-                return DropdownMenuItem(
-                  value: userType.name,
-                  child: Text((userType.name).toString()),
-                );
-              }).toList(),
+            UserTypeDDWidget(
+              initial: selectedUserType,
+              onItemChange: (UserType g) => selectedUserType = g,
             ),
+            // DropdownButton<String>(
+            //   // Not necessary for Option 1
+            //   // value: widget.user!.gender,
+            //   hint: const Text('Who are you ?'),
+            //   // value: (GenderType.OTHER).name,
+            //   value: viewModel.getUserType().toString(),
+            //   onChanged: (String? val) {
+            //     setState(() {
+            //       viewModel.setUserType(val!);
+            //       print(viewModel.getUserType().toString());
+            //     });
+            //   },
+            //   items: UserType.values.map((userType) {
+            //     return DropdownMenuItem(
+            //       value: userType.name,
+            //       child: Text((userType.name).toString()),
+            //     );
+            //   }).toList(),
+            // ),
             const SizedBox(height: 20.0),
           ],
         ),

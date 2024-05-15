@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/enum_converter.dart';
 
 class TatooArtist extends UserModel {
   @override
@@ -42,8 +41,8 @@ class TatooArtist extends UserModel {
   @override
   String? city;
   @override
-  @EnumConverter()
-  UserType userType = UserType.TATOOARTIST;
+  // @EnumConverter()
+  String userType = UserType.TATOOARTIST.name;
 
   bool? isGuestArtist;
   String? gender;
@@ -80,11 +79,11 @@ class TatooArtist extends UserModel {
     this.tatooStyles,
     this.secretKey,
     //  required super.userType,
-  }) : super(userType: UserType.TATOOARTIST);
+  }) : super(userType: UserType.TATOOARTIST.name);
 
   @override
   TatooArtist.fromJson(Map<String, dynamic> json)
-      : super(userType: UserType.TATOOARTIST) {
+      : super(userType: UserType.TATOOARTIST.name) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -109,7 +108,7 @@ class TatooArtist extends UserModel {
     postalAdress = json['postalAdress'];
     city = json['city'];
     secretKey = json['secretKey'];
-    super.userType = UserType.values.byName(json['userType']);
+    userType = json['userType'];
 
     if (json.containsKey('tatooStyles') && json['tatooStyles'] != null) {
       tatooStyles = json['tatooStyles'].cast<TatooStyle>() ?? [];
@@ -142,10 +141,9 @@ class TatooArtist extends UserModel {
     data['countryCode'] = countryCode;
     data['postalAdress'] = postalAdress;
     data['city'] = city;
-    data['userType'] = userType.name;
+    data['userType'] = userType;
     data['secretKey'] = secretKey;
     data['tatooStyles'] = tatooStyles!.map((style) => style.index).toList();
-    data['userType'] = userType.name;
 
     return data;
   }

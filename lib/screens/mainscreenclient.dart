@@ -9,17 +9,15 @@ import 'package:social_media_app/pages/profile.dart';
 import 'package:social_media_app/pages/search.dart';
 import 'package:social_media_app/utils/firebase.dart';
 
-class TabScreen extends StatefulWidget {
-  const TabScreen({super.key});
+class TabScreenClient extends StatefulWidget {
+  const TabScreenClient({super.key});
 
   @override
-  _TabScreenState createState() => _TabScreenState();
+  _TabScreenStateClient createState() => _TabScreenStateClient();
 }
 
-class _TabScreenState extends State<TabScreen> {
+class _TabScreenStateClient extends State<TabScreenClient> {
   int _page = 0;
-  // bool isArtist = true;
-  // String pageTitle = "";
 
   List pages = [
     {

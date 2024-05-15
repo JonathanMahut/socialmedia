@@ -39,8 +39,8 @@ class EventOrganisatorService implements UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    users.userType = userType;
-  
+    users.userType = userType.name;
+
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
     }

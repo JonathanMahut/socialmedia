@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
-import 'package:social_media_app/services/enum_converter.dart';
 
 class UserModel {
   String? username;
@@ -23,8 +22,8 @@ class UserModel {
   String? city;
   // Use EnumConverter annotation to convert enum to string and vice versa
 
-  @EnumConverter()
-  UserType userType = UserType.CLIENT; // Use EnumConverter annotation
+  // @EnumConverter()
+  String userType = UserType.UNKNOWN.name; // Use EnumConverter annotation
 
   UserModel({
     this.username,
@@ -67,7 +66,7 @@ class UserModel {
     countryCode = json['countryCode'];
     postalAdress = json['postalAdress'];
     city = json['city'];
-    userType = UserType.values.byName(json['userType']);
+    userType = json['userType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +89,7 @@ class UserModel {
     data['countryCode'] = countryCode;
     data['postalAdress'] = postalAdress;
     data['city'] = city;
-    data['userType'] = userType.name;
+    data['userType'] = userType;
 
     return data;
   }
