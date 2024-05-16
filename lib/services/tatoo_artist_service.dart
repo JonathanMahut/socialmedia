@@ -62,7 +62,7 @@ class TatooArtistService extends UserService {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
-      "userType": users.userType ?? UserType.TATOOARTIST as String,
+      "userType": users.userType,
 
       "gender": users.gender ?? GenderType.OTHER as String,
       // Sérialisation des styles de tatouage

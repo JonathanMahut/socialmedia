@@ -125,8 +125,6 @@ Double check install instructions for both
 
 ### Known Issues
 
-* For Artist, there is an issu on Signup, the Tatoo Style pages appears before Photo Profile, ans the selected styles are not saved.
-
 # Note
 
 - The stories feature is ready, you can write a cloud scheduler function to auto delete stories

@@ -9,6 +9,8 @@ import 'package:social_media_app/firebase_options.dart';
 import 'package:social_media_app/landing/landing_page.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
 import 'package:social_media_app/services/user_service.dart';
+import 'package:social_media_app/services/client_service.dart';
+import 'package:social_media_app/services/tatoo_artist_service.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/providers.dart';
 import 'package:social_media_app/view_models/theme/theme_view_model.dart';

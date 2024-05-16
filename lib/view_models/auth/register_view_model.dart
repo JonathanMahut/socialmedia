@@ -35,7 +35,7 @@ class RegisterViewModel extends ChangeNotifier {
               email: email,
               password: password,
               country: country,
-              userType: UserType.CLIENT.name);
+              userType: userType);
           print(success);
           if (success) {
             Navigator.of(context).pushReplacement(
