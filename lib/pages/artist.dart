@@ -1,13 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
-import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/screens/edit_profile.dart';

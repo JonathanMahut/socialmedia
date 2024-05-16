@@ -27,7 +27,7 @@ class EditProfileViewModel extends ChangeNotifier {
   File? image;
   String? imgLink;
   String? usergender;
-  UserType? usertype;
+  String? usertype;
 
   List<TatooStyle>? tatooStyle;
 
@@ -78,7 +78,7 @@ class EditProfileViewModel extends ChangeNotifier {
     return usergender;
   }
 
-  setUserType(UserType val) {
+  setUserType(String val) {
     print('SetUserType$val');
     usertype = val;
     notifyListeners();
@@ -86,9 +86,9 @@ class EditProfileViewModel extends ChangeNotifier {
 
   getUserType() {
     if (usertype == null || usertype == '') {
-      return UserType.UNKNOWN;
+      return 'UNKNOWN';
     } else {
-      return UserType;
+      return usertype;
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
+
 import 'package:social_media_app/utils/firebase.dart';
 
 class AuthService {
@@ -42,7 +42,7 @@ class AuthService {
         countryCode,
         postalAdress,
         city,
-        userType ?? UserType.CLIENT as String,
+        userType ,
       );
       return true;
     } else {
@@ -80,7 +80,7 @@ class AuthService {
       'countryCode': countryCode ?? '',
       'postalAdress': postalAdress ?? '',
       'city': city ?? '',
-      'userType': userType ?? UserType.CLIENT as String
+      'userType': userType ?? 'UNKNOWN'
     };
     print(userData);
 

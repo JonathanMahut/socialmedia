@@ -139,7 +139,7 @@ class _RegisterState extends State<Register> {
             },
             focusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           UserTypeDDWidget(
             initial: selectedUserType,
             onItemChange: (UserType g) => selectedUserType = g,
@@ -150,12 +150,12 @@ class _RegisterState extends State<Register> {
             width: 180.0,
             child: ElevatedButton(
               style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(
+                backgroundColor: WidgetStateProperty.all<Color>(
                     Theme.of(context).colorScheme.secondary),
               ),
               child: Text(

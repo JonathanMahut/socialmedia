@@ -6,8 +6,7 @@ class GenreDDWidget extends StatefulWidget {
   final GenderType initial;
 
   const GenreDDWidget(
-      {Key? key, required this.onItemChange, required this.initial})
-      : super(key: key);
+      {super.key, required this.onItemChange, required this.initial});
 
   @override
   _GenreDDWidgetState createState() => _GenreDDWidgetState(initial);

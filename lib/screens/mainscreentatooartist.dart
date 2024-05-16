@@ -66,7 +66,7 @@ class _TabScreenStateTatooArtist extends State<TabScreenTatooArtist> {
     {
       'title': 'flashes',
       'icon': Ionicons.flash,
-      'page': Flashes(),
+      'page': const Flashes(),
       'index': 5,
     },
   ];

@@ -5,7 +5,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/components/fab_container.dart';
 import 'package:social_media_app/pages/feeds.dart';
 import 'package:social_media_app/pages/notification.dart';
-import 'package:social_media_app/pages/profile.dart';
 import 'package:social_media_app/pages/profileclient.dart';
 import 'package:social_media_app/pages/search.dart';
 import 'package:social_media_app/utils/firebase.dart';

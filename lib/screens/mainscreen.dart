@@ -34,12 +34,6 @@ class _TabScreenState extends State<TabScreen> {
       'page': const Search(),
       'index': 1,
     },
-    // {
-    //   'title': 'unsee',
-    //   'icon': Ionicons.add_circle,
-    //   'page': const Text('nes'),
-    //   'index': 2,
-    // },
     {
       'title': 'Notification',
       'icon': CupertinoIcons.bell_solid,
@@ -52,24 +46,7 @@ class _TabScreenState extends State<TabScreen> {
       'page': Profile(profileId: firebaseAuth.currentUser!.uid),
       'index': 3,
     },
-    // {
-    //   'title': 'ProfileClient',
-    //   'icon': CupertinoIcons.person_fill,
-    //   'page': ProfileClient(profileId: firebaseAuth.currentUser!.uid),
-    //   'index': 5,
-    // },
-    // {
-    //   'title': 'ProfileTatooArtist',
-    //   'icon': CupertinoIcons.person_fill,
-    //   'page': ProfileTatooArtist(profileId: firebaseAuth.currentUser!.uid),
-    //   'index': 6,
-    // },
-    // {
-    //   'title': 'flashes',
-    //   'icon': Ionicons.flash,
-    //   'page': Flashes(),
-    //   'index': 7,
-    // },
+
   ];
 
   @override

@@ -102,6 +102,7 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
+                    
                     UserModel user = UserModel.fromJson(
                       snapshot.data!.data() as Map<String, dynamic>,
                     );

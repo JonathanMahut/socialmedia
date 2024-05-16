@@ -1,4 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, User;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,9 +9,10 @@ import 'package:social_media_app/components/life_cycle_event_handler.dart';
 import 'package:social_media_app/firebase_options.dart';
 import 'package:social_media_app/landing/landing_page.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
+import 'package:social_media_app/screens/mainscreenclient.dart';
+import 'package:social_media_app/screens/mainscreentatooartist.dart';
+import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/user_service.dart';
-import 'package:social_media_app/services/client_service.dart';
-import 'package:social_media_app/services/tatoo_artist_service.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/providers.dart';
 import 'package:social_media_app/view_models/theme/theme_view_model.dart';
@@ -45,6 +47,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    AuthService auth = AuthService();
+    String? currentUserType;
     return MultiProvider(
       providers: providers,
       child: Consumer<ThemeProvider>(
@@ -70,9 +74,24 @@ class _MyAppState extends State<MyApp> {
             home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: ((BuildContext context, snapshot) {
+                User user = auth.getCurrentUser();
                 if (snapshot.hasData) {
                   // Test if current user userType is CLIENT or TATTOARTIST
-                  return const TabScreen();
+                   FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(user.uid)
+                    .get()
+                    .then(
+                      (value) => currentUserType = value.get('userType'),
+                    );
+                    if (currentUserType == 'CLIENT') {
+                      return const TabScreenClient();
+                    } else if (currentUserType == 'TATTOOARTIST') {
+                      return const TabScreenTatooArtist();
+                    } else{
+                      return const TabScreen();
+                  }
+                  
                 } else {
                   return const Landing();
                 }

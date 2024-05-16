@@ -6,8 +6,7 @@ class UserTypeDDWidget extends StatefulWidget {
   final UserType initial;
 
   const UserTypeDDWidget(
-      {Key? key, required this.onItemChange, required this.initial})
-      : super(key: key);
+      {super.key, required this.onItemChange, required this.initial});
 
   @override
   _UserTypeDDWidgetState createState() => _UserTypeDDWidgetState(initial);
