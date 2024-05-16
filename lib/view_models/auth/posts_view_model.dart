@@ -8,7 +8,9 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
+import 'package:social_media_app/services/client_service.dart';
 import 'package:social_media_app/services/post_service.dart';
+import 'package:social_media_app/services/tatoo_artist_service.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -16,6 +18,8 @@ import 'package:social_media_app/utils/firebase.dart';
 class PostsViewModel extends ChangeNotifier {
   //Services
   UserService userService = UserService();
+  ClientService clientService = ClientService();
+  TatooArtistService tatooArtistService = TatooArtistService();
   PostService postService = PostService();
 
   //Keys
@@ -42,6 +46,7 @@ class PostsViewModel extends ChangeNotifier {
   bool edit = false;
   String? id;
   bool isFlash = false;
+  String? currentUserType;
 
   //controllers
   TextEditingController locationTEC = TextEditingController();
@@ -88,6 +93,12 @@ class PostsViewModel extends ChangeNotifier {
   setIsFlash(bool val) {
     print('SetFlash $val');
     isFlash = val;
+    notifyListeners();
+  }
+
+  setCurrentUsertype(String val) {
+    print('SetUserType $val');
+    currentUserType = val;
     notifyListeners();
   }
 
@@ -159,8 +170,7 @@ class PostsViewModel extends ChangeNotifier {
     try {
       loading = true;
       notifyListeners();
-      await postService.uploadPost(
-          mediaUrl!, location!, description!, isFlash);
+      await postService.uploadPost(mediaUrl!, location!, description!, isFlash);
       loading = false;
       resetPost();
       notifyListeners();
@@ -183,8 +193,9 @@ class PostsViewModel extends ChangeNotifier {
         await postService.uploadProfilePicture(
             mediaUrl!, firebaseAuth.currentUser!);
         loading = false;
-        Navigator.of(context)
-            .pushReplacement(CupertinoPageRoute(builder: (_) => const TabScreen()));
+
+        Navigator.of(context).pushReplacement(
+            CupertinoPageRoute(builder: (_) => const TabScreen()));
         notifyListeners();
       } catch (e) {
         print(e);

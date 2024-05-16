@@ -9,6 +9,7 @@ import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/auth/register_view_model.dart';
 import 'package:social_media_app/widgets/indicators.dart';
+import 'package:social_media_app/widgets/usertypedropdownwidget.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -65,6 +66,7 @@ class _RegisterState extends State<Register> {
   }
 
   buildForm(RegisterViewModel viewModel, BuildContext context) {
+    UserType selectedUserType = UserType.UNKNOWN;
     return Form(
       key: viewModel.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -138,40 +140,10 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.cPassFN,
           ),
           SizedBox(height: 10.0),
-          DropdownButton<String>(
-            // Not necessary for Option 1
-            // value: (UserType.CLIENT).name,
-            hint: Text('Who are you ?'),
-            onChanged: (String? val) {
-              setState(() {
-                val;
-                viewModel.setUserType(val) as String?;
-                print("User Type :" + viewModel.userType!);
-              });
-            },
-
-            value: viewModel.getUserType(),
-            items: UserType.values.map((userType) {
-              return DropdownMenuItem(
-                child: Text((userType.name).toString()),
-                value: userType.name,
-              );
-            }).toList(),
-            // focusNode: viewModel.genderFN,
+          UserTypeDDWidget(
+            initial: selectedUserType,
+            onItemChange: (UserType g) => selectedUserType = g,
           ),
-          // SizedBox(height: 10.0),
-          // SwitchListTile(
-          //   tileColor: Colors.yellow[50],
-          //   activeColor: Colors.red,
-          //   title: const Text('I am a tatoo artist !'),
-          //   value: false,
-          //   onChanged: (bool? val) {
-          //     setState(() {
-          //       viewModel.setArtist(val);
-          //     });
-          //   },
-          // ),
-
           const SizedBox(height: 25.0),
           SizedBox(
             height: 45.0,

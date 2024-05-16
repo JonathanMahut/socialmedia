@@ -10,15 +10,10 @@ class RegisterViewModel extends ChangeNotifier {
   bool validate = false;
   bool loading = false;
   String? username, email, country, password, cPassword, userType;
-  // String gender = 'UNKNOWN';
-
-  // bool isArtist = false;
-  // List<TatooStyle>? selectedTatooStyles = [];
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
   FocusNode passFN = FocusNode();
-  //FocusNode genderFN = FocusNode();
   FocusNode cPassFN = FocusNode();
   AuthService auth = AuthService();
 
@@ -40,11 +35,7 @@ class RegisterViewModel extends ChangeNotifier {
               email: email,
               password: password,
               country: country,
-              userType: UserType.CLIENT.name
-              // gender: gender,
-              // isArtist: isArtist,
-              // tatooStyles: selectedTatooStyles,
-              );
+              userType: UserType.CLIENT.name);
           print(success);
           if (success) {
             Navigator.of(context).pushReplacement(
@@ -56,20 +47,11 @@ class RegisterViewModel extends ChangeNotifier {
           } else {
             showInSnackBar('User account Not successfully created ', context);
           }
-          // if (isArtist == true) {
-          //   Navigator.of(context).pushReplacement(
-          //     CupertinoPageRoute(
-          //       builder: (_) => TatooSelectionPage(),
-          //     ),
-          //   );
-          //   showInSnackBar('Artist account created successfully', context);
-          // }
         } catch (e) {
           loading = false;
           notifyListeners();
           print(e.toString());
-          showInSnackBar(
-              auth.handleFirebaseAuthError(e.toString()), context);
+          showInSnackBar(auth.handleFirebaseAuthError(e.toString()), context);
         }
         loading = false;
         notifyListeners();
@@ -112,24 +94,6 @@ class RegisterViewModel extends ChangeNotifier {
   getUserType() {
     return userType;
   }
-
-  // setGender(val) {
-  //   gender = val.toString();
-  //   notifyListeners();
-  // }
-
-  // getGender() {
-  //   return gender;
-  // }
-
-  // setArtist(val) {
-  //   isArtist = val;
-  //   notifyListeners();
-  // }
-
-  // getIsArtidt() {
-  //   return isArtist;
-  // }
 
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

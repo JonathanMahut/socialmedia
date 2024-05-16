@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
+import 'package:social_media_app/models/client.dart';
 import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -25,6 +27,8 @@ currentUserId() {
 }
 
 UserModel? user;
+Client? client;
+TatooArtist? artist;
 
 class _ViewImageState extends State<ViewImage> {
   @override
@@ -186,8 +190,8 @@ class _ViewImageState extends State<ViewImage> {
           return LikeButton(
             onTap: onLikeButtonTapped,
             size: 25.0,
-            circleColor:
-                const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            circleColor: const CircleColor(
+                start: Color(0xffFFC0CB), end: Color(0xffff0000)),
             bubblesColor: const BubblesColor(
               dotPrimaryColor: Color(0xffFFA500),
               dotSecondaryColor: Color(0xffd8392b),

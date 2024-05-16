@@ -6,17 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
-import 'package:social_media_app/models/event_organisator.dart';
 import 'package:social_media_app/models/client.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/models/vendor.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
 import 'package:social_media_app/screens/settings.dart';
 import 'package:social_media_app/utils/firebase.dart';
+import 'package:social_media_app/widgets/genredropdownwidget.dart';
 import 'package:social_media_app/widgets/post_tiles.dart';
 
 class ProfileClient extends StatefulWidget {
@@ -64,6 +63,7 @@ class _ProfileClientState extends State<ProfileClient> {
 
   @override
   Widget build(BuildContext context) {
+    GenderType selectedGenre = GenderType.UNKNOWN;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -260,20 +260,10 @@ class _ProfileClientState extends State<ProfileClient> {
                                     top: 10.0, left: 20.0),
                                 child: SizedBox(
                                   width: 200,
-                                  child: DropdownButton<String>(
-                                    value: user.gender,
-                                    items: <String>['Male', 'Female', 'Other']
-                                        .map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        user.gender = value;
-                                      });
-                                    },
+                                  child: GenreDDWidget(
+                                    initial: selectedGenre,
+                                    onItemChange: (GenderType g) =>
+                                        selectedGenre = g,
                                   ),
                                 ),
                               )

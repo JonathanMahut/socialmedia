@@ -176,25 +176,6 @@ class _EditProfileState extends State<EditProfile> {
               },
             ),
             const SizedBox(height: 10.0),
-            // DropdownButton<String>(
-            //   // Not necessary for Option 1
-            //   // value: widget.user!.gender,
-            //   hint: const Text('Choose your gender'),
-            //   // value: (GenderType.OTHER).name,
-            //   value: viewModel.getGender(),
-            //   onChanged: (String? val) {
-            //     setState(() {
-            //       viewModel.setGender(val!);
-            //     });
-            //   },
-            //   // value: viewModel.getGender(),
-            //   items: GenderType.values.map((gender) {
-            //     return DropdownMenuItem(
-            //       value: gender.name,
-            //       child: Text((gender.name).toString()),
-            //     );
-            //   }).toList(),
-            // ),
             GenreDDWidget(
               initial: selectedGenre,
               onItemChange: (GenderType g) => selectedGenre = g,
@@ -204,25 +185,6 @@ class _EditProfileState extends State<EditProfile> {
               initial: selectedUserType,
               onItemChange: (UserType g) => selectedUserType = g,
             ),
-            // DropdownButton<String>(
-            //   // Not necessary for Option 1
-            //   // value: widget.user!.gender,
-            //   hint: const Text('Who are you ?'),
-            //   // value: (GenderType.OTHER).name,
-            //   value: viewModel.getUserType().toString(),
-            //   onChanged: (String? val) {
-            //     setState(() {
-            //       viewModel.setUserType(val!);
-            //       print(viewModel.getUserType().toString());
-            //     });
-            //   },
-            //   items: UserType.values.map((userType) {
-            //     return DropdownMenuItem(
-            //       value: userType.name,
-            //       child: Text((userType.name).toString()),
-            //     );
-            //   }).toList(),
-            // ),
             const SizedBox(height: 20.0),
           ],
         ),
