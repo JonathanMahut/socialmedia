@@ -190,7 +190,7 @@ class _CreatePostState extends State<CreatePost> {
                 tileColor: Colors.yellow[50],
                 activeColor: Colors.red,
                 title: const Text('It\'s a dispo flash'),
-                value: viewModel.isFlash ?? false,
+                value: viewModel.isFlash,
                 onChanged: (bool? val) {
                   setState(() {
                     viewModel.setIsFlash(val!);
