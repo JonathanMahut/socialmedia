@@ -152,12 +152,12 @@ class _LoginState extends State<Login> {
             width: 180.0,
             child: ElevatedButton(
               style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
-                backgroundColor: WidgetStateProperty.all<Color>(
+                backgroundColor: MaterialStateProperty.all<Color>(
                   Theme.of(context).colorScheme.secondary,
                 ),
               ),
