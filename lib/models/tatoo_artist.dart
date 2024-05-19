@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class TatooArtist extends UserModel {
   @override
@@ -41,11 +43,13 @@ class TatooArtist extends UserModel {
   @override
   String? city;
   @override
-  // @EnumConverter()
+  @EnumConverter()
   String userType = UserType.TATOOARTIST.name;
+  @EnumConverter()
+  String? gender = GenderType.UNKNOWN.name;
 
   bool? isGuestArtist;
-  String? gender;
+
   String? website;
   num? totalPosts;
   num? totalFlashes;

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:social_media_app/utils/firebase.dart';
 
 class AuthService {
@@ -24,6 +23,8 @@ class AuthService {
     String? postalAdress,
     String? city,
     String? userType,
+    String? theme,
+    String? gender,
   }) async {
     var res = await firebaseAuth.createUserWithEmailAndPassword(
       email: '$email',
@@ -31,19 +32,20 @@ class AuthService {
     );
     if (res.user != null) {
       await saveUserToFirestore(
-        name!,
-        res.user!,
-        email!,
-        country!,
-        displayName,
-        phoneNumber,
-        website,
-        language,
-        countryCode,
-        postalAdress,
-        city,
-        userType ,
-      );
+          name!,
+          res.user!,
+          email!,
+          country!,
+          displayName,
+          phoneNumber,
+          website,
+          language,
+          countryCode,
+          postalAdress,
+          city,
+          userType,
+          theme,
+          gender);
       return true;
     } else {
       return false;
@@ -64,6 +66,8 @@ class AuthService {
     String? postalAdress,
     String? city,
     String? userType,
+    String? gender,
+    String? theme,
   ) async {
     Map<String, dynamic> userData = {
       'username': name,
@@ -80,7 +84,9 @@ class AuthService {
       'countryCode': countryCode ?? '',
       'postalAdress': postalAdress ?? '',
       'city': city ?? '',
-      'userType': userType ?? 'UNKNOWN'
+      'userType': userType ?? 'UNKNOWN',
+      'theme': theme ?? '',
+      'gender': gender ?? 'UNKNOWN'
     };
     print(userData);
 

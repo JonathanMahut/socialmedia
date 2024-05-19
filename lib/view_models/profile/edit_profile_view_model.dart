@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
@@ -68,9 +69,9 @@ class EditProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setGender(String val) {
+  setGender(GenderType val) {
     print('SetGender$val');
-    usergender = val;
+    usergender = val.name;
     notifyListeners();
   }
 
@@ -78,9 +79,9 @@ class EditProfileViewModel extends ChangeNotifier {
     return usergender;
   }
 
-  setUserType(String val) {
+  setUserType(UserType val) {
     print('SetUserType$val');
-    usertype = val;
+    usertype = val.name;
     notifyListeners();
   }
 

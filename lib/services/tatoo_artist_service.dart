@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -34,7 +33,7 @@ class TatooArtistService extends UserService {
     String? username,
     String? bio,
     String? country,
-    required UserType userType,
+    required String userType,
     // bool? isArtist,
     String? gender,
     List<TatooStyle>?
@@ -45,7 +44,7 @@ class TatooArtistService extends UserService {
     users.username = username;
     users.bio = bio;
     users.country = country;
-    users.userType = userType.name;
+    users.userType = userType;
 
     if (gender != null) {
       users.gender = gender;
@@ -64,7 +63,7 @@ class TatooArtistService extends UserService {
       "photoUrl": users.photoUrl ?? '',
       "userType": users.userType,
 
-      "gender": users.gender ?? GenderType.OTHER as String,
+      "gender": users.gender ?? GenderType.UNKNOWN as String,
       // Sérialisation des styles de tatouage
       "tatooStyles": users.tatooStyles?.map((style) => style.index).toList(),
     });

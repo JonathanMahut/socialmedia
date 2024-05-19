@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class EventOrganisator extends UserModel {
   @override
@@ -46,8 +48,10 @@ class EventOrganisator extends UserModel {
   @override
   String? city;
   @override
-  // @EnumConverter()
+  @EnumConverter()
   String userType = UserType.EVENTORGANISATOR.name;
+  @EnumConverter()
+  String? gender = GenderType.UNKNOWN.name;
 
   String? secretKey;
 
@@ -75,7 +79,7 @@ class EventOrganisator extends UserModel {
     this.postalAdress,
     this.city,
     this.secretKey,
-    //required this.userType,
+    required this.gender,
   }) : super(userType: UserType.EVENTORGANISATOR.name);
 
   @override
@@ -104,6 +108,7 @@ class EventOrganisator extends UserModel {
     city = json['city'];
     secretKey = json['secretKey'];
     userType = json['userType'];
+    gender = json['gender'];
   }
 
   @override
@@ -132,7 +137,7 @@ class EventOrganisator extends UserModel {
     data['city'] = city;
     data['secretKey'] = secretKey;
     data['userType'] = userType;
-
+    data['gender'] = gender;
     return data;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class UserModel {
   String? username;
@@ -22,7 +23,7 @@ class UserModel {
   String? city;
   // Use EnumConverter annotation to convert enum to string and vice versa
 
-  // @EnumConverter()
+  @EnumConverter()
   String userType = UserType.UNKNOWN.name; // Use EnumConverter annotation
 
   UserModel({

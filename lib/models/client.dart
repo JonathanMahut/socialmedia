@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
+import 'package:social_media_app/services/enum_converter.dart';
 
 class Client extends UserModel {
   @override
@@ -25,7 +27,7 @@ class Client extends UserModel {
   String? displayName;
   @override
   String? phoneNumber;
-  String? gender;
+
   @override
   num? totalFollowers;
   @override
@@ -40,9 +42,13 @@ class Client extends UserModel {
   String? postalAdress;
   @override
   String? city;
+
   @override
-  // @EnumConverter()
+  @EnumConverter()
   String userType = UserType.CLIENT.name;
+  @override
+  @EnumConverter()
+  String? gender = GenderType.UNKNOWN.name;
 
   @override
   Client({

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/services.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -28,7 +27,8 @@ class UserService extends Service {
     String? username,
     String? bio,
     String? country,
-    required UserType userType,
+    required String userType,
+    String? gender,
   }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
@@ -36,7 +36,7 @@ class UserService extends Service {
     users.bio = bio;
     users.country = country;
     // UserType Value
-    users.userType = userType.name;
+    users.userType = userType;
 
     if (image != null) {
       users.photoUrl = await uploadImage(profilePic, image);
@@ -46,7 +46,8 @@ class UserService extends Service {
       'bio': bio,
       'country': country,
       "photoUrl": users.photoUrl ?? '',
-      "userType": users.userType ?? UserType.UNKNOWN,
+      "userType": users.userType,
+      'gender': gender ?? 'UNKNOWN'
     });
 
     return true;
