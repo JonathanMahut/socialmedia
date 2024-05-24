@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
+import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/user_service.dart';
