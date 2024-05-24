@@ -83,11 +83,53 @@ class TatooArtist extends UserModel {
     this.tatooStyles,
     this.secretKey,
     //  required super.userType,
-  }) : super(userType: UserType.TATOOARTIST.name);
+  }) : super(
+          userType: UserType.TATOOARTIST.name,
+          username: username,
+          email: email,
+          photoUrl: photoUrl,
+          phoneNumber: phoneNumber,
+          displayName: displayName,
+          id: id,
+          signedUpAt: signedUpAt,
+          isOnline: isOnline,
+          lastSeen: lastSeen,
+          bio: bio,
+          country: country,
+          gender: gender,
+          totalFollowers: totalFollowers,
+          totalFollowing: totalFollowing,
+          theme: theme,
+          language: language,
+          countryCode: countryCode,
+          postalAdress: postalAdress,
+          city: city,
+        );
 
   @override
   TatooArtist.fromJson(Map<String, dynamic> json)
-      : super(userType: UserType.TATOOARTIST.name) {
+      : super(
+          userType: UserType.TATOOARTIST.name,
+          username: json['username'],
+          email: json['email'],
+          photoUrl: json['photoUrl'],
+          country: json['country'],
+          id: json['id'],
+          signedUpAt: json['signedUpAt'],
+          isOnline: json['isOnline'],
+          lastSeen: json['lastSeen'],
+          bio: json['bio'],
+          displayName: json['displayName'],
+          phoneNumber: json['phoneNumber'],
+          gender: json['gender'],
+          totalFollowers: json['totalFollowers'],
+          totalFollowing: json['totalFollowing'],
+          theme: json['theme'],
+          language: json['language'],
+          countryCode: json['countryCode'],
+          postalAdress: json['postalAdress'],
+          city: json['city'],
+        ) {
     username = json['username'];
     email = json['email'];
     country = json['country'];

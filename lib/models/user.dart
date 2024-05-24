@@ -45,7 +45,7 @@ class UserModel {
     this.countryCode,
     this.postalAdress,
     this.city,
-    required this.userType,
+    required this.userType, required gender,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {

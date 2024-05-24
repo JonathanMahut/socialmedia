@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/enum_converter.dart';
@@ -72,11 +73,52 @@ class Annoucer extends UserModel {
     this.city,
     this.secretKey,
     // required super.userType,
-  }) : super(userType: UserType.VENDOR.name);
+  }) : super(
+            userType: UserType.VENDOR.name,
+            username: username,
+            email: email,
+            photoUrl: photoUrl,
+            phoneNumber: phoneNumber,
+            displayName: displayName,
+            id: id,
+            signedUpAt: signedUpAt,
+            isOnline: isOnline,
+            lastSeen: lastSeen,
+            bio: bio,
+            country: country,
+            totalFollowers: totalFollowers,
+            totalFollowing: totalFollowing,
+            theme: theme,
+            language: language,
+            countryCode: countryCode,
+            postalAdress: postalAdress,
+            city: city,
+            gender: GenderType.UNKNOWN.name);
 
   @override
   Annoucer.fromJson(Map<String, dynamic> json)
-      : super(userType: UserType.VENDOR.name) {
+      : super(
+          userType: UserType.VENDOR.name,
+          username: json['username'],
+          email: json['email'],
+          photoUrl: json['photoUrl'],
+          country: json['country'],
+          id: json['id'],
+          signedUpAt: json['signedUpAt'],
+          isOnline: json['isOnline'],
+          lastSeen: json['lastSeen'],
+          bio: json['bio'],
+          displayName: json['displayName'],
+          phoneNumber: json['phoneNumber'],
+          gender: json['gender'],
+          totalFollowers: json['totalFollowers'],
+          totalFollowing: json['totalFollowing'],
+          theme: json['theme'],
+          language: json['language'],
+          countryCode: json['countryCode'],
+          postalAdress: json['postalAdress'],
+          city: json['city'],
+        ) {
     username = json['username'];
     email = json['email'];
     country = json['country'];
@@ -100,6 +142,8 @@ class Annoucer extends UserModel {
     secretKey = json['secretKey'];
     userType = json['userType'];
   }
+
+  static get totalFlashes => null;
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
