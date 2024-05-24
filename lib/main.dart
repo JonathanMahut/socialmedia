@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, User;
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,9 +8,6 @@ import 'package:social_media_app/components/life_cycle_event_handler.dart';
 import 'package:social_media_app/firebase_options.dart';
 import 'package:social_media_app/landing/landing_page.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
-import 'package:social_media_app/screens/mainscreenclient.dart';
-import 'package:social_media_app/screens/mainscreentatooartist.dart';
-import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/theme_observer.dart';
 import 'package:social_media_app/utils/constants.dart';
@@ -23,13 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // FirebaseAppCheck.instance // Only needed if you use App checks
-  //     .installAppCheckProviderFactory(AppCheckProviderFactory(
-  //         provider: SafetyNetAppCheckProviderFactory()));
-  //  BlocOverrides.runZoned(
-  //   () => runApp(const MyApp()),
-  //   blocObserver: ThemeBlocObserver(),
-  // );
+
   Bloc.observer = ThemeBlocObserver();
   runApp(const MyApp());
 }
