@@ -6,50 +6,9 @@ import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/enum_converter.dart';
 
 class TatooArtist extends UserModel {
-  @override
-  String? username;
-  @override
-  String? email;
-  @override
-  String? photoUrl;
-  @override
-  String? country;
-  @override
-  String? bio;
-  @override
-  String? id;
-  @override
-  Timestamp? signedUpAt;
-  @override
-  Timestamp? lastSeen;
-  @override
-  bool? isOnline;
-  @override
-  String? displayName;
-  @override
-  String? phoneNumber;
-  @override
-  num? totalFollowers;
-  @override
-  num? totalFollowing;
-  @override
-  String? theme;
-  @override
-  String? language;
-  @override
-  String? countryCode;
-  @override
-  String? postalAdress;
-  @override
-  String? city;
-  @override
-  @EnumConverter()
-  String userType = UserType.TATOOARTIST.name;
   @EnumConverter()
   String? gender = GenderType.UNKNOWN.name;
-
   bool? isGuestArtist;
-
   String? website;
   num? totalPosts;
   num? totalFlashes;
@@ -57,53 +16,35 @@ class TatooArtist extends UserModel {
   List<TatooStyle>? tatooStyles;
 
   TatooArtist({
-    this.username,
-    this.email,
-    this.id,
-    this.photoUrl,
-    this.signedUpAt,
-    this.isOnline,
+    super.username,
+    super.email,
+    super.id,
+    super.photoUrl,
+    super.signedUpAt,
+    super.isOnline,
     this.isGuestArtist,
-    this.lastSeen,
-    this.bio,
-    this.country,
-    this.displayName,
-    this.phoneNumber,
+    super.lastSeen,
+    super.bio,
+    super.country,
+    super.displayName,
+    super.phoneNumber,
     this.gender,
     this.website,
-    this.totalFollowers,
-    this.totalFollowing,
+    super.totalFollowers,
+    super.totalFollowing,
     this.totalPosts,
     this.totalFlashes,
-    this.theme,
-    this.language,
-    this.countryCode,
-    this.postalAdress,
-    this.city,
+    super.theme,
+    super.language,
+    super.countryCode,
+    super.postalAdress,
+    super.city,
     this.tatooStyles,
     this.secretKey,
     //  required super.userType,
   }) : super(
           userType: UserType.TATOOARTIST.name,
-          username: username,
-          email: email,
-          photoUrl: photoUrl,
-          phoneNumber: phoneNumber,
-          displayName: displayName,
-          id: id,
-          signedUpAt: signedUpAt,
-          isOnline: isOnline,
-          lastSeen: lastSeen,
-          bio: bio,
-          country: country,
           gender: gender,
-          totalFollowers: totalFollowers,
-          totalFollowing: totalFollowing,
-          theme: theme,
-          language: language,
-          countryCode: countryCode,
-          postalAdress: postalAdress,
-          city: city,
         );
 
   @override

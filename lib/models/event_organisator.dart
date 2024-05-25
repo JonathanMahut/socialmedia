@@ -5,102 +5,41 @@ import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/enum_converter.dart';
 
 class EventOrganisator extends UserModel {
-  @override
-  String? username;
-  @override
-  String? email;
-  @override
-  String? photoUrl;
-  @override
-  String? country;
-  @override
-  String? bio;
-  @override
-  String? id;
-  @override
-  Timestamp? signedUpAt;
-  @override
-  Timestamp? lastSeen;
-  @override
-  bool? isOnline;
-  @override
-  String? displayName;
-  @override
-  String? phoneNumber;
-
   String? website;
-  @override
-  num? totalFollowers;
-  @override
-  num? totalFollowing;
-
   num? totalPosts;
-
   num? totalFlashes;
-  @override
-  String? theme;
-  @override
-  String? language;
-  @override
-  String? countryCode;
-  @override
-  String? postalAdress;
-  @override
-  String? city;
-  @override
-  @EnumConverter()
-  String userType = UserType.EVENTORGANISATOR.name;
   @EnumConverter()
   String? gender = GenderType.UNKNOWN.name;
-
   String? secretKey;
 
   @override
   EventOrganisator({
-    this.username,
-    this.email,
-    this.id,
-    this.photoUrl,
-    this.signedUpAt,
-    this.isOnline,
-    this.lastSeen,
-    this.bio,
-    this.country,
-    this.displayName,
-    this.phoneNumber,
+    super.username,
+    super.email,
+    super.id,
+    super.photoUrl,
+    super.signedUpAt,
+    super.isOnline,
+    super.lastSeen,
+    super.bio,
+    super.country,
+    super.displayName,
+    super.phoneNumber,
     this.website,
-    this.totalFollowers,
-    this.totalFollowing,
+    super.totalFollowers,
+    super.totalFollowing,
     this.totalPosts,
     this.totalFlashes,
-    this.theme,
-    this.language,
-    this.countryCode,
-    this.postalAdress,
-    this.city,
+    super.theme,
+    super.language,
+    super.countryCode,
+    super.postalAdress,
+    super.city,
     this.secretKey,
     required this.gender,
   }) : super(
           userType: UserType.EVENTORGANISATOR.name,
-          username: username,
-          email: email,
-          photoUrl: photoUrl,
-          phoneNumber: phoneNumber,
-          displayName: displayName,
-          id: id,
-          signedUpAt: signedUpAt,
-          isOnline: isOnline,
-          lastSeen: lastSeen,
-          bio: bio,
-          country: country,
           gender: gender,
-          totalFollowers: totalFollowers,
-          totalFollowing: totalFollowing,
-          theme: theme,
-          language: language,
-          countryCode: countryCode,
-          postalAdress: postalAdress,
-          city: city,
         );
 
   @override

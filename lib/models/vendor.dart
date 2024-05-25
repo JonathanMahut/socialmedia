@@ -5,95 +5,36 @@ import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/enum_converter.dart';
 
 class Annoucer extends UserModel {
-  @override
-  String? username;
-  @override
-  String? email;
-  @override
-  String? photoUrl;
-  @override
-  String? country;
-  @override
-  String? bio;
-  @override
-  String? id;
-  @override
-  Timestamp? signedUpAt;
-  @override
-  Timestamp? lastSeen;
-  @override
-  bool? isOnline;
-  @override
-  String? displayName;
-  @override
-  String? phoneNumber;
   String? website;
-  @override
-  num? totalFollowers;
-  @override
-  num? totalFollowing;
-
   num? totalPosts;
-  @override
-  String? theme;
-  @override
-  String? language;
-  @override
-  String? countryCode;
-  @override
-  String? postalAdress;
-  @override
-  String? city;
   String? secretKey;
-  @override
-  @EnumConverter()
-  String userType = UserType.VENDOR.name;
 
   @override
   Annoucer({
-    this.username,
-    this.email,
-    this.id,
-    this.photoUrl,
-    this.signedUpAt,
-    this.isOnline,
-    this.lastSeen,
-    this.bio,
-    this.country,
-    this.displayName,
-    this.phoneNumber,
+    //  this.username,
+    super.username,
+    super.email,
+    super.id,
+    super.photoUrl,
+    super.signedUpAt,
+    super.isOnline,
+    super.lastSeen,
+    super.bio,
+    super.country,
+    super.displayName,
+    super.phoneNumber,
     this.website,
-    this.totalFollowers,
-    this.totalFollowing,
+    super.totalFollowers,
+    super.totalFollowing,
     this.totalPosts,
-    this.theme,
-    this.language,
-    this.countryCode,
-    this.postalAdress,
-    this.city,
+    super.theme,
+    super.language,
+    super.countryCode,
+    super.postalAdress,
+    super.city,
     this.secretKey,
     // required super.userType,
-  }) : super(
-            userType: UserType.VENDOR.name,
-            username: username,
-            email: email,
-            photoUrl: photoUrl,
-            phoneNumber: phoneNumber,
-            displayName: displayName,
-            id: id,
-            signedUpAt: signedUpAt,
-            isOnline: isOnline,
-            lastSeen: lastSeen,
-            bio: bio,
-            country: country,
-            totalFollowers: totalFollowers,
-            totalFollowing: totalFollowing,
-            theme: theme,
-            language: language,
-            countryCode: countryCode,
-            postalAdress: postalAdress,
-            city: city,
-            gender: GenderType.UNKNOWN.name);
+  }) : super(userType: UserType.VENDOR.name, gender: GenderType.UNKNOWN.name);
 
   @override
   Annoucer.fromJson(Map<String, dynamic> json)

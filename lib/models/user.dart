@@ -22,7 +22,6 @@ class UserModel {
   String? postalAdress;
   String? city;
   // Use EnumConverter annotation to convert enum to string and vice versa
-
   @EnumConverter()
   String userType = UserType.UNKNOWN.name; // Use EnumConverter annotation
 
@@ -45,7 +44,8 @@ class UserModel {
     this.countryCode,
     this.postalAdress,
     this.city,
-    required this.userType, required gender,
+    required this.userType,
+    required gender,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -93,5 +93,57 @@ class UserModel {
     data['userType'] = userType;
 
     return data;
+  }
+
+  setId(String id) {
+    this.id = id;
+  }
+
+  setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  setPhotoUrl(String photoUrl) {
+    this.photoUrl = photoUrl;
+  }
+
+  setBio(String bio) {
+    this.bio = bio;
+  }
+
+  setCountry(String country) {
+    this.country = country;
+  }
+
+  setLanguage(String language) {
+    this.language = language;
+  }
+
+  setTheme(String theme) {
+    this.theme = theme;
+  }
+
+  setCountryCode(String countryCode) {
+    this.countryCode = countryCode;
+  }
+
+  setPostalAdress(String postalAdress) {
+    this.postalAdress = postalAdress;
+  }
+
+  setCity(String city) {
+    this.city = city;
+  }
+
+  setUserType(String userType) {
+    this.userType = userType;
+  }
+
+  setTotalFollowers(num totalFollowers) {
+    this.totalFollowers = totalFollowers;
+  }
+
+  setTotalFollowing(num totalFollowing) {
+    this.totalFollowing = totalFollowing;
   }
 }

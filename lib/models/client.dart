@@ -5,98 +5,37 @@ import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/enum_converter.dart';
 
 class Client extends UserModel {
-  @override
-  String? username;
-  @override
-  String? email;
-  @override
-  String? photoUrl;
-  @override
-  String? country;
-  @override
-  String? bio;
-  @override
-  String? id;
-  @override
-  Timestamp? signedUpAt;
-  @override
-  Timestamp? lastSeen;
-  @override
-  bool? isOnline;
-  @override
-  String? displayName;
-  @override
-  String? phoneNumber;
-
-  @override
-  num? totalFollowers;
-  @override
-  num? totalFollowing;
-  @override
-  String? theme;
-  @override
-  String? language;
-  @override
-  String? countryCode;
-  @override
-  String? postalAdress;
-  @override
-  String? city;
-
-  @override
-  @EnumConverter()
-  String userType = UserType.CLIENT.name;
   @EnumConverter()
   String? gender = GenderType.UNKNOWN.name;
 
   @override
   Client({
-    this.username,
-    this.email,
-    this.id,
-    this.photoUrl,
-    this.signedUpAt,
-    this.isOnline,
-    this.lastSeen,
-    this.bio,
-    this.country,
-    this.displayName,
-    this.phoneNumber,
+    super.username,
+    super.email,
+    super.id,
+    super.photoUrl,
+    super.signedUpAt,
+    super.isOnline,
+    super.lastSeen,
+    super.bio,
+    super.country,
+    super.displayName,
+    super.phoneNumber,
     this.gender,
-    this.totalFollowers,
-    this.totalFollowing,
-    this.theme,
-    this.language,
-    this.countryCode,
-    this.postalAdress,
-    this.city,
-    //  required super.userType,
+    super.totalFollowers,
+    super.totalFollowing,
+    super.theme,
+    super.language,
+    super.countryCode,
+    super.postalAdress,
+    super.city,
   }) : super(
-            userType: UserType.CLIENT.name,
-            username: username,
-            email: email,
-            photoUrl: photoUrl,
-            phoneNumber: phoneNumber,
-            displayName: displayName,
-            id: id,
-            signedUpAt: signedUpAt,
-            isOnline: isOnline,
-            lastSeen: lastSeen,
-            bio: bio,
-            country: country,
-            gender: gender,
-            totalFollowers: totalFollowers,
-            totalFollowing: totalFollowing,
-            theme: theme,
-            language: language,
-            countryCode: countryCode,
-            postalAdress: postalAdress,
-            city: city);
+          userType: UserType.CLIENT.name,
+          gender: gender,
+        );
 
   @override
   Client.fromJson(Map<String, dynamic> json)
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2110679814.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2819579614.
       : super(
           userType: UserType.CLIENT.name,
           username: json['username'],
