@@ -231,26 +231,28 @@ class _ProfileClientState extends State<ProfileClient> {
                                     // : buildLikeButton()
                                   ],
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 20.0),
+                                  child: user.bio!.isEmpty
+                                      ? Container()
+                                      : SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            user.bio!,
+                                            style: const TextStyle(
+                                              fontSize: 10.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            maxLines: null,
+                                          ),
+                                        ),
+                                ),
                               ],
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio!.isEmpty
-                              ? Container()
-                              : SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    user.bio!,
-                                    style: const TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    maxLines: null,
-                                  ),
-                                ),
-                        ),
+
                         Container(),
                         //Diplay the Gender of the currennt user if the
                         user.userType == UserType.TATOOARTIST.name ||

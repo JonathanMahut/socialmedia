@@ -102,7 +102,6 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    
                     UserModel user = UserModel.fromJson(
                       snapshot.data!.data() as Map<String, dynamic>,
                     );
@@ -227,23 +226,24 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio!.isEmpty
-                              ? Container()
-                              : SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    user.bio!,
-                                    style: const TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10.0, left: 20.0),
+                              child: user.bio!.isEmpty
+                                  ? Container()
+                                  : SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        user.bio!,
+                                        style: const TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        maxLines: null,
+                                      ),
                                     ),
-                                    maxLines: null,
-                                  ),
-                                ),
+                            ),
+                          ],
                         ),
                         Container(),
                         const SizedBox(height: 10.0),
