@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/enum_converter.dart';
 
 class Annoucer extends UserModel {
   String? website;
