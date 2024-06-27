@@ -32,4 +32,26 @@ class CommentModel {
     data['userId'] = userId;
     return data;
   }
+
+// FromMap constructor
+  factory CommentModel.fromMap(Map<String, dynamic> map) {
+    return CommentModel(
+      username: map['username'],
+      comment: map['comment'],
+      timestamp: map['timestamp'],
+      userDp: map['userDp'],
+      userId: map['userId'],
+    );
+  }
+
+  // ToMap method
+  Map<String, dynamic> toMap() {
+    return {
+      'username': username,
+      'comment': comment,
+      'timestamp': timestamp,
+      'userDp': userDp,
+      'userId': userId,
+    };
+  }
 }

@@ -15,9 +15,9 @@ class Message {
     senderUid = json['senderUid'];
     messageId = json['messageId'];
     if (json['type'] == 'text') {
-      type = MessageType.TEXT;
+      type = MessageType.text;
     } else {
-      type = MessageType.IMAGE;
+      type = MessageType.image;
     }
     time = json['time'];
   }
@@ -27,7 +27,7 @@ class Message {
     data['content'] = content;
     data['senderUid'] = senderUid;
     data['messageId'] = messageId;
-    if (type == MessageType.TEXT) {
+    if (type == MessageType.text) {
       data['type'] = 'text';
     } else {
       data['type'] = 'image';

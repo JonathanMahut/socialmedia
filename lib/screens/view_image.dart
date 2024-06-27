@@ -3,9 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
-import 'package:social_media_app/models/client.dart';
 import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -27,8 +25,6 @@ currentUserId() {
 }
 
 UserModel? user;
-Client? client;
-TatooArtist? artist;
 
 class _ViewImageState extends State<ViewImage> {
   @override

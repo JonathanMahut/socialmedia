@@ -100,7 +100,7 @@ class ChatItem extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              type == MessageType.IMAGE ? "IMAGE" : "$msg",
+              type == MessageType.image ? "image" : "$msg",
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),

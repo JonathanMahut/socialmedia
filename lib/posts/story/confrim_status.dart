@@ -85,7 +85,7 @@ class _ConfirmStatusState extends State<ConfirmStatus> {
             StatusModel message = StatusModel(
               url: url,
               caption: viewModel.description,
-              type: MessageType.IMAGE,
+              type: MessageType.image,
               time: Timestamp.now(),
               statusId: uuid.v1(),
               viewers: [],
@@ -100,7 +100,7 @@ class _ConfirmStatusState extends State<ConfirmStatus> {
             StatusModel message = StatusModel(
               url: url,
               caption: viewModel.description,
-              type: MessageType.IMAGE,
+              type: MessageType.image,
               time: Timestamp.now(),
               statusId: uuid.v1(),
               viewers: [],

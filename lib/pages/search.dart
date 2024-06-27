@@ -10,8 +10,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/chats/conversation.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/pages/profile.dart';
-import 'package:social_media_app/pages/profileclient.dart';
-import 'package:social_media_app/pages/profiletatooartist.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/widgets/indicators.dart';
@@ -305,7 +303,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
   showProfile(BuildContext context, {String? profileId, String? userType}) {
     // Navigate to the correct profile page according to userType of current user
     switch (userType) {
-      case 'CLIENT':
+      /* case 'CLIENT':
         Navigator.push(
           context,
           CupertinoPageRoute(
@@ -320,7 +318,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
             builder: (_) => ProfileTatooArtist(profileId: profileId),
           ),
         );
-        break;
+        break; */
       default:
         Navigator.push(
           context,

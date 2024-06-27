@@ -1,10 +1,9 @@
 enum UserType {
-  CLIENT,
-  VENDOR,
-  EVENTORGANISATOR,
-  TATOOARTIST,
-  TATOOSHOP,
-  TATOOSHOPOWNER,
-  UNKNOWN,
-  USER
+  tattooArtist,
+  client,
+  eventOrganizer,
+  supplier,
+  admin,
+  superAdmin,
+  unknown
 }

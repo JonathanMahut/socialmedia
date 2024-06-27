@@ -23,7 +23,7 @@ class UserModel {
   String? city;
   // Use EnumConverter annotation to convert enum to string and vice versa
   @EnumConverter()
-  String userType = UserType.UNKNOWN.name; // Use EnumConverter annotation
+  String userType = UserType.unknown.name; // Use EnumConverter annotation
 
   UserModel({
     this.username,

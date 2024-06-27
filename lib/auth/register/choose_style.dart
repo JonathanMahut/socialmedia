@@ -9,7 +9,7 @@ class TatooSelectionPage extends StatefulWidget {
 }
 
 class _TatooSelectionPageState extends State<TatooSelectionPage> {
-  List<TatooStyle> selectedTatooStyles = [];
+  List<TattooArtistSpecialty> selectedTatooStyles = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class _TatooSelectionPageState extends State<TatooSelectionPage> {
       ),
       body: GridView.count(
         crossAxisCount: 3,
-        children: TatooStyle.values.map((style) {
+        children: TattooArtistSpecialty.values.map((style) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(

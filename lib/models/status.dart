@@ -24,13 +24,13 @@ class StatusModel {
     statusId = json['statusId'];
     viewers = json['viewers'];
     if (json['type'] == 'text') {
-      type = MessageType.TEXT;
+      type = MessageType.text;
     } else if (json['type'] == 'image') {
-      type = MessageType.IMAGE;
+      type = MessageType.image;
     } else if (json['type'] == 'video') {
-      type = MessageType.VIDEO;
+      type = MessageType.video;
     } else if (json['type'] == 'audio') {
-      type = MessageType.AUDIO;
+      type = MessageType.audio;
     }
     time = json['time'];
   }
@@ -41,13 +41,13 @@ class StatusModel {
     data['statusId'] = statusId;
     data['viewers'] = viewers;
     data['url'] = url;
-    if (type == MessageType.TEXT) {
+    if (type == MessageType.text) {
       data['type'] = 'text';
-    } else if (type == MessageType.VIDEO) {
+    } else if (type == MessageType.image) {
       data['type'] = 'image';
-    } else if (type == MessageType.VIDEO) {
+    } else if (type == MessageType.video) {
       data['type'] = 'video';
-    } else if (type == MessageType.AUDIO) {
+    } else if (type == MessageType.audio) {
       data['type'] = 'audio';
     }
     data['time'] = time;

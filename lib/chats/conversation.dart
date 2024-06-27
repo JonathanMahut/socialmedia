@@ -340,7 +340,7 @@ class _ConversationState extends State<Conversation> {
     Message message = Message(
       content: msg,
       senderUid: user?.uid,
-      type: isImage ? MessageType.IMAGE : MessageType.TEXT,
+      type: MessageType.text,
       time: Timestamp.now(),
     );
 

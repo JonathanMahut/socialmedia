@@ -8,9 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
-import 'package:social_media_app/services/client_service.dart';
 import 'package:social_media_app/services/post_service.dart';
-import 'package:social_media_app/services/tatoo_artist_service.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -18,8 +16,7 @@ import 'package:social_media_app/utils/firebase.dart';
 class PostsViewModel extends ChangeNotifier {
   //Services
   UserService userService = UserService();
-  ClientService clientService = ClientService();
-  TatooArtistService tatooArtistService = TatooArtistService();
+
   PostService postService = PostService();
 
   //Keys

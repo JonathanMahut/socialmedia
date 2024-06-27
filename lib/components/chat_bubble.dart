@@ -12,7 +12,8 @@ class ChatBubbleWidget extends StatefulWidget {
   final Timestamp? time;
   final bool? isMe;
 
-  const ChatBubbleWidget({super.key, 
+  const ChatBubbleWidget({
+    super.key,
     @required this.message,
     @required this.time,
     @required this.isMe,
@@ -81,8 +82,8 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
             children: <Widget>[
               Padding(
                 padding:
-                    EdgeInsets.all(widget.type == MessageType.TEXT ? 10 : 0),
-                child: widget.type == MessageType.TEXT
+                    EdgeInsets.all(widget.type == MessageType.text ? 10 : 0),
+                child: widget.type == MessageType.text
                     ? Text(
                         widget.message!,
                         style: TextStyle(

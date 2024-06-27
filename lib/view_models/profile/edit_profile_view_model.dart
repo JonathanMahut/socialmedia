@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
 import 'package:social_media_app/models/enum/tatoo_style.dart';
 import 'package:social_media_app/models/enum/user_type.dart';
-import 'package:social_media_app/models/tatoo_artist.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/constants.dart';
@@ -20,8 +18,6 @@ class EditProfileViewModel extends ChangeNotifier {
   UserService userService = UserService();
   final picker = ImagePicker();
   UserModel? user;
-  Client? client;
-  TatooArtist? tatooArtist;
   String? country;
   String? username;
   String? bio;
@@ -30,20 +26,10 @@ class EditProfileViewModel extends ChangeNotifier {
   String? usergender;
   String? usertype;
 
-  List<TatooStyle>? tatooStyle;
+  List<TattooArtistSpecialty>? tatooStyle;
 
   setUser(UserModel val) {
     user = val;
-    notifyListeners();
-  }
-
-  setClient(Client val) {
-    client = val;
-    notifyListeners();
-  }
-
-  setTatooArtist(TatooArtist val) {
-    tatooArtist = val;
     notifyListeners();
   }
 
@@ -97,7 +83,7 @@ class EditProfileViewModel extends ChangeNotifier {
     return tatooStyle;
   }
 
-  setTatooStyle(List<TatooStyle> val) {
+  setTatooStyle(List<TattooArtistSpecialty> val) {
     print('SetTatooStyle$val');
     tatooStyle = val;
     notifyListeners();

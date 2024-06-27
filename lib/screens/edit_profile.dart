@@ -9,9 +9,7 @@ import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
 import 'package:social_media_app/utils/validation.dart';
 import 'package:social_media_app/view_models/profile/edit_profile_view_model.dart';
-import 'package:social_media_app/widgets/genredropdownwidget.dart';
 import 'package:social_media_app/widgets/indicators.dart';
-import 'package:social_media_app/widgets/usertypedropdownwidget.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel? user;
@@ -121,45 +119,6 @@ class _EditProfileState extends State<EditProfile> {
     GenderType selectedGenre;
     UserType selectedUserType;
 
-    switch (viewModel.getGender()) {
-      case GenderType.MALE:
-        selectedGenre = GenderType.MALE;
-        break;
-      case GenderType.FEMALE:
-        selectedGenre = GenderType.FEMALE;
-        break;
-      case GenderType.NONBINARY:
-        selectedGenre = GenderType.NONBINARY;
-        break;
-      case GenderType.UNKNOWN:
-        selectedGenre = GenderType.UNKNOWN;
-        break;
-      default:
-        selectedGenre = GenderType.UNKNOWN;
-        break;
-    }
-
-    switch (viewModel.getUserType()) {
-      case UserType.CLIENT:
-        selectedUserType = UserType.CLIENT;
-        break;
-      case UserType.TATOOARTIST:
-        selectedUserType = UserType.TATOOARTIST;
-        break;
-      case UserType.EVENTORGANISATOR:
-        selectedUserType = UserType.EVENTORGANISATOR;
-        break;
-      case UserType.VENDOR:
-        selectedUserType = UserType.VENDOR;
-        break;
-      case UserType.UNKNOWN:
-        selectedUserType = UserType.UNKNOWN;
-        break;
-      default:
-        selectedUserType = UserType.UNKNOWN;
-        break;
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -213,18 +172,6 @@ class _EditProfileState extends State<EditProfile> {
               onChanged: (String val) {
                 viewModel.setBio(val);
               },
-            ),
-            const SizedBox(height: 10.0),
-            GenreDDWidget(
-              initial: selectedGenre,
-              onItemChange: (GenderType g) => viewModel.setGender(g),
-              //  onItemChange: (GenderType g) => selectedGenre = g,
-            ),
-            const SizedBox(height: 10.0),
-            UserTypeDDWidget(
-              initial: selectedUserType,
-              onItemChange: (UserType g) => viewModel.setUserType(g),
-              //  onItemChange: (UserType g) => selectedUserType = g,
             ),
             const SizedBox(height: 20.0),
           ],

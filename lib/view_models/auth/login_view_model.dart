@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
-import 'package:social_media_app/screens/mainscreenclient.dart';
-import 'package:social_media_app/screens/mainscreentatooartist.dart';
 import 'package:social_media_app/services/auth_service.dart';
 import 'package:social_media_app/utils/validation.dart';
 
@@ -46,16 +44,9 @@ class LoginViewModel extends ChangeNotifier {
               .then(
                 (value) => currentUserType = value.get('userType'),
               );
-          if (currentUserType == 'UNKNOWN') {
-            Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(builder: (_) => const TabScreen()));
-          } else if (currentUserType == 'TATOOARTIST') {
-            Navigator.of(context).pushReplacement(CupertinoPageRoute(
-                builder: (_) => const TabScreenTatooArtist()));
-          } else if (currentUserType == 'CLIENT') {
-            Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(builder: (_) => const TabScreenClient()));
-          }
+
+          Navigator.of(context).pushReplacement(
+              CupertinoPageRoute(builder: (_) => const TabScreen()));
         }
       } catch (e) {
         loading = false;

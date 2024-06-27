@@ -66,7 +66,7 @@ class _RegisterState extends State<Register> {
   }
 
   buildForm(RegisterViewModel viewModel, BuildContext context) {
-    UserType selectedUserType = UserType.UNKNOWN;
+    UserType selectedUserType = UserType.unknown;
     return Form(
       key: viewModel.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
