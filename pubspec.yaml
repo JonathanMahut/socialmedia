@@ -1,5 +1,5 @@
 name: social_media_app
-description: A new Flutter project.
+description: An application for the Tatoo Artists
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -34,7 +34,7 @@ dependencies:
   #percent_indicator: ^4.2.2
   percent_indicator: ^4.2.3
   #cached_network_image: ^3.0.0
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.3.1
   #flutter_spinkit: ^5.0.0
   flutter_spinkit: ^5.2.1
   #cloud_firestore: ^3.4.3
@@ -61,11 +61,11 @@ dependencies:
   #geocoding: ^2.0.0
   geocoding: ^3.0.0
   #timeago: ^3.1.0
-  timeago: ^3.6.0
+  timeago: ^3.6.1
   #google_fonts: ^3.0.1
   google_fonts: ^6.2.1
   #provider: ^6.0.3
-  provider: ^6.1.1
+  provider: ^6.1.2
   #image_cropper: ^3.0.0
   image_cropper: ^7.0.5
   #shared_preferences: ^2.0.6
@@ -79,7 +79,7 @@ dependencies:
   #flutter_chat_bubble: ^2.0.0
   flutter_chat_bubble: ^2.0.2
   #permission_handler: ^10.1.0
-  permission_handler: ^11.0.1
+  permission_handler: ^11.3.1
   #story: ^0.8.0
   story: ^1.1.0
   #story_view: ^0.14.0
@@ -96,7 +96,7 @@ dependencies:
   lottie: ^3.0.0
   custom_clippers: ^2.0.0
   easy_localization: ^3.0.3
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0

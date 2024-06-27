@@ -88,7 +88,7 @@ class StatusViewModel extends ChangeNotifier {
       );
       mediaUrl = File(croppedFile!.path);
       loading = false;
-      Navigator.of(context!).push(
+      Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (_) => const ConfirmStatus(),
         ),

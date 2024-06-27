@@ -8,14 +8,12 @@ import 'package:social_media_app/auth/register/register.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
 import 'package:social_media_app/models/client.dart';
 import 'package:social_media_app/models/enum/gender_type.dart';
-import 'package:social_media_app/models/enum/user_type.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/screens/edit_profile.dart';
 import 'package:social_media_app/screens/list_posts.dart';
 import 'package:social_media_app/screens/settings.dart';
 import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/genredropdownwidget.dart';
 import 'package:social_media_app/widgets/post_tiles.dart';
 
 class ProfileClient extends StatefulWidget {
@@ -51,11 +49,8 @@ class _ProfileClientState extends State<ProfileClient> {
   // Determine usertype of the current user
 
   checkIfFollowing() async {
-    DocumentSnapshot doc = await followersRef
-        .doc(widget.profileId)
-        .collection('userFollowers')
-        .doc(currentUserId())
-        .get();
+    DocumentSnapshot doc =
+        await followersRef.doc(widget.profileId).collection('userFollowers').doc(currentUserId()).get();
     setState(() {
       isFollowing = doc.exists;
     });
@@ -124,9 +119,7 @@ class _ProfileClientState extends State<ProfileClient> {
                               child: user.photoUrl?.isEmpty ?? true
                                   ? CircleAvatar(
                                       radius: 40.0,
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                      backgroundColor: Theme.of(context).colorScheme.secondary,
                                       child: Center(
                                         child: Text(
                                           user.username![0].toUpperCase(),
@@ -140,8 +133,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                     )
                                   : CircleAvatar(
                                       radius: 40.0,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
+                                      backgroundImage: CachedNetworkImageProvider(
                                         '${user.photoUrl}',
                                       ),
                                     ),
@@ -158,8 +150,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                       child: SizedBox(width: 10.0),
                                     ),
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 130.0,
@@ -187,8 +178,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                         const SizedBox(width: 10.0),
                                         Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               user.email!,
@@ -205,8 +195,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                             onTap: () {
                                               Navigator.of(context).push(
                                                 CupertinoPageRoute(
-                                                  builder: (_) =>
-                                                      const Setting(),
+                                                  builder: (_) => const Setting(),
                                                 ),
                                               );
                                             },
@@ -214,9 +203,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                               children: [
                                                 Icon(
                                                   Ionicons.settings_outline,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
+                                                  color: Theme.of(context).colorScheme.secondary,
                                                 ),
                                                 const Text(
                                                   'settings',
@@ -232,8 +219,7 @@ class _ProfileClientState extends State<ProfileClient> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0, left: 20.0),
+                                  padding: const EdgeInsets.only(top: 10.0, left: 20.0),
                                   child: user.bio!.isEmpty
                                       ? Container()
                                       : SizedBox(
@@ -248,48 +234,39 @@ class _ProfileClientState extends State<ProfileClient> {
                                           ),
                                         ),
                                 ),
+                                // //Diplay the Genre of the currennt user if the
+                                // user.gender == GenderType.UNKNOWN.name
+                                //     ? Padding(
+                                //         padding: const EdgeInsets.only(
+                                //             top: 10.0, left: 20.0),
+                                //         child: SizedBox(
+                                //           width: 200,
+                                //           child: GenreDDWidget(
+                                //             initial: selectedGenre,
+                                //             onItemChange: (GenderType g) =>
+                                //                 selectedGenre = g,
+                                //           ),
+                                //         ),
+                                //       )
+                                //     : Container(),
                               ],
                             ),
                           ],
                         ),
-
-                        Container(),
-                        //Diplay the Gender of the currennt user if the
-                        user.userType == UserType.TATOOARTIST.name ||
-                                user.userType == UserType.CLIENT.name
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 20.0),
-                                child: SizedBox(
-                                  width: 200,
-                                  child: GenreDDWidget(
-                                    initial: selectedGenre,
-                                    onItemChange: (GenderType g) =>
-                                        selectedGenre = g,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-
-                        const SizedBox(height: 10.0),
+                        // Container(),
+                        // const SizedBox(height: 10.0),
                         SizedBox(
-                          height: 50.0,
+                          height: 75.0,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 StreamBuilder(
-                                  stream: postRef
-                                      .where('ownerId',
-                                          isEqualTo: widget.profileId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: postRef.where('ownerId', isEqualTo: widget.profileId).snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
+                                      QuerySnapshot<Object?>? snap = snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
                                       return buildCount("POSTS", docs.length);
                                     } else {
@@ -300,24 +277,18 @@ class _ProfileClientState extends State<ProfileClient> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: Container(
-                                    height: 50.0,
+                                    height: 75.0,
                                     width: 0.3,
                                     color: Colors.grey,
                                   ),
                                 ),
                                 StreamBuilder(
-                                  stream: followersRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowers')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: followersRef.doc(widget.profileId).collection('userFollowers').snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
+                                      QuerySnapshot<Object?>? snap = snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "FOLLOWERS", docs.length);
+                                      return buildCount("FOLLOWERS", docs.length);
                                     } else {
                                       return buildCount("FOLLOWERS", 0);
                                     }
@@ -326,24 +297,18 @@ class _ProfileClientState extends State<ProfileClient> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: Container(
-                                    height: 50.0,
+                                    height: 55.0,
                                     width: 0.3,
                                     color: Colors.grey,
                                   ),
                                 ),
                                 StreamBuilder(
-                                  stream: followingRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowing')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: followingRef.doc(widget.profileId).collection('userFollowing').snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
+                                      QuerySnapshot<Object?>? snap = snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "FOLLOWING", docs.length);
+                                      return buildCount("FOLLOWING", docs.length);
                                     } else {
                                       return buildCount("FOLLOWING", 0);
                                     }
@@ -379,8 +344,7 @@ class _ProfileClientState extends State<ProfileClient> {
                           const Spacer(),
                           IconButton(
                             onPressed: () async {
-                              DocumentSnapshot doc =
-                                  await usersRef.doc(widget.profileId).get();
+                              DocumentSnapshot doc = await usersRef.doc(widget.profileId).get();
                               var currentUser = UserModel.fromJson(
                                 doc.data() as Map<String, dynamic>,
                               );
@@ -421,7 +385,7 @@ class _ProfileClientState extends State<ProfileClient> {
             fontFamily: 'Ubuntu-Regular',
           ),
         ),
-        const SizedBox(height: 3.0),
+        const SizedBox(height: 6.0),
         Text(
           label,
           style: const TextStyle(
@@ -486,13 +450,9 @@ class _ProfileClientState extends State<ProfileClient> {
         width: 250.0,
         height: 40.0,
         decoration: BoxDecoration(
-          color: isFollowing
-              ? Colors.white
-              : Theme.of(context).colorScheme.secondary,
+          color: isFollowing ? Colors.white : Theme.of(context).colorScheme.secondary,
           border: Border.all(
-            color: isFollowing
-                ? Colors.grey
-                : Theme.of(context).colorScheme.secondary,
+            color: isFollowing ? Colors.grey : Theme.of(context).colorScheme.secondary,
           ),
           borderRadius: BorderRadius.circular(5.0),
         ),
@@ -537,16 +497,8 @@ class _ProfileClientState extends State<ProfileClient> {
       });
     } else {
       // follow user
-      followersRef
-          .doc(widget.profileId)
-          .collection('userFollowers')
-          .doc(firebaseAuth.currentUser!.uid)
-          .set({});
-      followingRef
-          .doc(firebaseAuth.currentUser!.uid)
-          .collection('userFollowing')
-          .doc(widget.profileId)
-          .set({});
+      followersRef.doc(widget.profileId).collection('userFollowers').doc(firebaseAuth.currentUser!.uid).set({});
+      followingRef.doc(firebaseAuth.currentUser!.uid).collection('userFollowing').doc(widget.profileId).set({});
       setState(() {
         isFollowing = true;
       });

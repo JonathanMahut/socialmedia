@@ -136,9 +136,9 @@ class PostsViewModel extends ChangeNotifier {
               CropAspectRatioPreset.ratio16x9
             ],
           ),
-          WebUiSettings(
-            context: context!,
-          ),
+          // WebUiSettings(
+          //   context: context,
+          // ),
         ],
       );
       mediaUrl = File(croppedFile!.path);
@@ -147,7 +147,9 @@ class PostsViewModel extends ChangeNotifier {
     } catch (e) {
       loading = false;
       notifyListeners();
-      showInSnackBar('Cancelled', context);
+      if (context!.mounted) {
+        showInSnackBar('Cancelled', context);
+      }
     }
   }
 
@@ -209,7 +211,9 @@ class PostsViewModel extends ChangeNotifier {
       } catch (e) {
         print(e);
         loading = false;
-        showInSnackBar('Uploaded successfully!', context);
+        if (context.mounted) {
+          showInSnackBar('Uploaded successfully!', context);
+        }
         notifyListeners();
       }
     }

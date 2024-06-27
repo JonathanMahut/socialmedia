@@ -72,29 +72,9 @@ class _MyAppState extends State<MyApp> {
             ),
             home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
-              builder: ((BuildContext context, snapshot) {
-                // User user = auth.getCurrentUser();
-              
+              builder: ((BuildContext context, snapshot) {             
 
                 if (snapshot.hasData) {
-//                   // Test if current user userType is CLIENT or TATTOARTIST
-//                    FirebaseFirestore.instance
-//                     .collection('users')
-//                     .doc(user.uid)
-//                     .get()
-//                     .then(
-//                       (value) => currentUserType = value.get('userType'),
-//                     );
-// // Suggested code may be subject to a license. Learn more: ~LicenseLog:14650707.
-//                     print(currentUserType);
-//                     if (currentUserType == 'CLIENT') {
-//                       return const TabScreenClient();
-//                     } else if (currentUserType == 'TATTOOARTIST') {
-//                       return const TabScreenTatooArtist();
-//                     } else{
-//                       return const TabScreen();
-//                   }
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2308876756.
 
                   return const TabScreen();
                 } else {

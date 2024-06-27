@@ -226,29 +226,28 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 20.0),
-                              child: user.bio!.isEmpty
-                                  ? Container()
-                                  : SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        user.bio!,
-                                        style: const TextStyle(
-                                          fontSize: 10.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        maxLines: null,
-                                      ),
-                                    ),
-                            ),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
+                          child: user.bio!.isEmpty
+                              ? Container()
+                              : SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    user.bio!,
+                                    style: const TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
                         ),
                         Container(),
                         const SizedBox(height: 10.0),
                         SizedBox(
-                          height: 50.0,
+                          height: 55.0,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 30.0),
@@ -301,7 +300,7 @@ class _ProfileState extends State<Profile> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: Container(
-                                    height: 50.0,
+                                    height: 55.0,
                                     width: 0.3,
                                     color: Colors.grey,
                                   ),
