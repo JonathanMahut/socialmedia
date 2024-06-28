@@ -13,6 +13,7 @@ class StatusService {
   String statusId = const Uuid().v1();
   UserService userService = UserService();
 
+  final uuid = Uuid();
   void showSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
@@ -20,11 +21,7 @@ class StatusService {
 
   sendStatus(StatusModel status, String chatId) async {
     //will send message to chats collection with the usersId
-    await statusRef
-        .doc(chatId)
-        .collection("statuses")
-        .doc(status.statusId)
-        .set(status.toJson());
+    await statusRef.doc(chatId).collection("statuses").doc(status.statusId).set(status.toJson());
     //will update "lastTextTime" to the last time a text was sent
     await statusRef.doc(chatId).update({
       "userId": firebaseAuth.currentUser!.uid,
@@ -47,8 +44,7 @@ class StatusService {
   }
 
   Future<String> uploadImage(File image) async {
-    Reference storageReference =
-        storage.ref().child("chats").child(uuid.v1()).child(uuid.v4());
+    Reference storageReference = storage.ref().child("chats").child(uuid.v1()).child(uuid.v4());
     UploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.whenComplete(() => null);
     String imageUrl = await storageReference.getDownloadURL();

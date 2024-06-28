@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/core/utils/constants.dart';
+import 'package:social_media_app/data/models/enum/app_theme.dart';
 import 'package:social_media_app/data/models/enum/gender_type.dart';
-import 'package:social_media_app/data/models/enum/tatoo_style.dart';
+import 'package:social_media_app/data/models/enum/subscription_type.dart';
 import 'package:social_media_app/data/models/enum/user_type.dart';
+import 'package:social_media_app/data/models/event.dart';
+import 'package:social_media_app/data/models/product_model.dart';
+import 'package:social_media_app/data/models/social_media_link_model.dart';
 import 'package:social_media_app/data/models/user.dart';
 import 'package:social_media_app/domain/services/user_service.dart';
 
@@ -21,20 +25,129 @@ class EditProfileViewModel extends ChangeNotifier {
   String? country;
   String? username;
   String? bio;
+  String? displayName;
+  String? phoneNumber;
+  String? language;
+  String? countryCode;
+  String? postalAddress;
+  String? city;
+  List<String>? specialties;
+  AppTheme? theme;
+  SubscriptionType? subscriptionType;
+  DateTime? subscriptionStartDate;
+  DateTime? subscriptionEndDate;
+  bool? isTrialPeriod;
+  String? portfolioUrl;
+  List<EventModel>? organizedEvents;
+  String? companyName;
+  List<Product>? products;
+  String? websiteUrl;
+  List<SocialMediaLink>? socialMediaLinks;
   File? image;
   String? imgLink;
-  String? usergender;
-  String? usertype;
+  String? userType; // Store userType as String
+  String? gender; // Store gender as String
+  UserType? _userType; // Store userType as an enum
+  GenderType? _gender; // Store gender as an enum
 
-  List<TattooArtistSpecialty>? tatooStyle;
+  UserType? getUserType() {
+    return _userType;
+  }
+
+  // Setter for userType (converting from String to enum)
+  setUserType(String userTypeString) {
+    _userType = _userTypeFromString(userTypeString);
+    notifyListeners();
+  }
+
+  // Getter for gender
+  GenderType? getGender() {
+    return _gender;
+  }
+
+  // Setter for gender (converting from String to enum)
+  setGender(String genderString) {
+    _gender = _genderTypeFromString(genderString);
+    notifyListeners();
+  }
+
+  UserType? _userTypeFromString(String? userTypeString) {
+    if (userTypeString != null) {
+      try {
+        return UserType.values.byName(userTypeString);
+      } catch (e) {
+        print('Invalid UserType: $userTypeString');
+      }
+    }
+    return null;
+  }
+
+  GenderType? _genderTypeFromString(String? genderString) {
+    if (genderString != null) {
+      try {
+        return GenderType.values.byName(genderString);
+      } catch (e) {
+        print('Invalid GenderType: $genderString');
+      }
+    }
+    return null;
+  }
+
+  setDisplayName(String val) {
+    print('SetDisplayName $val');
+    displayName = val;
+    notifyListeners();
+  }
+
+  setPhoneNumber(String val) {
+    print('SetPhoneNumber $val');
+    phoneNumber = val;
+    notifyListeners();
+  }
+
+  setLanguage(String val) {
+    print('SetLanguage $val');
+    language = val;
+    notifyListeners();
+  }
+
+  setCountryCode(String val) {
+    print('SetCountryCode $val');
+    countryCode = val;
+    notifyListeners();
+  }
+
+  setPostalAddress(String val) {
+    print('SetPostalAddress $val');
+    postalAddress = val;
+    notifyListeners();
+  }
 
   setUser(UserModel val) {
     user = val;
     notifyListeners();
   }
 
+  setCity(String val) {
+    print('SetCity $val');
+    city = val;
+    notifyListeners();
+  }
+
   setImage(UserModel user) {
     imgLink = user.photoUrl;
+  }
+
+  setSpecialties(List<String> val) {
+    print('SetSpecialties $val');
+    specialties = val;
+    notifyListeners();
+  }
+
+  setTheme(AppTheme val) {
+    print('SetTheme $val');
+    theme = val;
+    notifyListeners();
   }
 
   setCountry(String val) {
@@ -43,49 +156,75 @@ class EditProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setSubscriptionStartDate(DateTime val) {
+    print('SetSubscriptionStartDate $val');
+    subscriptionStartDate = val;
+    notifyListeners();
+  }
+
+  setSubscriptionEndDate(DateTime val) {
+    print('SetSubscriptionEndDate $val');
+    subscriptionEndDate = val;
+    notifyListeners();
+  }
+
+  setIsTrialPeriod(bool val) {
+    print('SetIsTrialPeriod $val');
+    isTrialPeriod = val;
+    notifyListeners();
+  }
+
+  setSubscriptionType(SubscriptionType val) {
+    print('SetSubscriptionType $val');
+    subscriptionType = val;
+    notifyListeners();
+  }
+
   setBio(String val) {
-    print('SetBio$val');
+    print('SetBio $val');
     bio = val;
     notifyListeners();
   }
 
+  setPortfolioUrl(String val) {
+    print('SetPortfolioUrl $val');
+    portfolioUrl = val;
+    notifyListeners();
+  }
+
+  setOrganizedEvents(List<EventModel> val) {
+    print('SetOrganizedEvents $val');
+    organizedEvents = val;
+    notifyListeners();
+  }
+
   setUsername(String val) {
-    print('SetUsername$val');
+    print('SetUsername $val');
     username = val;
     notifyListeners();
   }
 
-  setGender(GenderType val) {
-    print('SetGender$val');
-    usergender = val.name;
+  setCompanyName(String val) {
+    print('SetCompanyName $val');
+    companyName = val;
     notifyListeners();
   }
 
-  getGender() {
-    return usergender;
-  }
-
-  setUserType(UserType val) {
-    print('SetUserType$val');
-    usertype = val.name;
+  setProducts(List<Product> val) {
+    print('SetProducts $val');
+    products = val;
     notifyListeners();
   }
 
-  getUserType() {
-    if (usertype == null || usertype == '') {
-      return 'UNKNOWN';
-    } else {
-      return usertype;
-    }
+  setSocialMediaLinks(List<SocialMediaLink> val) {
+    print('SetSocialMediaLinks $val');
+    socialMediaLinks = val;
+    notifyListeners();
   }
 
-  getTatooStyle() {
-    return tatooStyle;
-  }
-
-  setTatooStyle(List<TattooArtistSpecialty> val) {
-    print('SetTatooStyle$val');
-    tatooStyle = val;
+  setWebsiteUrl(String val) {
+    print('SetWebsiteUrl $val');
+    websiteUrl = val;
     notifyListeners();
   }
 
@@ -121,27 +260,48 @@ class EditProfileViewModel extends ChangeNotifier {
     return loading;
   }
 
-  // ignore: missing_return
-
   editProfile(BuildContext context) async {
     FormState form = formKey.currentState!;
     form.save();
     if (!form.validate()) {
       validate = true;
       notifyListeners();
-      showInSnackBar(
-          'Please fix the errors in red before submitting.', context);
+      showInSnackBar('Please fix the errors in red before submitting.', context);
     } else {
       try {
         loading = true;
         notifyListeners();
+
+        // Convert userType and gender stringsto enums
+        UserType? userTypeValue = this._userTypeFromString(userType); // Pass the string property 'userType'
+        GenderType? genderValue = this._genderTypeFromString(gender); // Pass the string property 'gender'
+
         bool success = await userService.updateProfile(
-          //  user: user,
           image: image,
           username: username,
           bio: bio,
           country: country,
-          userType: getUserType(),
+          // Use the parameter names correctly:
+          userTypeString: userTypeValue?.name, // Pass the enum name as a string
+          genderString: genderValue?.name, // Pass the enum name as a string
+          displayName: displayName,
+          phoneNumber: phoneNumber,
+          language: language,
+          countryCode: countryCode,
+          postalAddress: postalAddress,
+          city: city,
+          specialties: specialties,
+          theme: theme,
+          subscriptionType: subscriptionType,
+          subscriptionStartDate: subscriptionStartDate,
+          subscriptionEndDate: subscriptionEndDate,
+          isTrialPeriod: isTrialPeriod,
+          portfolioUrl: portfolioUrl,
+          organizedEvents: organizedEvents,
+          companyName: companyName,
+          products: products,
+          websiteUrl: websiteUrl,
+          socialMediaLinks: socialMediaLinks,
         );
         print(success);
         if (success) {

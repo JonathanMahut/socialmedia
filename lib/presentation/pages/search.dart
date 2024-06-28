@@ -11,8 +11,12 @@ import 'package:social_media_app/core/utils/constants.dart';
 import 'package:social_media_app/core/utils/firebase.dart';
 import 'package:social_media_app/data/models/user.dart';
 import 'package:social_media_app/presentation/pages/profile.dart';
+import 'package:social_media_app/presentation/pages/profile_client.dart..dart';
+import 'package:social_media_app/presentation/pages/profile_tattoo_artist.dart';
 import 'package:social_media_app/presentation/screens/chats/conversation.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
+
+import '../../data/models/enum/user_type.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -48,14 +52,10 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
       loading = false;
     });
   }
-  // Determine usertype of the current user
 
+  // Determine usertype of the current user
   checkCurrentUserType() async {
-    DocumentSnapshot doc = await usersRef
-        .doc(currentUserId())
-        .collection('users')
-        .doc(currentUserId())
-        .get();
+    DocumentSnapshot doc = await usersRef.doc(currentUserId()).collection('users').doc(currentUserId()).get();
     // Get the Usertype of the current user
     userType = doc.get('usertype');
   }
@@ -117,11 +117,12 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     );
   }
 
+  // ... (Your buildSearch method remains the same) ...
   buildSearch() {
     return Row(
       children: [
         Container(
-          height: 30.0,
+          height: 35.0,
           width: MediaQuery.of(context).size.width - 50,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.2),
@@ -152,12 +153,11 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                // contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0),
                 border: InputBorder.none,
                 counterText: '',
                 hintText: 'Search...',
                 hintStyle: const TextStyle(
-                  fontSize: 13.0,
+                  fontSize: 15.0,
                 ),
               ),
             ),
@@ -178,118 +178,116 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
         );
       } else {
         return Expanded(
-          child: Container(
-            child: ListView.builder(
-              itemCount: filteredUsers.length,
-              itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot doc = filteredUsers[index];
-                UserModel user =
-                    UserModel.fromJson(doc.data() as Map<String, dynamic>);
-                if (doc.id == currentUserId()) {
-                  Timer(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      removeFromList(index);
-                    });
+          child: ListView.builder(
+            itemCount: filteredUsers.length,
+            itemBuilder: (BuildContext context, int index) {
+              DocumentSnapshot doc = filteredUsers[index];
+              UserModel user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+              if (doc.id == currentUserId()) {
+                Timer(const Duration(milliseconds: 500), () {
+                  setState(() {
+                    removeFromList(index);
                   });
-                }
-                return ListTile(
-                  onTap: () => showProfile(context,
-                      profileId: user.id!, userType: user.userType),
-                  leading: user.photoUrl!.isEmpty
-                      ? CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          child: Center(
-                            child: Text(
-                              user.username![0].toUpperCase(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ),
-                        )
-                      : CircleAvatar(
-                          radius: 20.0,
-                          backgroundImage: CachedNetworkImageProvider(
-                            '${user.photoUrl}',
-                          ),
-                        ),
-                  title: Text(
-                    user.username!,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    user.email!,
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (_) => StreamBuilder(
-                            stream: chatIdRef
-                                .where(
-                                  "users",
-                                  isEqualTo: getUser(
-                                    firebaseAuth.currentUser!.uid,
-                                    doc.id,
-                                  ),
-                                )
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasData) {
-                                var snap = snapshot.data;
-                                List docs = snap!.docs;
-                                print(snapshot.data!.docs.toString());
-                                return docs.isEmpty
-                                    ? Conversation(
-                                        userId: doc.id,
-                                        chatId: 'newChat',
-                                      )
-                                    : Conversation(
-                                        userId: doc.id,
-                                        chatId:
-                                            docs[0].get('chatId').toString(),
-                                      );
-                              }
-                              return Conversation(
-                                userId: doc.id,
-                                chatId: 'newChat',
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 30.0,
-                      width: 62.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(3.0),
-                      ),
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(5.0),
+                });
+              }
+
+              // Get userType from the document
+              String userTypeString = doc.get('userType'); // Assuming 'userType' is the field name in Firestore
+              UserType userType = _userTypeFromString(userTypeString); // Use your helper method to convert to enum
+
+              return ListTile(
+                onTap: () => showProfile(context, profileId: user.id!, userType: userType), // Pass the UserType enum
+                leading: user.photoUrl!.isEmpty
+                    ? CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        child: Center(
                           child: Text(
-                            'Message',
-                            style: TextStyle(
+                            user.username![0].toUpperCase(),
+                            style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w900,
                             ),
+                          ),
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: CachedNetworkImageProvider(
+                          '${user.photoUrl}',
+                        ),
+                      ),
+                title: Text(
+                  user.username!,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  user.email!,
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) => StreamBuilder(
+                          stream: chatIdRef
+                              .where(
+                                "users",
+                                isEqualTo: getUser(
+                                  firebaseAuth.currentUser!.uid,
+                                  doc.id,
+                                ),
+                              )
+                              .snapshots(),
+                          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              var snap = snapshot.data;
+                              List docs = snap!.docs;
+                              print(snapshot.data!.docs.toString());
+                              return docs.isEmpty
+                                  ? Conversation(
+                                      userId: doc.id,
+                                      chatId: 'newChat',
+                                    )
+                                  : Conversation(
+                                      userId: doc.id,
+                                      chatId: docs[0].get('chatId').toString(),
+                                    );
+                            }
+                            return Conversation(
+                              userId: doc.id,
+                              chatId: 'newChat',
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 30.0,
+                    width: 62.0,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(3.0),
+                    ),
+                    child: const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Text(
+                          'Message',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         );
       }
@@ -300,25 +298,35 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     }
   }
 
-  showProfile(BuildContext context, {String? profileId, String? userType}) {
+  UserType _userTypeFromString(String userTypeString) {
+    try {
+      return UserType.values.byName(userTypeString);
+    } catch (e) {
+      print('Invalid UserType: $userTypeString');
+      return UserType.client; // Or handle the error appropriately
+    }
+  }
+
+  showProfile(BuildContext context, {required String profileId, required UserType userType}) {
     // Navigate to the correct profile page according to userType of current user
     switch (userType) {
-      /* case 'CLIENT':
+      case UserType.client:
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (_) => ProfileClient(profileId: profileId),
+            builder: (_) => ProfileClient(profileId: profileId), // Assuming you have a ProfileClient screen
           ),
         );
         break;
-      case 'TATOOARTIST':
+      case UserType.tattooArtist:
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (_) => ProfileTatooArtist(profileId: profileId),
+            builder: (_) => ProfileTatooArtist(profileId: profileId), // Assuming you have a ProfileTat
           ),
         );
-        break; */
+        break;
+      // Add cases for other user types as needed (Event Organizer, Supplier, etc.)
       default:
         Navigator.push(
           context,
@@ -341,7 +349,4 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     var chatId = "${list[0]}-${list[1]}";
     return chatId;
   }
-
-  // @override
-  // bool get wantKeepAlive => true;
 }

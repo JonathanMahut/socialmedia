@@ -1,34 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:uuid/uuid.dart';
 
-FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-FirebaseStorage storage = FirebaseStorage.instance;
-const Uuid uuid = Uuid();
+// Initialize Firebase services
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+final FirebaseStorage storage = FirebaseStorage.instance;
 
-// Collection refs
-CollectionReference usersRef = firestore.collection('users');
-/* CollectionReference userRef = firestore.collection('tatooartists');
-CollectionReference userRef2 = firestore.collection('eventorganisators');
-CollectionReference userRef3 = firestore.collection('announcers'); */
-CollectionReference chatRef = firestore.collection("chats");
-CollectionReference postRef = firestore.collection('posts');
-CollectionReference storyRef = firestore.collection('posts');
-CollectionReference flashRef = firestore.collection('flashes');
+// Collection references
+final CollectionReference usersRef = firestore.collection('users');
+final CollectionReference productRef = firestore.collection('products');
+final CollectionReference chatRef = firestore.collection("chats");
+final CollectionReference postRef = firestore.collection('posts');
+final CollectionReference storyRef = firestore.collection('posts');
+final CollectionReference flashRef = firestore.collection('flashes');
+final CollectionReference eventRef = firestore.collection('events');
+final CollectionReference commentRef = firestore.collection('comments');
+final CollectionReference notificationRef = firestore.collection('notifications');
+final CollectionReference followersRef = firestore.collection('followers');
+final CollectionReference followingRef = firestore.collection('following');
+final CollectionReference likesRef = firestore.collection('likes');
+final CollectionReference favUsersRef = firestore.collection('favoriteUsers');
+final CollectionReference chatIdRef = firestore.collection('chatIds');
+final CollectionReference statusRef = firestore.collection('status');
 
-CollectionReference commentRef = firestore.collection('comments');
-CollectionReference notificationRef = firestore.collection('notifications');
-CollectionReference followersRef = firestore.collection('followers');
-CollectionReference followingRef = firestore.collection('following');
-CollectionReference likesRef = firestore.collection('likes');
-CollectionReference favUsersRef = firestore.collection('favoriteUsers');
-CollectionReference chatIdRef = firestore.collection('chatIds');
-CollectionReference statusRef = firestore.collection('status');
-
-// Storage refs
-Reference profilePic = storage.ref().child('profilePic');
-Reference flashes = storage.ref().child('flashes');
-Reference posts = storage.ref().child('posts');
-Reference statuses = storage.ref().child('status');
+// Storage references
+final Reference profilePic = storage.ref().child('profilePic');
+final Reference flashes = storage.ref().child('flashes');
+final Reference posts = storage.ref().child('posts');
+final Reference statuses = storage.ref().child('status');

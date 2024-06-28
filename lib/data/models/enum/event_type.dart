@@ -1,5 +1,5 @@
-enum EventOrganizerType {
-  convention,
+enum EventType {
+  tattooConvention,
   guestSpot,
   workshop,
   // ... other event types

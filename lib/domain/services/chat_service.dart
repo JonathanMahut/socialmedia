@@ -5,9 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_media_app/core/utils/firebase.dart';
 import 'package:social_media_app/data/models/message.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatService {
   FirebaseStorage storage = FirebaseStorage.instance;
+
+  final uuid = Uuid();
 
   sendMessage(Message message, String chatId) async {
     //will send message to chats collection with the usersId
@@ -26,8 +29,7 @@ class ChatService {
   }
 
   Future<String> uploadImage(File image, String chatId) async {
-    Reference storageReference =
-        storage.ref().child("chats").child(chatId).child(uuid.v4());
+    Reference storageReference = storage.ref().child("chats").child(chatId).child(uuid.v4());
     UploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.whenComplete(() => null);
     String imageUrl = await storageReference.getDownloadURL();
