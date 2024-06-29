@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/core/utils/constants.dart';
-import 'package:social_media_app/core/utils/providers.dart';
+import 'package:social_media_app/domain/services/auth_service.dart';
 import 'package:social_media_app/domain/services/user_service.dart';
 import 'package:social_media_app/domain/view_models/theme/theme_view_model.dart';
 import 'package:social_media_app/presentation/components/life_cycle_event_handler.dart';
@@ -32,10 +32,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // AuthService auth = AuthService();
-    // String? currentUserType ='';
     return MultiProvider(
-      providers: providers,
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
       child: Consumer<ThemeProvider>(
         builder: (context, ThemeProvider notifier, Widget? child) {
           return MaterialApp(
@@ -46,11 +47,11 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: const [
-              Locale('en'), // English
-              Locale('fr'), // French
-              Locale('es'), // Spanish
-              Locale('ge'), // German
-              Locale('it'), // Italian
+              Locale('en'),
+              Locale('fr'),
+              Locale('es'),
+              Locale('ge'),
+              Locale('it'),
             ],
             debugShowCheckedModeBanner: false,
             theme: themeData(

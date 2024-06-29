@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:social_media_app/core/utils/firebase.dart'; // Make sure this import is correct for your project
+import 'package:social_media_app/core/utils/firebase.dart';
 import 'package:social_media_app/data/models/enum/app_theme.dart';
 import 'package:social_media_app/data/models/enum/gender_type.dart';
 import 'package:social_media_app/data/models/enum/subscription_type.dart';
 import 'package:social_media_app/data/models/enum/user_type.dart';
-import 'package:social_media_app/data/models/user.dart'; // Import your UserModel
+import 'package:social_media_app/data/models/user.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -16,7 +17,6 @@ class AuthService {
     return _auth.currentUser;
   }
 
-  // Creates a Firebase user with email and password
   Future<UserModel?> createUserWithEmailAndPassword({
     required String name,
     required String email,
@@ -61,21 +61,19 @@ class AuthService {
         );
 
         await saveUserToFirestore(newUser);
+        notifyListeners();
         return newUser;
       }
     } catch (e) {
       print(e.toString());
-      // Consider rethrowing the exception or returning a specific error message
     }
     return null;
   }
 
-  // Saves user details to Firestore
   Future<void> saveUserToFirestore(UserModel user) async {
     await usersRef.doc(user.id).set(user.toJson());
   }
 
-  // Function to log in a user with their email and password
   Future<UserModel?> signInWithEmailAndPassword({required String email, required String password}) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -85,17 +83,16 @@ class AuthService {
       if (result.user != null) {
         DocumentSnapshot userSnapshot = await usersRef.doc(result.user!.uid).get();
         if (userSnapshot.exists) {
+          notifyListeners();
           return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
         }
       }
     } catch (e) {
       print(e.toString());
-      // Consider rethrowing the exception or returning a specific error message
     }
     return null;
   }
 
-  // Sign in with Google
   Future<UserModel?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -110,6 +107,7 @@ class AuthService {
         if (userCredential.user != null) {
           DocumentSnapshot userSnapshot = await usersRef.doc(userCredential.user!.uid).get();
           if (userSnapshot.exists) {
+            notifyListeners();
             return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
           } else {
             UserModel newUser = UserModel(
@@ -123,29 +121,27 @@ class AuthService {
               lastSeen: DateTime.now(),
             );
             await saveUserToFirestore(newUser);
+            notifyListeners();
             return newUser;
           }
         }
       }
     } catch (e) {
       print(e.toString());
-      // Consider rethrowing the exception or returning a specific error message
     }
     return null;
   }
 
-  // Reset password
   Future<void> forgotPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
-  // Log out
   Future<void> logOut() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
+    notifyListeners();
   }
 
-  // Start a trial period for a user
   Future<void> startTrial(String userId, SubscriptionType subscriptionType) async {
     final now = DateTime.now();
     final trialEndDate = now.add(const Duration(days: 30));
@@ -156,9 +152,9 @@ class AuthService {
       'subscriptionEndDate': trialEndDate,
       'isTrialPeriod': true,
     });
+    notifyListeners();
   }
 
-  // Upgrade a user's subscription
   Future<void> upgradeSubscription(String userId, SubscriptionType subscriptionType) async {
     final now = DateTime.now();
     final subscriptionEndDate = now.add(const Duration(days: 365));
@@ -169,9 +165,9 @@ class AuthService {
       'subscriptionEndDate': subscriptionEndDate,
       'isTrialPeriod': false,
     });
+    notifyListeners();
   }
 
-  // Cancel a user's subscription
   Future<void> cancelSubscription(String userId) async {
     await usersRef.doc(userId).update({
       'subscriptionType': SubscriptionType.free.name,
@@ -179,16 +175,16 @@ class AuthService {
       'subscriptionEndDate': null,
       'isTrialPeriod': false,
     });
+    notifyListeners();
   }
 
-  // Update a user's profile picture
   Future<void> updateProfilePicture(String userId, String photoUrl) async {
     await usersRef.doc(userId).update({
       'photoUrl': photoUrl,
     });
+    notifyListeners();
   }
 
-  // Handle Firebase Auth errors
   String handleFirebaseAuthError(FirebaseAuthException e) {
     switch (e.code) {
       case 'weak-password':
