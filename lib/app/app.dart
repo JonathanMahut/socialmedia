@@ -12,6 +12,8 @@ import 'package:social_media_app/presentation/components/life_cycle_event_handle
 import 'package:social_media_app/presentation/pages/landing/landing_page.dart';
 import 'package:social_media_app/presentation/screens/mainscreen.dart';
 
+import '../domain/view_models/auth/posts_view_model.dart';
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -37,6 +39,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel(AuthService())), // Provide AuthViewModel
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => PostsViewModel()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, ThemeProvider notifier, Widget? child) {

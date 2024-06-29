@@ -33,6 +33,13 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     super.initState();
+//    _fetchUserDataAndBuildPages();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // Use didChangeDependencies instead of initState
+    super.didChangeDependencies();
     _fetchUserDataAndBuildPages();
   }
 
