@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -5,12 +6,16 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/core/utils/validation.dart';
 import 'package:social_media_app/data/models/enum/user_type.dart';
+import 'package:social_media_app/domain/view_models/auth/auth_view_model.dart';
 import 'package:social_media_app/domain/view_models/auth/register_view_model.dart';
 import 'package:social_media_app/presentation/components/password_text_field.dart';
 import 'package:social_media_app/presentation/components/text_form_builder.dart';
+import 'package:social_media_app/presentation/pages/auth/register/profile_pic.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
 import 'package:social_media_app/presentation/widgets/usertypedropdownwidget.dart';
 import 'package:sign_in_button/sign_in_button.dart';
+
+import '../../../../data/models/user.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -176,7 +181,45 @@ class Register extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              onPressed: () => viewModel.register(context),
+              onPressed: () async {
+                if (viewModel.formKey.currentState!.validate()) {
+                  viewModel.formKey.currentState!.save();
+                  // Call signUpWithEmailAndPassword and handle navigation
+                  if (viewModel.name != null &&
+                      viewModel.email != null &&
+                      viewModel.country != null &&
+                      viewModel.password != null &&
+                      viewModel.selectedUserType != null) {
+                    UserModel? newUser =
+                        await Provider.of<AuthViewModel>(context, listen: false).signUpWithEmailAndPassword(
+                      name: viewModel.name!, // Use the non-null assertion operator (!)
+                      email: viewModel.email!,
+                      country: viewModel.country!,
+                      password: viewModel.password!,
+                      userType: viewModel.selectedUserType!,
+                    );
+
+                    if (newUser != null) {
+                      // Navigate to ProfilePicture within the provider scope
+                      Navigator.of(context).pushReplacement(
+                        CupertinoPageRoute(
+                          builder: (_) => ProfilePicture(user: newUser),
+                        ),
+                      );
+                    } else {
+                      // Handle sign-up error (e.g., display an error message)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Registration failed. Please try again.')),
+                      );
+                    }
+                  } else {
+                    // Handle the case where one or more required fields are null
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please fill in all required fields.')),
+                    );
+                  }
+                }
+              },
             ),
           ),
         ],

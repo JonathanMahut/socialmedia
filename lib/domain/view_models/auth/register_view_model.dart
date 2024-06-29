@@ -29,6 +29,24 @@ class RegisterViewModel extends ChangeNotifier {
 
   final AuthService _authService = AuthService(); // Instance of AuthService
 
+  // Getters for all fields
+  String? get name => username;
+  String? get userEmail => email;
+  String? get userCountry => country;
+  String? get userPassword => password;
+  String? get confirmPassword => cPassword;
+  UserType? get userType => selectedUserType;
+  GenderType? get gender => selectedGender;
+  AppTheme get theme => selectedTheme;
+  String? get userDisplayName => displayName;
+  String? get userPhoneNumber => phoneNumber;
+  String? get userWebsite => website;
+  String? get userLanguage => language;
+  String? get userCountryCode => countryCode;
+  String? get userPostalAddress => postalAddress;
+  String? get userCity => city;
+  List<String>? get userSpecialties => specialties;
+
   Future<void> register(BuildContext context) async {
     FormState form = formKey.currentState!;
     form.save();
