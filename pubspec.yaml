@@ -107,6 +107,8 @@ dependencies:
   # Gestion des thèmes via Bloc
   flutter_bloc: ^8.1.6
   bloc: ^8.0.3
+  flutter_facebook_auth: ^7.0.1
+  sign_in_button: ^3.2.0
 
   http: any
  

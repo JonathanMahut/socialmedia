@@ -6,8 +6,11 @@ import 'package:social_media_app/domain/view_models/auth/posts_view_model.dart';
 import 'package:social_media_app/presentation/components/custom_image.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
 
+import '../../../../data/models/user.dart';
+
 class ProfilePicture extends StatefulWidget {
-  const ProfilePicture({super.key});
+  final UserModel user; // Add the required 'user'
+  const ProfilePicture({super.key, required this.user});
 
   @override
   _ProfilePictureState createState() => _ProfilePictureState();
@@ -62,8 +65,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                               child: Text(
                                 'Tap to add your profile picture',
                                 style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                                  color: Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                             )
@@ -79,8 +81,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
               Center(
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(
-                        Theme.of(context).colorScheme.secondary),
+                    backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
                     shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),

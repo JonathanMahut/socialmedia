@@ -1,97 +1,196 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/domain/services/auth_service.dart';
 import 'package:social_media_app/presentation/pages/auth/register/profile_pic.dart';
+
+import '../../../data/models/enum/app_theme.dart';
+import '../../../data/models/enum/gender_type.dart';
+import '../../../data/models/enum/user_type.dart';
+import '../../../data/models/user.dart';
+import '../../../presentation/screens/mainscreen.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool validate = false;
   bool loading = false;
-  String? username, email, country, password, cPassword, userType;
+  String? username, email, country, password, cPassword;
+  UserType? selectedUserType;
+  GenderType? selectedGender;
+  AppTheme selectedTheme = AppTheme.system;
+  String? displayName, phoneNumber, website, language, countryCode, postalAddress, city;
+  List<String>? specialties;
   FocusNode usernameFN = FocusNode();
   FocusNode emailFN = FocusNode();
   FocusNode countryFN = FocusNode();
   FocusNode passFN = FocusNode();
   FocusNode cPassFN = FocusNode();
-  AuthService auth = AuthService();
 
-  register(BuildContext context) async {
+  final AuthService _authService = AuthService(); // Instance of AuthService
+
+  Future<void> register(BuildContext context) async {
     FormState form = formKey.currentState!;
     form.save();
     if (!form.validate()) {
       validate = true;
       notifyListeners();
-      showInSnackBar(
-          'Please fix the errors in red before submitting.', context);
+      showInSnackBar('Please fix the errors in red before submitting.', context);
     } else {
       if (password == cPassword) {
         loading = true;
         notifyListeners();
         try {
-          bool success = await auth.createUser(
-              name: username,
-              email: email,
-              password: password,
-              country: country,
-              userType: userType);
-          print(success);
-          if (success) {
+          final UserModel? newUser = await _authService.createUserWithEmailAndPassword(
+            name: username!,
+            email: email!,
+            country: country!,
+            password: password!,
+            userType: selectedUserType!,
+            displayName: displayName,
+            phoneNumber: phoneNumber,
+            website: website,
+            language: language,
+            countryCode: countryCode,
+            postalAddress: postalAddress,
+            city: city,
+            gender: selectedGender,
+            specialties: specialties,
+            theme: selectedTheme,
+          );
+
+          if (newUser != null) {
             Navigator.of(context).pushReplacement(
               CupertinoPageRoute(
-                builder: (_) => const ProfilePicture(),
+                builder: (_) => ProfilePicture(user: newUser),
               ),
             );
-            print(success);
           } else {
-            showInSnackBar('User account Not successfully created ', context);
+            showInSnackBar('User account not successfully created.', context);
           }
         } catch (e) {
           loading = false;
           notifyListeners();
           print(e.toString());
-          showInSnackBar(auth.handleFirebaseAuthError(e.toString()), context);
+          showInSnackBar(_authService.handleFirebaseAuthError(e as FirebaseAuthException), context);
+        } finally {
+          loading = false;
+          notifyListeners();
         }
-        loading = false;
-        notifyListeners();
       } else {
-        showInSnackBar('The passwords does not match', context);
+        showInSnackBar('The passwords do not match.', context);
       }
     }
   }
 
-  setEmail(val) {
+  Future<void> signInWithGoogle(BuildContext context) async {
+    loading = true;
+    notifyListeners();
+
+    try {
+      UserModel? user = await _authService.signInWithGoogle();
+      if (user != null) {
+        // Navigate to the Home screen after successful sign-in
+        Navigator.of(context).pushReplacement(
+          CupertinoPageRoute(
+            builder: (_) => TabScreen(), // Replace with your actual Home screen widget
+          ),
+        );
+      } else {
+        showInSnackBar('Google Sign-In failed.', context);
+      }
+    } catch (e) {
+      print(e.toString());
+      showInSnackBar('An error occurred during Google Sign-In.', context);
+    } finally {
+      loading = false;
+      notifyListeners();
+    }
+  }
+
+  // Setter methods for all fields
+  void setEmail(String val) {
     email = val;
     notifyListeners();
   }
 
-  setPassword(val) {
+  void setPassword(String val) {
     password = val;
     notifyListeners();
   }
 
-  setName(val) {
+  void setName(String val) {
     username = val;
     notifyListeners();
   }
 
-  setConfirmPass(val) {
+  void setConfirmPass(String val) {
     cPassword = val;
     notifyListeners();
   }
 
-  setCountry(val) {
+  void setCountry(String val) {
     country = val;
     notifyListeners();
   }
 
-  setUserType(val) {
-    userType = val;
+  void setSelectedUserType(UserType? userType) {
+    selectedUserType = userType;
     notifyListeners();
   }
 
-  getUserType() {
-    return userType;
+  void setSelectedGender(GenderType? gender) {
+    selectedGender = gender;
+    notifyListeners();
+  }
+
+  void setSelectedTheme(AppTheme theme) {
+    selectedTheme = theme;
+    notifyListeners();
+  }
+
+  void setDisplayName(String? val) {
+    displayName = val;
+    notifyListeners();
+  }
+
+  void setPhoneNumber(String? val) {
+    phoneNumber = val;
+    notifyListeners();
+  }
+
+  void setWebsite(String? val) {
+    website = val;
+    notifyListeners();
+  }
+
+  void setLanguage(String? val) {
+    language = val;
+    notifyListeners();
+  }
+
+  void setCountryCode(String? val) {
+    countryCode = val;
+    notifyListeners();
+  }
+
+  void setPostalAddress(String? val) {
+    postalAddress = val;
+    notifyListeners();
+  }
+
+  void setCity(String? val) {
+    city = val;
+    notifyListeners();
+  }
+
+  void setSpecialties(List<String>? val) {
+    specialties = val;
+    notifyListeners();
+  }
+
+  UserType? getUserType() {
+    return selectedUserType;
   }
 
   void showInSnackBar(String value, context) {

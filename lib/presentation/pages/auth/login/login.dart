@@ -9,6 +9,7 @@ import 'package:social_media_app/presentation/components/password_text_field.dar
 import 'package:social_media_app/presentation/components/text_form_builder.dart';
 import 'package:social_media_app/presentation/pages/auth/register/register.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
+import 'package:sign_in_button/sign_in_button.dart'; // Import for sign_in_button package
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -61,6 +62,14 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 25.0),
             buildForm(context, viewModel),
+            const SizedBox(height: 20.0), // Added spacing
+            // Google Sign-In Button
+            Center(
+              child: SignInButton(
+                Buttons.google,
+                onPressed: () => viewModel.signInWithGoogle(context),
+              ),
+            ),
             const SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +170,6 @@ class _LoginState extends State<Login> {
                   Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              // highlightElevation: 4.0,
               child: Text(
                 'Log in'.toUpperCase(),
                 style: const TextStyle(

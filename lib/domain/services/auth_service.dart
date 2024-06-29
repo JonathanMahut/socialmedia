@@ -1,264 +1,210 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_media_app/core/utils/firebase.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:social_media_app/core/utils/firebase.dart'; // Make sure this import is correct for your project
+import 'package:social_media_app/data/models/enum/app_theme.dart';
+import 'package:social_media_app/data/models/enum/gender_type.dart';
+import 'package:social_media_app/data/models/enum/subscription_type.dart';
+import 'package:social_media_app/data/models/enum/user_type.dart';
+import 'package:social_media_app/data/models/user.dart'; // Import your UserModel
 
 class AuthService {
-  User getCurrentUser() {
-    User user = firebaseAuth.currentUser!;
-    return user;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  User? getCurrentUser() {
+    return _auth.currentUser;
   }
 
-  // Crée un utilisateur Firebase
-  Future<bool> createUser({
-    String? name,
-    User? user,
-    String? email,
-    String? country,
-    String? password,
+  // Creates a Firebase user with email and password
+  Future<UserModel?> createUserWithEmailAndPassword({
+    required String name,
+    required String email,
+    required String country,
+    required String password,
+    required UserType userType,
     String? displayName,
     String? phoneNumber,
     String? website,
     String? language,
     String? countryCode,
-    String? postalAdress,
+    String? postalAddress,
     String? city,
-    String? userType,
-    String? theme,
-    String? gender,
+    GenderType? gender,
+    List<String>? specialties,
+    AppTheme theme = AppTheme.system,
   }) async {
-    var res = await firebaseAuth.createUserWithEmailAndPassword(
-      email: '$email',
-      password: '$password',
-    );
-    if (res.user != null) {
-      await saveUserToFirestore(
-          name!,
-          res.user!,
-          email!,
-          country!,
-          displayName,
-          phoneNumber,
-          website,
-          language,
-          countryCode,
-          postalAdress,
-          city,
-          userType,
-          theme,
-          gender);
-      return true;
-    } else {
-      return false;
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (result.user != null) {
+        UserModel newUser = UserModel(
+          id: result.user!.uid,
+          email: email,
+          username: name,
+          userType: userType,
+          photoUrl: result.user!.photoURL,
+          country: country,
+          displayName: displayName,
+          phoneNumber: phoneNumber,
+          language: language ?? 'en',
+          countryCode: countryCode,
+          postalAddress: postalAddress,
+          city: city,
+          gender: gender,
+          specialties: specialties,
+          theme: theme,
+          signedUpAt: DateTime.now(),
+          lastSeen: DateTime.now(),
+        );
+
+        await saveUserToFirestore(newUser);
+        return newUser;
+      }
+    } catch (e) {
+      print(e.toString());
+      // Consider rethrowing the exception or returning a specific error message
     }
+    return null;
   }
 
-  // Enregistre les détails de l'utilisateur dans Firestore
-  saveUserToFirestore(
-    String name,
-    User user,
-    String email,
-    String country,
-    String? displayName,
-    String? phoneNumber,
-    String? website,
-    String? language,
-    String? countryCode,
-    String? postalAdress,
-    String? city,
-    String? userType,
-    String? gender,
-    String? theme,
-  ) async {
-    Map<String, dynamic> userData = {
-      'username': name,
-      'email': email,
-      'time': Timestamp.now(),
-      'id': user.uid,
-      'bio': "",
-      'country': country,
-      'photoUrl': user.photoURL ?? '',
-      'displayName': displayName ?? '',
-      'phoneNumber': phoneNumber ?? '',
-      'website': website ?? '',
-      'language': language ?? '',
-      'countryCode': countryCode ?? '',
-      'postalAdress': postalAdress ?? '',
-      'city': city ?? '',
-      'userType': userType ?? 'UNKNOWN',
-      'theme': theme ?? '',
-      'gender': gender ?? 'UNKNOWN'
-    };
-    print(userData);
-
-    await usersRef.doc(user.uid).set(userData);
+  // Saves user details to Firestore
+  Future<void> saveUserToFirestore(UserModel user) async {
+    await usersRef.doc(user.id).set(user.toJson());
   }
 
-  // Fonction pour connecter un utilisateur avec son email et son mot de passe
-  Future<bool> loginUser({String? email, String? password}) async {
-    var res = await firebaseAuth.signInWithEmailAndPassword(
-      email: '$email',
-      password: '$password',
-    );
-
-    if (res.user != null) {
-      return true;
-    } else {
-      return false;
+  // Function to log in a user with their email and password
+  Future<UserModel?> signInWithEmailAndPassword({required String email, required String password}) async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (result.user != null) {
+        DocumentSnapshot userSnapshot = await usersRef.doc(result.user!.uid).get();
+        if (userSnapshot.exists) {
+          return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      // Consider rethrowing the exception or returning a specific error message
     }
+    return null;
   }
 
-  // Réinitialiser le mot de passe
-  forgotPassword(String email) async {
-    await firebaseAuth.sendPasswordResetEmail(email: email);
+  // Sign in with Google
+  Future<UserModel?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        final UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+        if (userCredential.user != null) {
+          DocumentSnapshot userSnapshot = await usersRef.doc(userCredential.user!.uid).get();
+          if (userSnapshot.exists) {
+            return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
+          } else {
+            UserModel newUser = UserModel(
+              id: userCredential.user!.uid,
+              email: userCredential.user!.email ?? '',
+              username: googleUser.displayName ?? '',
+              userType: UserType.client,
+              photoUrl: userCredential.user!.photoURL,
+              country: '',
+              signedUpAt: DateTime.now(),
+              lastSeen: DateTime.now(),
+            );
+            await saveUserToFirestore(newUser);
+            return newUser;
+          }
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      // Consider rethrowing the exception or returning a specific error message
+    }
+    return null;
   }
 
-  // Déconnexion
-  logOut() async {
-    await firebaseAuth.signOut();
+  // Reset password
+  Future<void> forgotPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
   }
 
-  // Gestion des erreurs Firebase Auth
-  String handleFirebaseAuthError(String e) {
-    if (e.contains("ERROR_WEAK_PASSWORD")) {
-      return "Le mot de passe est trop faible";
-    } else if (e.contains("invalid-email")) {
-      return "Email invalide";
-    } else if (e.contains("ERROR_EMAIL_ALREADY_IN_USE") ||
-        e.contains('email-already-in-use')) {
-      return "L'adresse email est déjà utilisée par un autre compte.";
-    } else if (e.contains("ERROR_NETWORK_REQUEST_FAILED")) {
-      return "Erreur réseau!";
-    } else if (e.contains("ERROR_USER_NOT_FOUND") ||
-        e.contains('firebase_auth/user-not-found')) {
-      return "Identifiants invalides.";
-    } else if (e.contains("ERROR_WRONG_PASSWORD") ||
-        e.contains('wrong-password')) {
-      return "Identifiants invalides.";
-    } else if (e.contains('firebase_auth/requires-recent-login')) {
-      return 'Cette opération est sensible et nécessite une authentification récente.'
-          ' Connectez-vous à nouveau avant de réessayer cette demande.';
-    } else {
-      return e;
+  // Log out
+  Future<void> logOut() async {
+    await _auth.signOut();
+    await _googleSignIn.signOut();
+  }
+
+  // Start a trial period for a user
+  Future<void> startTrial(String userId, SubscriptionType subscriptionType) async {
+    final now = DateTime.now();
+    final trialEndDate = now.add(const Duration(days: 30));
+
+    await usersRef.doc(userId).update({
+      'subscriptionType': subscriptionType.name,
+      'subscriptionStartDate': now,
+      'subscriptionEndDate': trialEndDate,
+      'isTrialPeriod': true,
+    });
+  }
+
+  // Upgrade a user's subscription
+  Future<void> upgradeSubscription(String userId, SubscriptionType subscriptionType) async {
+    final now = DateTime.now();
+    final subscriptionEndDate = now.add(const Duration(days: 365));
+
+    await usersRef.doc(userId).update({
+      'subscriptionType': subscriptionType.name,
+      'subscriptionStartDate': now,
+      'subscriptionEndDate': subscriptionEndDate,
+      'isTrialPeriod': false,
+    });
+  }
+
+  // Cancel a user's subscription
+  Future<void> cancelSubscription(String userId) async {
+    await usersRef.doc(userId).update({
+      'subscriptionType': SubscriptionType.free.name,
+      'subscriptionStartDate': null,
+      'subscriptionEndDate': null,
+      'isTrialPeriod': false,
+    });
+  }
+
+  // Update a user's profile picture
+  Future<void> updateProfilePicture(String userId, String photoUrl) async {
+    await usersRef.doc(userId).update({
+      'photoUrl': photoUrl,
+    });
+  }
+
+  // Handle Firebase Auth errors
+  String handleFirebaseAuthError(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'weak-password':
+        return 'The password provided is too weak.';
+      case 'email-already-in-use':
+        return 'The account already exists for that email.';
+      case 'user-not-found':
+        return 'No user found for that email.';
+      case 'wrong-password':
+        return 'Wrong password.';
+      case 'invalid-email':
+        return 'The email address is badly formatted.';
+      case 'requires-recent-login':
+        return 'This operation is sensitive and requires recent authentication. Log in again before retrying this request.';
+      default:
+        return 'An unknown error occurred.';
     }
   }
 }
-
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:social_media_app/models/user.dart';
-// import 'package:social_media_app/models/tatoo_artist.dart';
-// import 'package:social_media_app/utils/firebase.dart';
-
-// class AuthService {
-//   FirebaseAuth _auth = FirebaseAuth.instance;
-
-//   // Méthode pour créer un utilisateur avec Firebase
-//   Future<bool> createUser({
-//     required String name,
-//     required String email,
-//     required String country,
-//     required String password,
-//     String? displayName,
-//     String? phoneNumber,
-//     String? website,
-//     String? language,
-//     String? countryCode,
-//     String? postalAdress,
-//     String? city,
-//     String userType = 'standard', // Par défaut, crée un utilisateur standard
-//   }) async {
-//     try {
-//       UserCredential result = await _auth.createUserWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-
-//       User? user = result.user;
-//       if (user != null) {
-//         await saveUserToFirestore(
-//           name,
-//           user,
-//           email,
-//           country,
-//           displayName,
-//           phoneNumber,
-//           website,
-//           language,
-//           countryCode,
-//           postalAdress,
-//           city,
-//           userType,
-//         );
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     } catch (e) {
-//       print(e.toString());
-//       return false;
-//     }
-//   }
-
-//   // Enregistre les détails de l'utilisateur dans Firestore
-//   Future<void> saveUserToFirestore(
-//     String name,
-//     User user,
-//     String email,
-//     String country,
-//     String? displayName,
-//     String? phoneNumber,
-//     String? website,
-//     String? language,
-//     String? countryCode,
-//     String? postalAdress,
-//     String? city,
-//     String userType,
-//   ) async {
-//     Map<String, dynamic> userData = {
-//       'username': name,
-//       'email': email,
-//       'country': country,
-//       'time': Timestamp.now(),
-//       'id': user.uid,
-//       'type': userType, // Ajoute le type d'utilisateur
-//       'bio': "",
-//       'photoUrl': user.photoURL ?? '',
-//       'displayName': displayName ?? '',
-//       'phoneNumber': phoneNumber ?? '',
-//       'website': website ?? '',
-//       'language': language ?? '',
-//       'countryCode': countryCode ?? '',
-//       'postalAdress': postalAdress ?? '',
-//       'city': city ?? '',
-//     };
-
-//     await usersRef.doc(user.uid).set(userData);
-//   }
-
-//   // Fonction pour connecter un utilisateur avec son email et son mot de passe
-//   Future<bool> loginUser({required String email, required String password}) async {
-//     try {
-//       UserCredential result = await _auth.signInWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-
-//       User? user = result.user;
-//       return user != null;
-//     } catch (e) {
-//       print(e.toString());
-//       return false;
-//     }
-//   }
-
-//   // Déconnexion
-//   Future<void> logOut() async {
-//     await _auth.signOut();
-//   }
-
-//   // Gestion des erreurs Firebase Auth
-//   String handleFirebaseAuthError(String e) {
-//     // Gestion des erreurs...
-//   }
-// }

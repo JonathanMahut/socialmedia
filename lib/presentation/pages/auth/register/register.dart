@@ -10,6 +10,7 @@ import 'package:social_media_app/presentation/components/password_text_field.dar
 import 'package:social_media_app/presentation/components/text_form_builder.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
 import 'package:social_media_app/presentation/widgets/usertypedropdownwidget.dart';
+import 'package:sign_in_button/sign_in_button.dart'; // Import for the sign_in_button package
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -41,6 +42,14 @@ class _RegisterState extends State<Register> {
             const SizedBox(height: 30.0),
             buildForm(viewModel, context),
             const SizedBox(height: 30.0),
+            // Google Sign-In Button
+            Center(
+              child: SignInButton(
+                Buttons.google,
+                onPressed: () => viewModel.signInWithGoogle(context),
+              ),
+            ),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -142,7 +151,10 @@ class _RegisterState extends State<Register> {
           const SizedBox(height: 10.0),
           UserTypeDDWidget(
             initial: selectedUserType,
-            onItemChange: (UserType g) => selectedUserType = g,
+            onItemChange: (UserType g) {
+              viewModel.setSelectedUserType(g); // Update the ViewModel
+              selectedUserType = g; // Update local variable
+            },
           ),
           const SizedBox(height: 25.0),
           SizedBox(
@@ -155,8 +167,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
-                backgroundColor: WidgetStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.secondary),
+                backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
               ),
               child: Text(
                 'sign up'.toUpperCase(),
