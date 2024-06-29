@@ -10,71 +10,70 @@ import 'package:social_media_app/presentation/components/password_text_field.dar
 import 'package:social_media_app/presentation/components/text_form_builder.dart';
 import 'package:social_media_app/presentation/widgets/indicators.dart';
 import 'package:social_media_app/presentation/widgets/usertypedropdownwidget.dart';
-import 'package:sign_in_button/sign_in_button.dart'; // Import for the sign_in_button package
+import 'package:sign_in_button/sign_in_button.dart';
 
-class Register extends StatefulWidget {
+class Register extends StatelessWidget {
   const Register({super.key});
 
   @override
-  _RegisterState createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register> {
-  @override
   Widget build(BuildContext context) {
-    RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
-    return LoadingOverlay(
-      progressIndicator: circularProgress(context),
-      isLoading: viewModel.loading,
-      child: Scaffold(
-        key: viewModel.scaffoldKey,
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 10),
-            Text(
-              'Welcome to Tatoo Connect\nCreate a new account and connect with friends and artists',
-              style: GoogleFonts.nunitoSans(
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            buildForm(viewModel, context),
-            const SizedBox(height: 30.0),
-            // Google Sign-In Button
-            Center(
-              child: SignInButton(
-                Buttons.google,
-                onPressed: () => viewModel.signInWithGoogle(context),
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return ChangeNotifierProvider(
+      create: (context) => RegisterViewModel(),
+      builder: (context, child) {
+        final viewModel = Provider.of<RegisterViewModel>(context);
+        return LoadingOverlay(
+          progressIndicator: circularProgress(context),
+          isLoading: viewModel.loading,
+          child: Scaffold(
+            key: viewModel.scaffoldKey,
+            body: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
               children: [
-                const Text(
-                  'Already have an account  ',
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+                SizedBox(height: MediaQuery.of(context).size.height / 10),
+                Text(
+                  'Welcome to Tatoo Connect\nCreate a new account and connect with friends and artists',
+                  style: GoogleFonts.nunitoSans(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
                   ),
+                ),
+                const SizedBox(height: 30.0),
+                buildForm(viewModel, context),
+                const SizedBox(height: 30.0),
+                Center(
+                  child: SignInButton(
+                    Buttons.google,
+                    onPressed: () => viewModel.signInWithGoogle(context),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Already have an account  ',
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
-  buildForm(RegisterViewModel viewModel, BuildContext context) {
+  Widget buildForm(RegisterViewModel viewModel, BuildContext context) {
     UserType selectedUserType = UserType.unknown;
     return Form(
       key: viewModel.formKey,
@@ -152,8 +151,8 @@ class _RegisterState extends State<Register> {
           UserTypeDDWidget(
             initial: selectedUserType,
             onItemChange: (UserType g) {
-              viewModel.setSelectedUserType(g); // Update the ViewModel
-              selectedUserType = g; // Update local variable
+              viewModel.setSelectedUserType(g);
+              selectedUserType = g;
             },
           ),
           const SizedBox(height: 25.0),
