@@ -15,9 +15,9 @@ import 'package:social_media_app/presentation/screens/settings.dart';
 import 'package:social_media_app/presentation/widgets/post_tiles.dart';
 
 class Profile extends StatefulWidget {
-  final profileId;
+  final String profileId;
 
-  const Profile({super.key, this.profileId});
+  const Profile({super.key, required this.profileId});
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -42,17 +42,115 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      DocumentSnapshot doc = await usersRef.doc(widget.profileId).get();
+      if (doc.exists) {
+        setState(() {
+          users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+        });
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+      // Handle error appropriately (e.g., show a snackbar)
+    }
   }
 
   checkIfFollowing() async {
-    DocumentSnapshot doc = await followersRef
-        .doc(widget.profileId)
-        .collection('userFollowers')
-        .doc(currentUserId())
-        .get();
+    DocumentSnapshot doc =
+        await followersRef.doc(widget.profileId).collection('userFollowers').doc(currentUserId()).get();
     setState(() {
       isFollowing = doc.exists;
     });
+  }
+
+  buildCountColumn(String label, int count) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          count.toString(),
+          style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 5.0),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey,
+          ),
+        )
+      ],
+    );
+  }
+
+  buildProfileButton() {
+    // viewing your own profile - should show edit profile button
+    bool isProfileOwner = widget.profileId == currentUserId();
+    if (isProfileOwner) {
+      return buildButton(
+          text: "Edit Profile",
+          function: () {
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (_) => EditProfile(
+                  user: users,
+                ),
+              ),
+            );
+          });
+      // viewing someone else's profile - should show follow/unfollow button
+    } else if (isFollowing) {
+      return buildButton(
+        text: "Unfollow",
+        function: handleUnfollow,
+      );
+    } else if (!isFollowing) {
+      return buildButton(
+        text: "Follow",
+        function: handleFollow,
+      );
+    }
+  }
+
+  buildButton({required String text, required VoidCallback function}) {
+    return SizedBox(
+      width: 130.0,
+      height: 38.0,
+      child: ElevatedButton(
+        onPressed: function,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isFollowing ? Colors.white : Colors.blue,
+          side: BorderSide(
+            color: isFollowing ? Colors.grey : Colors.blue,
+          ),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isFollowing ? Colors.black : Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  handleUnfollow() {
+    // Implement unfollow logic here
+    print('Unfollow clicked');
+  }
+
+  handleFollow() {
+    // Implement follow logic here
+    print('Follow clicked');
   }
 
   @override
@@ -62,485 +160,246 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
         title: const Text('Tatoo Connect'),
         actions: [
-          widget.profileId == firebaseAuth.currentUser!.uid
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await firebaseAuth.signOut();
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (_) => const Register(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        'Log Out',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 15.0,
-                        ),
+          if (widget.profileId == firebaseAuth.currentUser!.uid)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 25.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    await firebaseAuth.signOut();
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (_) => const Register(),
                       ),
+                    );
+                  },
+                  child: const Text(
+                    'Log Out',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 15.0,
                     ),
                   ),
-                )
-              : const SizedBox()
+                ),
+              ),
+            )
+          else
+            const SizedBox(),
         ],
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            pinned: true,
-            floating: false,
-            toolbarHeight: 5.0,
-            collapsedHeight: 6.0,
-            expandedHeight: 225.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: StreamBuilder(
-                stream: usersRef.doc(widget.profileId).snapshots(),
-                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    UserModel user = UserModel.fromJson(
-                      snapshot.data!.data() as Map<String, dynamic>,
-                    );
+      body: StreamBuilder(
+        stream: usersRef.doc(widget.profileId).snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: Text('User not found'));
+          }
+          UserModel user = UserModel.fromJson(snapshot.data!.data() as Map<String, dynamic>);
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: user.photoUrl?.isEmpty ?? true
-                                  ? CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      child: Center(
-                                        child: Text(
-                                          user.username![0].toUpperCase(),
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                        '${user.photoUrl}',
-                                      ),
-                                    ),
-                            ),
-                            const SizedBox(width: 20.0),
-                            Column(
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                pinned: true,
+                floating: false,
+                toolbarHeight: 5.0,
+                collapsedHeight: 6.0,
+                expandedHeight: 225.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 32.0),
-                                Row(
-                                  children: [
-                                    const Visibility(
-                                      visible: false,
-                                      child: SizedBox(width: 10.0),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: 130.0,
+                                user.photoUrl?.isEmpty ?? true
+                                    ? CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                                        child: Center(
                                           child: Text(
-                                            user.username!,
+                                            user.username![0].toUpperCase(),
                                             style: const TextStyle(
+                                              color: Colors.white,
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w900,
                                             ),
-                                            maxLines: null,
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 130.0,
-                                          child: Text(
-                                            user.country!,
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundImage: CachedNetworkImageProvider(
+                                          '${user.photoUrl}',
                                         ),
-                                        const SizedBox(width: 10.0),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              user.email!,
-                                              style: const TextStyle(
-                                                fontSize: 10.0,
-                                              ),
-                                            ),
-                                          ],
+                                      ),
+                                const SizedBox(width: 20.0),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 32.0),
+                                      Text(
+                                        user.username!,
+                                        style: TextStyle(
+                                          fontSize: constraints.maxWidth > 600 ? 18 : 16,
+                                          fontWeight: FontWeight.w900,
                                         ),
-                                      ],
-                                    ),
-                                    widget.profileId == currentUserId()
-                                        ? InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                CupertinoPageRoute(
-                                                  builder: (_) =>
-                                                      const Setting(),
-                                                ),
-                                              );
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Ionicons.settings_outline,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                                const Text(
-                                                  'settings',
-                                                  style: TextStyle(
-                                                    fontSize: 11.5,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        : const Text('')
-                                    // : buildLikeButton()
-                                  ],
+                                        maxLines: null,
+                                      ),
+                                      Text(
+                                        user.country!,
+                                        style: TextStyle(
+                                          fontSize: constraints.maxWidth > 600 ? 14 : 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        user.email!,
+                                        style: const TextStyle(fontSize: 10.0),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                if (widget.profileId == currentUserId())
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                          builder: (_) => const Setting(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Ionicons.settings_outline,
+                                      color: Theme.of(context).colorScheme.secondary,
+                                    ),
+                                  ),
                               ],
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio!.isEmpty
-                              ? Container()
-                              : SizedBox(
-                                  width: 200,
-                                  child: Text(
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: user.bio!.isEmpty
+                                ? Container()
+                                : Text(
                                     user.bio!,
                                     style: const TextStyle(
-                                      fontSize: 10.0,
+                                      fontSize: 14.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                                     maxLines: null,
                                   ),
-                                ),
-                        ),
-                        Container(),
-                        const SizedBox(height: 10.0),
-                        SizedBox(
-                          height: 55.0,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 StreamBuilder(
-                                  stream: postRef
-                                      .where('ownerId',
-                                          isEqualTo: widget.profileId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: postRef.where('ownerId', isEqualTo: widget.profileId).snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount("POSTS", docs.length);
+                                      postCount = snapshot.data!.docs.length;
+                                      return buildCountColumn("POSTS", postCount);
                                     } else {
-                                      return buildCount("POSTS", 0);
+                                      return buildCountColumn("POSTS", 0);
                                     }
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 15.0),
-                                  child: Container(
-                                    height: 50.0,
-                                    width: 0.3,
-                                    color: Colors.grey,
-                                  ),
-                                ),
                                 StreamBuilder(
-                                  stream: followersRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowers')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: followersRef.doc(widget.profileId).collection('userFollowers').snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "FOLLOWERS", docs.length);
+                                      followersCount = snapshot.data!.docs.length;
+                                      return buildCountColumn("FOLLOWERS", followersCount);
                                     } else {
-                                      return buildCount("FOLLOWERS", 0);
+                                      return buildCountColumn("FOLLOWERS", 0);
                                     }
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 15.0),
-                                  child: Container(
-                                    height: 55.0,
-                                    width: 0.3,
-                                    color: Colors.grey,
-                                  ),
-                                ),
                                 StreamBuilder(
-                                  stream: followingRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowing')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream: followingRef.doc(widget.profileId).collection('userFollowing').snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "FOLLOWING", docs.length);
+                                      followingCount = snapshot.data!.docs.length;
+                                      return buildCountColumn("FOLLOWING", followingCount);
                                     } else {
-                                      return buildCount("FOLLOWING", 0);
+                                      return buildCountColumn("FOLLOWING", 0);
                                     }
                                   },
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        buildProfileButton(user),
-                      ],
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                if (index > 0) return null;
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'All Posts',
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              DocumentSnapshot doc =
-                                  await usersRef.doc(widget.profileId).get();
-                              var currentUser = UserModel.fromJson(
-                                doc.data() as Map<String, dynamic>,
-                              );
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (_) => ListPosts(
-                                    userId: widget.profileId,
-                                    username: currentUser.username,
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Ionicons.grid_outline),
-                          )
+                          const SizedBox(height: 10.0),
+                          if (widget.profileId != currentUserId())
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: buildProfileButton(),
+                            )
+                          else
+                            const SizedBox(),
                         ],
-                      ),
-                    ),
-                    buildPostView()
-                  ],
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  buildCount(String label, int count) {
-    return Column(
-      children: <Widget>[
-        Text(
-          count.toString(),
-          style: const TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Ubuntu-Regular',
-          ),
-        ),
-        const SizedBox(height: 3.0),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            fontFamily: 'Ubuntu-Regular',
-          ),
-        )
-      ],
-    );
-  }
-
-  buildProfileButton(user) {
-    if (widget.profileId == firebaseAuth.currentUser!.uid) {
-      return InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (_) => EditProfile(
-                user: user,
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return StreamBuilder<QuerySnapshot>(
+                      stream: postRef
+                          .where('ownerId', isEqualTo: widget.profileId)
+                          .orderBy('timestamp', descending: true)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('Something went wrong'),
+                          );
+                        }
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              PostModel post =
+                                  PostModel.fromJson(snapshot.data!.docs[index].data() as Map<String, dynamic>);
+                              return PostTile(post: post);
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: Text('No posts yet'),
+                          );
+                        }
+                      },
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+            ],
           );
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          width: 250.0,
-          height: 40.0,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          child: Center(
-            child: Text(
-              'Edit Profile',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    return buildFollowButton(user);
-  }
-
-  buildFollowButton(user) {
-    // if viewing your own profile - show edit profile button
-    if (widget.profileId == firebaseAuth.currentUser!.uid) {
-      return buildProfileButton(user);
-    }
-    // display follow button
-    return InkWell(
-      onTap: () {
-        handleFollow(user);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        width: 250.0,
-        height: 40.0,
-        decoration: BoxDecoration(
-          color: isFollowing
-              ? Colors.white
-              : Theme.of(context).colorScheme.secondary,
-          border: Border.all(
-            color: isFollowing
-                ? Colors.grey
-                : Theme.of(context).colorScheme.secondary,
-          ),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: Center(
-          child: Text(
-            isFollowing ? 'Unfollow' : 'Follow',
-            style: TextStyle(
-              color: isFollowing ? Colors.black : Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
       ),
-    );
-  }
-
-  handleFollow(user) {
-    if (isFollowing) {
-      // unfollow user
-      followersRef
-          .doc(widget.profileId)
-          .collection('userFollowers')
-          .doc(firebaseAuth.currentUser!.uid)
-          .get()
-          .then((doc) {
-        if (doc.exists) {
-          doc.reference.delete();
-        }
-      });
-      followingRef
-          .doc(firebaseAuth.currentUser!.uid)
-          .collection('userFollowing')
-          .doc(widget.profileId)
-          .get()
-          .then((doc) {
-        if (doc.exists) {
-          doc.reference.delete();
-        }
-      });
-      setState(() {
-        isFollowing = false;
-      });
-    } else {
-      // follow user
-      followersRef
-          .doc(widget.profileId)
-          .collection('userFollowers')
-          .doc(firebaseAuth.currentUser!.uid)
-          .set({});
-      followingRef
-          .doc(firebaseAuth.currentUser!.uid)
-          .collection('userFollowing')
-          .doc(widget.profileId)
-          .set({});
-      setState(() {
-        isFollowing = true;
-      });
-    }
-  }
-
-  buildPostView() {
-    return StreamGridWrapper(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      physics: const NeverScrollableScrollPhysics(),
-      stream: postRef.where('ownerId', isEqualTo: widget.profileId).snapshots(),
-      itemBuilder: (_, documentSnapshot) {
-        PostModel post = PostModel.fromJson(
-          documentSnapshot.data() as Map<String, dynamic>,
-        );
-        return PostTile(
-          post: post,
-        );
-      },
     );
   }
 }

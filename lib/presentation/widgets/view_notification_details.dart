@@ -35,12 +35,20 @@ class _ViewActivityDetailsState extends State<ViewActivityDetails> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
             leading: GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (_) =>
-                          Profile(profileId: widget.activity!.userId),
-                    ));
+                if (widget.activity!.userId != null) {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) => Profile(profileId: widget.activity!.userId!), // Now it's safe
+                      ));
+                } else {
+                  // Handle the case where userId is null, maybe show a snackbar or log an error
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("User information is not available."),
+                    ),
+                  );
+                }
               },
               child: CircleAvatar(
                 radius: 25.0,

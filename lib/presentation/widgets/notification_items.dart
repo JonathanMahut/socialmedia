@@ -30,13 +30,22 @@ class _ActivityItemsState extends State<ActivityItems> {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
         onTap: () {
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (_) => widget.activity!.type == "follow"
-                  ? Profile(profileId: widget.activity!.userId)
-                  : ViewActivityDetails(activity: widget.activity!),
-            ),
-          );
+          if (widget.activity!.userId != null) {
+            // Add null check for userId
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (_) => widget.activity!.type == "follow"
+                    ? Profile(profileId: widget.activity!.userId!) // Now safe to use !
+                    : ViewActivityDetails(activity: widget.activity!),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("User information is not available."),
+              ),
+            );
+          }
         },
         leading: widget.activity!.userDp!.isEmpty
             ? CircleAvatar(
@@ -72,18 +81,14 @@ class _ActivityItemsState extends State<ActivityItems> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14.0,
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
                 ),
               ),
               TextSpan(
                 text: buildTextConfiguration(),
                 style: TextStyle(
                   fontSize: 12.0,
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
                 ),
               ),
             ],
