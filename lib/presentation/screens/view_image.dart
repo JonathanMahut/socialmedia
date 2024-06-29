@@ -10,9 +10,10 @@ import 'package:social_media_app/presentation/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ViewImage extends StatefulWidget {
-  final PostModel? post;
+  final String mediaUrl; // Now takes a single mediaUrl
+  final PostModel post; // Still need the post for other details
 
-  const ViewImage({super.key, this.post});
+  const ViewImage({Key? key, required this.mediaUrl, required this.post}) : super(key: key);
 
   @override
   _ViewImageState createState() => _ViewImageState();
@@ -49,7 +50,7 @@ class _ViewImageState extends State<ViewImage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.post!.username!,
+                      widget.post.username,
                       style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
                     const SizedBox(height: 3.0),
@@ -58,7 +59,7 @@ class _ViewImageState extends State<ViewImage> {
                         const Icon(Ionicons.alarm_outline, size: 13.0),
                         const SizedBox(width: 3.0),
                         Text(
-                          timeago.format(widget.post!.timestamp!.toDate()),
+                          timeago.format(widget.post.timestamp.toDate()),
                         ),
                       ],
                     ),
@@ -80,7 +81,7 @@ class _ViewImageState extends State<ViewImage> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5.0),
         child: CachedNetworkImage(
-          imageUrl: widget.post!.mediaUrl!,
+          imageUrl: widget.mediaUrl, // Use the passed mediaUrl
           placeholder: (context, url) {
             return circularProgress(context);
           },
@@ -96,82 +97,50 @@ class _ViewImageState extends State<ViewImage> {
   }
 
   addLikesToNotification() async {
-    bool isNotMe = currentUserId() != widget.post!.ownerId;
+    bool isNotMe = currentUserId() != widget.post.ownerId;
 
     if (isNotMe) {
       DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
       user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
-      notificationRef
-          .doc(widget.post!.ownerId)
-          .collection('notifications')
-          .doc(widget.post!.postId)
-          .set({
+      notificationRef.doc(widget.post.ownerId).collection('notifications').doc(widget.post.postId).set({
         "type": "like",
         "username": user!.username!,
         "userId": currentUserId(),
         "userDp": user!.photoUrl,
-        "postId": widget.post!.postId,
-        "mediaUrl": widget.post!.mediaUrl,
+        "postId": widget.post.postId,
+        "mediaUrl": widget.mediaUrl, // Use the passed mediaUrl
         "timestamp": timestamp,
       });
     }
   }
 
   removeLikeFromNotification() async {
-    bool isNotMe = currentUserId() != widget.post!.ownerId;
+    bool isNotMe = currentUserId() != widget.post.ownerId;
 
     if (isNotMe) {
       DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
       user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
-      notificationRef
-          .doc(widget.post!.ownerId)
-          .collection('notifications')
-          .doc(widget.post!.postId)
-          .get()
-          .then((doc) => {
-                if (doc.exists) {doc.reference.delete()}
-              });
+      notificationRef.doc(widget.post.ownerId).collection('notifications').doc(widget.post.postId).get().then((doc) => {
+            if (doc.exists) {doc.reference.delete()}
+          });
     }
   }
 
   buildLikeButton() {
     return StreamBuilder(
       stream: likesRef
-          .where('postId', isEqualTo: widget.post!.postId)
+          .where('postId', isEqualTo: widget.post.postId)
           .where('userId', isEqualTo: currentUserId())
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
-          // return IconButton(
-          //   onPressed: () {
-          //     if (docs.isEmpty) {
-          //       likesRef.add({
-          //         'userId': currentUserId(),
-          //         'postId': widget.post!.postId,
-          //         'dateCreated': Timestamp.now(),
-          //       });
-          //       addLikesToNotification();
-          //     } else {
-          //       likesRef.doc(docs[0].id).delete();
-          //       removeLikeFromNotification();
-          //     }
-          //   },
-          //   icon: docs.isEmpty
-          //       ? Icon(
-          //           CupertinoIcons.heart,
-          //         )
-          //       : Icon(
-          //           CupertinoIcons.heart_fill,
-          //           color: Colors.red,
-          //         ),
-          // );
-          ///added animated like button
+
           Future<bool> onLikeButtonTapped(bool isLiked) async {
             if (docs.isEmpty) {
               likesRef.add({
                 'userId': currentUserId(),
-                'postId': widget.post!.postId,
+                'postId': widget.post.postId,
                 'dateCreated': Timestamp.now(),
               });
               addLikesToNotification();
@@ -186,8 +155,7 @@ class _ViewImageState extends State<ViewImage> {
           return LikeButton(
             onTap: onLikeButtonTapped,
             size: 25.0,
-            circleColor: const CircleColor(
-                start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            circleColor: const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
             bubblesColor: const BubblesColor(
               dotPrimaryColor: Color(0xffFFA500),
               dotSecondaryColor: Color(0xffd8392b),

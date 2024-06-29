@@ -172,4 +172,15 @@ class UserService extends Service {
     }
     return following;
   }
+
+  bool canCreatePost(UserType userType) {
+    List<UserType> authorizedUserTypes = [
+      UserType.tattooArtist,
+      UserType.eventOrganizer,
+      UserType.supplier,
+      UserType.admin,
+      UserType.superAdmin,
+    ];
+    return authorizedUserTypes.contains(userType);
+  }
 }

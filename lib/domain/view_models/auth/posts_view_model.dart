@@ -48,6 +48,29 @@ class PostsViewModel extends ChangeNotifier {
   //controllers
   TextEditingController locationTEC = TextEditingController();
 
+  String? _postType;
+  List<String> _hashtags = [];
+
+  // Getters for postType and hashtags
+  String? get postType => _postType;
+  List<String> get hashtags => _hashtags;
+
+  // Setters for postType and hashtags (you might already have these)
+  setPostType(String? type) {
+    _postType = type;
+    notifyListeners();
+  }
+
+  addHashtag(String hashtag) {
+    _hashtags.add(hashtag);
+    notifyListeners();
+  }
+
+  removeHashtag(String hashtag) {
+    _hashtags.remove(hashtag);
+    notifyListeners();
+  }
+
   //Setters
   setEdit(bool val) {
     edit = val;
@@ -56,10 +79,15 @@ class PostsViewModel extends ChangeNotifier {
 
   setPost(PostModel post) {
     description = post.description;
-    imgLink = post.mediaUrl;
+    // Handle mediaUrls (list) instead of mediaUrl (single string)
+    if (post.mediaUrls.isNotEmpty) {
+      imgLink = post.mediaUrls[0]; // Assuming you want to display the first image for now
+    } else {
+      imgLink = null; // No media URLs available
+    }
     location = post.location;
     edit = true;
-    edit = false;
+    edit = false; // This line seems redundant, you might want to remove it
     notifyListeners();
   }
 
@@ -155,16 +183,13 @@ class PostsViewModel extends ChangeNotifier {
     notifyListeners();
     LocationPermission permission = await Geolocator.checkPermission();
     print(permission);
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
+    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
       LocationPermission rPermission = await Geolocator.requestPermission();
       print(rPermission);
       await getLocation();
     } else {
-      position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          position!.latitude, position!.longitude);
+      position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> placemarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
       placemark = placemarks[0];
       location = " ${placemarks[0].locality}, ${placemarks[0].country}";
       locationTEC.text = location!;
@@ -177,8 +202,8 @@ class PostsViewModel extends ChangeNotifier {
   uploadPosts(BuildContext context) async {
     try {
       loading = true;
-      notifyListeners();
-      await postService.uploadPost(mediaUrl!, location!, description!, isFlash);
+      notifyListeners(); // Access the postType and hashtags member variables
+      await postService.uploadPost([mediaUrl!], location!, description!, isFlash, this.postType, this.hashtags);
       loading = false;
       resetPost();
       notifyListeners();
@@ -186,7 +211,7 @@ class PostsViewModel extends ChangeNotifier {
       print(e);
       loading = false;
       resetPost();
-      showInSnackBar('Uploaded successfully!', context);
+      showInSnackBar('Error uploading post', context);
       notifyListeners();
     }
   }
@@ -198,12 +223,10 @@ class PostsViewModel extends ChangeNotifier {
       try {
         loading = true;
         notifyListeners();
-        await postService.uploadProfilePicture(
-            mediaUrl!, firebaseAuth.currentUser!);
+        await postService.uploadProfilePicture(mediaUrl!, firebaseAuth.currentUser!);
         loading = false;
 
-        Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(builder: (_) => const TabScreen()));
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (_) => const TabScreen()));
         notifyListeners();
       } catch (e) {
         print(e);
