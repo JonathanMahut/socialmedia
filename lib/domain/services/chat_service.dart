@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 class ChatService {
   FirebaseStorage storage = FirebaseStorage.instance;
 
-  final uuid = Uuid();
+  final uuid = const Uuid();
 
   sendMessage(Message message, String chatId) async {
     //will send message to chats collection with the usersId

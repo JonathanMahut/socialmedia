@@ -16,7 +16,7 @@ import 'package:social_media_app/presentation/screens/view_image.dart'; // Adjus
 class CommentsScreen extends StatefulWidget {
   final PostModel post;
 
-  const CommentsScreen({Key? key, required this.post}) : super(key: key);
+  const CommentsScreen({super.key, required this.post});
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();
@@ -69,7 +69,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           // User info
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 20,
                 backgroundImage: NetworkImage('https://via.placeholder.com/50'), // Replace with actual user image
               ),
@@ -291,7 +291,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
       notificationRef.doc(widget.post.ownerId).collection('notifications').doc(widget.post.postId).set({
         "type": "like",
-        "username": user!.username!,
+        "username": user!.username,
         "userId": currentUserId(),
         "userDp": user!.photoUrl!,
         "postId": widget.post.postId,

@@ -10,7 +10,7 @@ import '../../../../data/models/user.dart';
 
 class ProfilePicture extends StatefulWidget {
   final UserModel user;
-  const ProfilePicture({Key? key, required this.user}) : super(key: key);
+  const ProfilePicture({super.key, required this.user});
 
   @override
   _ProfilePictureState createState() => _ProfilePictureState();
@@ -81,8 +81,8 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   Center(
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),

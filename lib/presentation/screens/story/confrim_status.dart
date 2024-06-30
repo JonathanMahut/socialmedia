@@ -21,7 +21,7 @@ class ConfirmStatus extends StatefulWidget {
 
 class _ConfirmStatusState extends State<ConfirmStatus> {
   bool loading = false;
-  final uuid = Uuid();
+  final uuid = const Uuid();
   @override
   Widget build(BuildContext context) {
     StatusViewModel viewModel = Provider.of<StatusViewModel>(context);

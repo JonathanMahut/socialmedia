@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media_app/data/models/enum/app_theme.dart';
-import 'package:social_media_app/data/models/enum/event_type.dart';
 import 'package:social_media_app/data/models/enum/gender_type.dart';
 import 'package:social_media_app/data/models/enum/subscription_type.dart';
 import 'package:social_media_app/data/models/enum/user_type.dart';
@@ -8,14 +7,6 @@ import 'package:social_media_app/data/models/event.dart';
 import 'package:social_media_app/data/models/product_model.dart';
 import 'package:social_media_app/data/models/social_media_link_model.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/data/models/enum/app_theme.dart';
-import 'package:social_media_app/data/models/enum/gender_type.dart';
-import 'package:social_media_app/data/models/enum/subscription_type.dart';
-import 'package:social_media_app/data/models/enum/user_type.dart';
-import 'package:social_media_app/data/models/event.dart';
-import 'package:social_media_app/data/models/product_model.dart';
-import 'package:social_media_app/data/models/social_media_link_model.dart';
 
 class UserModel {
   final String id;

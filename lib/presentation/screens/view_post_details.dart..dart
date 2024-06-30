@@ -16,7 +16,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class ViewPostDetails extends StatefulWidget {
   final PostModel post;
 
-  const ViewPostDetails({Key? key, required this.post}) : super(key: key);
+  const ViewPostDetails({super.key, required this.post});
 
   @override
   State<ViewPostDetails> createState() => _ViewPostDetailsState();
@@ -190,14 +190,14 @@ class _ViewPostDetailsState extends State<ViewPostDetails> {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => showProfile(context, profileId: user.id!),
+                  onTap: () => showProfile(context, profileId: user.id),
                   child: user.photoUrl!.isEmpty
                       ? CircleAvatar(
                           radius: 20,
                           backgroundColor: Theme.of(context).colorScheme.secondary,
                           child: Center(
                             child: Text(
-                              user.username![0].toUpperCase(),
+                              user.username[0].toUpperCase(),
                               style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w900),
                             ),
                           ),
@@ -212,7 +212,7 @@ class _ViewPostDetailsState extends State<ViewPostDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.username!,
+                      user.username,
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     if (widget.post.location != null && widget.post.location!.isNotEmpty)
@@ -303,7 +303,7 @@ class _ViewPostDetailsState extends State<ViewPostDetails> {
       UserModel user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
       services.addLikesToNotification(
         "like",
-        user.username!,
+        user.username,
         currentUserId(),
         widget.post.postId,
         widget.post.mediaUrls[0],

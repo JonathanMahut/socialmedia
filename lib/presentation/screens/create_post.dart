@@ -84,11 +84,11 @@ class _CreatePostState extends State<CreatePost> {
                         backgroundImage: NetworkImage(user.photoUrl!),
                       ),
                       title: Text(
-                        user.username!,
+                        user.username,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        user.email!,
+                        user.email,
                       ),
                     );
                   }

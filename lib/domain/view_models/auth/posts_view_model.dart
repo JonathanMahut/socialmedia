@@ -49,7 +49,7 @@ class PostsViewModel extends ChangeNotifier {
   TextEditingController locationTEC = TextEditingController();
 
   String? _postType;
-  List<String> _hashtags = [];
+  final List<String> _hashtags = [];
 
   // Getters for postType and hashtags
   String? get postType => _postType;
@@ -203,7 +203,7 @@ class PostsViewModel extends ChangeNotifier {
     try {
       loading = true;
       notifyListeners(); // Access the postType and hashtags member variables
-      await postService.uploadPost([mediaUrl!], location!, description!, isFlash, this.postType, this.hashtags);
+      await postService.uploadPost([mediaUrl!], location!, description!, isFlash, postType, hashtags);
       loading = false;
       resetPost();
       notifyListeners();

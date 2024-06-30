@@ -10,7 +10,6 @@ import 'package:social_media_app/data/models/enum/user_type.dart';
 import 'package:social_media_app/data/models/user.dart';
 import 'package:social_media_app/domain/services/auth_service.dart';
 import 'package:social_media_app/presentation/components/fab_container.dart';
-import 'package:social_media_app/presentation/pages/feeds.dart';
 import 'package:social_media_app/presentation/pages/notification.dart';
 import 'package:social_media_app/presentation/pages/profile.dart';
 import 'package:social_media_app/presentation/pages/search.dart';
@@ -33,29 +32,26 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     super.initState();
-//    _fetchUserDataAndBuildPages();
   }
 
   @override
   void didChangeDependencies() {
     // Use didChangeDependencies instead of initState
     super.didChangeDependencies();
-    _fetchUserDataAndBuildPages();
+    //   _fetchUserDataAndBuildPages();
   }
 
-  Future<void> _fetchUserDataAndBuildPages() async {
+  Future<UserModel?> _fetchUserData() async {
     final authService = Provider.of<AuthService>(context, listen: false);
     User? firebaseUser = authService.getCurrentUser();
 
     if (firebaseUser != null) {
       DocumentSnapshot userSnapshot = await usersRef.doc(firebaseUser.uid).get();
       if (userSnapshot.exists) {
-        UserModel currentUser = UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
-        setState(() {
-          _pages = _buildPagesForUser(currentUser.userType);
-        });
+        return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
       }
     }
+    return null;
   }
 
   List<Map<String, dynamic>> _buildPagesForUser(UserType userType) {
@@ -176,19 +172,33 @@ class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageTransitionSwitcher(
-        transitionBuilder: (
-          Widget child,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-        ) {
-          return FadeThroughTransition(
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            child: child,
-          );
+      body: FutureBuilder<UserModel?>(
+        future: _fetchUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData && snapshot.data != null) {
+            _pages = _buildPagesForUser(snapshot.data!.userType);
+            return PageTransitionSwitcher(
+              transitionBuilder: (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                return FadeThroughTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: _pages.isNotEmpty ? _pages[_page]['page'] : Container(),
+            );
+          } else {
+            return const Center(child: Text('No user data found.'));
+          }
         },
-        child: _pages.isNotEmpty ? _pages[_page]['page'] : Container(),
       ),
       bottomNavigationBar: _pages.isNotEmpty
           ? BottomAppBar(
@@ -224,6 +234,7 @@ class _TabScreenState extends State<TabScreen> {
     );
   }
 
+  // ... (rest of your TabScreen code)
   buildFab() {
     return const SizedBox(
       height: 45.0,

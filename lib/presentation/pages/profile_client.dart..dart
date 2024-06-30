@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfileClient extends StatefulWidget {
   final String profileId;
 
-  const ProfileClient({Key? key, required this.profileId}) : super(key: key);
+  const ProfileClient({super.key, required this.profileId});
 
   @override
   _ProfileClientState createState() => _ProfileClientState();

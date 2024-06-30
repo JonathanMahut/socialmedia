@@ -51,7 +51,7 @@ class ChatItem extends StatelessWidget {
                             Theme.of(context).colorScheme.secondary,
                         child: Center(
                           child: Text(
-                            user.username![0].toUpperCase(),
+                            user.username[0].toUpperCase(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -93,7 +93,7 @@ class ChatItem extends StatelessWidget {
               ],
             ),
             title: Text(
-              '${user.username}',
+              user.username,
               maxLines: 1,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,

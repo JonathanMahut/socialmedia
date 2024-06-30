@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'package:social_media_app/domain/services/post_service.dart';
 import 'package:social_media_app/presentation/components/custom_card.dart';
 import 'package:social_media_app/presentation/pages/profile.dart';
 import 'package:social_media_app/presentation/screens/comment.dart';
-import 'package:social_media_app/presentation/screens/view_image.dart'; // You'll need to create this screen
+// You'll need to create this screen
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,7 +20,7 @@ import '../screens/view_post_details.dart..dart';
 class UserPost extends StatefulWidget {
   final PostModel post;
 
-  const UserPost({Key? key, required this.post}) : super(key: key);
+  const UserPost({super.key, required this.post});
 
   @override
   State<UserPost> createState() => _UserPostState();
@@ -268,7 +267,7 @@ class _UserPostState extends State<UserPost> {
       UserModel user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
       services.addLikesToNotification(
         "like",
-        user.username!,
+        user.username,
         currentUserId(),
         widget.post.postId,
         widget.post.mediaUrls[0],
@@ -323,7 +322,7 @@ class _UserPostState extends State<UserPost> {
                   ),
                 ),
                 child: GestureDetector(
-                  onTap: () => showProfile(context, profileId: user.id!),
+                  onTap: () => showProfile(context, profileId: user.id),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Row(
@@ -335,7 +334,7 @@ class _UserPostState extends State<UserPost> {
                                 backgroundColor: Theme.of(context).colorScheme.secondary,
                                 child: Center(
                                   child: Text(
-                                    user.username![0].toUpperCase(),
+                                    user.username[0].toUpperCase(),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.0,
@@ -356,7 +355,7 @@ class _UserPostState extends State<UserPost> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              user.username!, // Use the username from the fetched user data
+                              user.username, // Use the username from the fetched user data
                               style: const TextStyle(
                                 fontWeight: FontWeight.w900,
                                 color: Colors.black,

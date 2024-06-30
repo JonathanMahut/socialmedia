@@ -13,7 +13,7 @@ class ViewImage extends StatefulWidget {
   final String mediaUrl; // Now takes a single mediaUrl
   final PostModel post; // Still need the post for other details
 
-  const ViewImage({Key? key, required this.mediaUrl, required this.post}) : super(key: key);
+  const ViewImage({super.key, required this.mediaUrl, required this.post});
 
   @override
   _ViewImageState createState() => _ViewImageState();
@@ -104,7 +104,7 @@ class _ViewImageState extends State<ViewImage> {
       user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
       notificationRef.doc(widget.post.ownerId).collection('notifications').doc(widget.post.postId).set({
         "type": "like",
-        "username": user!.username!,
+        "username": user!.username,
         "userId": currentUserId(),
         "userDp": user!.photoUrl,
         "postId": widget.post.postId,

@@ -9,7 +9,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class PostTile extends StatelessWidget {
   final PostModel post;
 
-  const PostTile({Key? key, required this.post}) : super(key: key);
+  const PostTile({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PostTile extends StatelessWidget {
         children: [
           // User info (using ListTile for better structure)
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               radius: 20,
               backgroundImage: NetworkImage('https://via.placeholder.com/50'),
             ),
@@ -154,7 +154,7 @@ class PostTile extends StatelessWidget {
                       children: post.hashtags.map((hashtag) {
                         return Text(
                           '#$hashtag',
-                          style: TextStyle(color: Colors.blue),
+                          style: const TextStyle(color: Colors.blue),
                         );
                       }).toList(),
                     ),

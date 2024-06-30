@@ -111,7 +111,7 @@ class RegisterViewModel extends ChangeNotifier {
         // Navigate to the Home screen after successful sign-in
         Navigator.of(context).pushReplacement(
           CupertinoPageRoute(
-            builder: (_) => TabScreen(), // Replace with your actual Home screen widget
+            builder: (_) => const TabScreen(), // Replace with your actual Home screen widget
           ),
         );
       } else {

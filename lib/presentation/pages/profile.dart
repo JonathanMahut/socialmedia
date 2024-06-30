@@ -7,10 +7,8 @@ import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/core/utils/firebase.dart';
 import 'package:social_media_app/data/models/post.dart';
 import 'package:social_media_app/data/models/user.dart';
-import 'package:social_media_app/presentation/components/stream_grid_wrapper.dart';
 import 'package:social_media_app/presentation/pages/auth/register/register.dart';
 import 'package:social_media_app/presentation/screens/edit_profile.dart';
-import 'package:social_media_app/presentation/screens/list_posts.dart';
 import 'package:social_media_app/presentation/screens/settings.dart';
 import 'package:social_media_app/presentation/widgets/post_tiles.dart';
 
@@ -226,7 +224,7 @@ class _ProfileState extends State<Profile> {
                                           backgroundColor: Theme.of(context).colorScheme.secondary,
                                           child: Center(
                                             child: Text(
-                                              user.username![0].toUpperCase(),
+                                              user.username[0].toUpperCase(),
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15.0,
@@ -248,7 +246,7 @@ class _ProfileState extends State<Profile> {
                                       children: [
                                         const SizedBox(height: 32.0),
                                         Text(
-                                          user.username!,
+                                          user.username,
                                           style: TextStyle(
                                             fontSize: constraints.maxWidth > 600 ? 18 : 16,
                                             fontWeight: FontWeight.w900,
@@ -266,7 +264,7 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         const SizedBox(height: 5.0),
                                         Text(
-                                          user.email!,
+                                          user.email,
                                           style: const TextStyle(fontSize: 10.0),
                                         ),
                                       ],

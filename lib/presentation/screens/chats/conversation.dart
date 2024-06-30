@@ -212,7 +212,7 @@ class _ConversationState extends State<Conversation> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Hero(
-                    tag: user.email!,
+                    tag: user.email,
                     child: user.photoUrl!.isEmpty
                         ? CircleAvatar(
                             radius: 25.0,
@@ -220,7 +220,7 @@ class _ConversationState extends State<Conversation> {
                                 Theme.of(context).colorScheme.secondary,
                             child: Center(
                               child: Text(
-                                user.username![0].toUpperCase(),
+                                user.username[0].toUpperCase(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
@@ -243,7 +243,7 @@ class _ConversationState extends State<Conversation> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${user.username}',
+                        user.username,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,

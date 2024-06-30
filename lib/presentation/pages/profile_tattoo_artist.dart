@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfileTatooArtist extends StatefulWidget {
   final String profileId;
 
-  const ProfileTatooArtist({Key? key, required this.profileId}) : super(key: key);
+  const ProfileTatooArtist({super.key, required this.profileId});
 
   @override
   _ProfileTatooArtistState createState() => _ProfileTatooArtistState();

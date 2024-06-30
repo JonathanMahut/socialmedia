@@ -13,7 +13,7 @@ class StatusService {
   String statusId = const Uuid().v1();
   UserService userService = UserService();
 
-  final uuid = Uuid();
+  final uuid = const Uuid();
   void showSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));

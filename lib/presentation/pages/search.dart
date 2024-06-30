@@ -196,14 +196,14 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
               UserType userType = _userTypeFromString(userTypeString); // Use your helper method to convert to enum
 
               return ListTile(
-                onTap: () => showProfile(context, profileId: user.id!, userType: userType), // Pass the UserType enum
+                onTap: () => showProfile(context, profileId: user.id, userType: userType), // Pass the UserType enum
                 leading: user.photoUrl!.isEmpty
                     ? CircleAvatar(
                         radius: 20.0,
                         backgroundColor: Theme.of(context).colorScheme.secondary,
                         child: Center(
                           child: Text(
-                            user.username![0].toUpperCase(),
+                            user.username[0].toUpperCase(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -219,11 +219,11 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                         ),
                       ),
                 title: Text(
-                  user.username!,
+                  user.username,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(
-                  user.email!,
+                  user.email,
                 ),
                 trailing: GestureDetector(
                   onTap: () {

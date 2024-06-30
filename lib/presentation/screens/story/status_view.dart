@@ -134,7 +134,7 @@ class _StatusScreenState extends State<StatusScreen> {
                                           Column(
                                             children: [
                                               Text(
-                                                user.username!,
+                                                user.username,
                                                 style: const TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.bold,

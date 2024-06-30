@@ -273,8 +273,8 @@ class EditProfileViewModel extends ChangeNotifier {
         notifyListeners();
 
         // Convert userType and gender stringsto enums
-        UserType? userTypeValue = this._userTypeFromString(userType); // Pass the string property 'userType'
-        GenderType? genderValue = this._genderTypeFromString(gender); // Pass the string property 'gender'
+        UserType? userTypeValue = _userTypeFromString(userType); // Pass the string property 'userType'
+        GenderType? genderValue = _genderTypeFromString(gender); // Pass the string property 'gender'
 
         bool success = await userService.updateProfile(
           image: image,
